@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://PixelArt/FloraAssetPack/Ground Sprites/Flora/Flora Weeping Willow.png" type="Texture" id=1]
+[ext_resource path="res://Action RPG Resources/Shadows/LargeShadow.png" type="Texture" id=2]
+[ext_resource path="res://World/RandomizeWorldElement.gd" type="Script" id=3]
+[ext_resource path="res://World/WorldElementSwing.shader" type="Shader" id=4]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 4 )
+shader_param/offset = 0.5
+shader_param/speed = 0.5
+shader_param/starting = -10.0
+shader_param/spread = 0.01
+shader_param/Shift_Hue = 0.0
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 4.00001
+height = 6.0
+
+[node name="Tree" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 1 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, -50 )
+
+[node name="ShadowSprite" type="Sprite" parent="Sprite"]
+show_behind_parent = true
+scale = Vector2( 2.21875, 2 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -1.5708
+shape = SubResource( 2 )
+one_way_collision_margin = 0.0

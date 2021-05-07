@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Pause.wav-c1709c5ceceded3d0d79113f329a91e6.sample"
+
+[deps]
+
+source_file="res://SoundFX/Sounds/Pause.wav"
+dest_files=[ "res://.import/Pause.wav-c1709c5ceceded3d0d79113f329a91e6.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
