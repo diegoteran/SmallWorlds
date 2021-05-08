@@ -144,7 +144,7 @@ func play_roll_sound():
 	SoundFx.play("Evade", global_position, rand_range(0.9, 1.1), -20)
 
 func run_step():
-	SoundFx.play("Step", global_position, rand_range(0.9, 1.4), -40)
+	SoundFx.play("Step", global_position, rand_range(0.9, 1.1), -35)
 
 func _on_HurtBox_area_entered(_area):
 	stats.health -= 1

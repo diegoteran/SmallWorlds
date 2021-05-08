@@ -5,6 +5,7 @@ export (Array, AudioStream) var music_list = []
 var music_list_index = 0
 
 onready var musicPlayer = $AudioStreamPlayer
+onready var environment = $Environment
 
 func list_play():
 	assert(music_list.size() > 0)

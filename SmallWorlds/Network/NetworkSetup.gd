@@ -8,6 +8,7 @@ onready var playerName = $MultiplayerConfigure/CenterContainer/VBoxContainer/Pla
 
 func _ready():
 	randomize()
+	Music.list_play()
 	address.text = Network.ip_address
 	SaverAndLoader.load_game()
 	
@@ -16,6 +17,7 @@ func _ready():
 		playerName.text = savedPlayerName
 
 func _on_CreateServerButton_pressed():
+	SoundFx.play_menu("Menu Select", rand_range(0.8, 1.2), -30)
 	to_join_world()
 	# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://World/World.tscn")
@@ -25,6 +27,7 @@ func _on_CreateServerButton_pressed():
 
 
 func _on_JoinServerButton_pressed():
+	SoundFx.play_menu("Menu Select", rand_range(0.8, 1.2), -30)
 	to_join_world()
 	
 	if serverAddress.text != "":
@@ -38,3 +41,21 @@ func _on_JoinServerButton_pressed():
 func to_join_world():
 	SaverAndLoader.custom_data.player_name = playerName.text
 	SaverAndLoader.save_game()
+	Music.list_stop()
+
+
+func _on_CreateServerButton_focus_entered():
+	play_menu_move()
+
+
+func _on_JoinServerButton_focus_entered():
+	play_menu_move()
+
+func play_menu_move():
+	SoundFx.play_menu("Menu Move", rand_range(0.8, 1.2), -30)
+
+func _on_CreateServerButton_mouse_entered():
+	play_menu_move()
+
+func _on_JoinServerButton_mouse_entered():
+	play_menu_move()

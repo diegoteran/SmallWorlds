@@ -102,6 +102,12 @@ func pick_random_state(state_list):
 	state_list.shuffle()
 	return state_list.pop_front()
 
+func play_flap():
+	SoundFx.play("BatFlap", global_position, rand_range(1.5, 2), -35)
+
+func play_hurt():
+	SoundFx.play("BatHurt", global_position, rand_range(0.8, 1.2), -30)
+
 func accelerate_towards_point(point, delta):
 	var direction = global_position.direction_to(point)
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
@@ -118,6 +124,7 @@ func _on_HurtBox_area_entered(area):
 
 remotesync func hurt():
 	hurtBox.create_hit_effect()
+	play_hurt()
 
 func _on_Stats_no_health():
 	queue_free()
@@ -141,3 +148,8 @@ func Health(health):
 		if hp <= 0:
 			OnDeath()
 
+
+
+func _on_AnimatedSprite_frame_changed():
+	if sprite.frame == 2:
+		play_flap()

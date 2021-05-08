@@ -59,5 +59,9 @@ margin_right = 97.0
 margin_bottom = 118.0
 align = 1
 placeholder_text = "Enter IP"
+[connection signal="focus_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/CreateServerButton" to="." method="_on_CreateServerButton_focus_entered"]
+[connection signal="mouse_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/CreateServerButton" to="." method="_on_CreateServerButton_mouse_entered"]
 [connection signal="pressed" from="MultiplayerConfigure/CenterContainer/VBoxContainer/CreateServerButton" to="." method="_on_CreateServerButton_pressed"]
+[connection signal="focus_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/JoinServerButton" to="." method="_on_JoinServerButton_focus_entered"]
+[connection signal="mouse_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/JoinServerButton" to="." method="_on_JoinServerButton_mouse_entered"]
 [connection signal="pressed" from="MultiplayerConfigure/CenterContainer/VBoxContainer/JoinServerButton" to="." method="_on_JoinServerButton_pressed"]

@@ -8,3 +8,7 @@ script = ExtResource( 1 )
 music_list = [ ExtResource( 2 ) ]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]

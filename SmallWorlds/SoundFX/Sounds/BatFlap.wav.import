@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BatFlap.wav-f5c2b6b627c902b77f4f81cfaa8911a2.sample"
+
+[deps]
+
+source_file="res://SoundFX/Sounds/BatFlap.wav"
+dest_files=[ "res://.import/BatFlap.wav-f5c2b6b627c902b77f4f81cfaa8911a2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
