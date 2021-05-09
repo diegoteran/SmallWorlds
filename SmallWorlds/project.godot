@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Depth Tamers"
-run/main_scene="res://Network/NetworkSetup.tscn"
+run/main_scene="res://Menus/TitleScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -26,7 +26,8 @@ Network="*res://Network/Network.tscn"
 SoundFx="*res://SoundFX/SoundFX.tscn"
 SaverAndLoader="*res://Singletons/SaverAndLoader.gd"
 Music="*res://SoundFX/Music.tscn"
-Utils="*res://Singletons/Utils.gd"
+Globals="*res://Singletons/Globals.gd"
+Settings="*res://Singletons/Settings.gd"
 
 [debug]
 

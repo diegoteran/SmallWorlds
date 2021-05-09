@@ -1,0 +1,115 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Menus/PixelFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Menus/SettingsMenu.gd" type="Script" id=2]
+
+[node name="SettingsMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 480.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ReturnButton" type="Button" parent="ScrollContainer/VBoxContainer"]
+margin_right = 480.0
+margin_bottom = 23.0
+custom_fonts/font = ExtResource( 1 )
+text = " Return"
+flat = true
+align = 0
+
+[node name="FullScreen" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 27.0
+margin_right = 480.0
+margin_bottom = 51.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/FullScreen"]
+margin_top = 3.0
+margin_right = 86.0
+margin_bottom = 20.0
+custom_fonts/font = ExtResource( 1 )
+text = "Fullsceen"
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/FullScreen"]
+margin_left = 90.0
+margin_right = 452.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="FullScreen" type="CheckBox" parent="ScrollContainer/VBoxContainer/FullScreen"]
+margin_left = 456.0
+margin_right = 480.0
+margin_bottom = 24.0
+
+[node name="Music" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 55.0
+margin_right = 480.0
+margin_bottom = 72.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Music"]
+margin_right = 133.0
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 1 )
+text = "Music Volume"
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Music"]
+margin_left = 137.0
+margin_right = 306.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+
+[node name="Music" type="HSlider" parent="ScrollContainer/VBoxContainer/Music"]
+margin_left = 310.0
+margin_right = 480.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
+
+[node name="Sfx" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 76.0
+margin_right = 480.0
+margin_bottom = 93.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Sfx"]
+margin_right = 141.0
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 1 )
+text = "Sound Effects"
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Sfx"]
+margin_left = 145.0
+margin_right = 310.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+
+[node name="Sfx" type="HSlider" parent="ScrollContainer/VBoxContainer/Sfx"]
+margin_left = 314.0
+margin_right = 480.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
+[connection signal="focus_entered" from="ScrollContainer/VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_focus_entered"]
+[connection signal="mouse_entered" from="ScrollContainer/VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_mouse_entered"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_pressed"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/FullScreen/FullScreen" to="." method="_on_FullScreen_toggled"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/Music/Music" to="." method="_on_Music_value_changed"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/Sfx/Sfx" to="." method="_on_Sfx_value_changed"]

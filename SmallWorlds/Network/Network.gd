@@ -56,9 +56,12 @@ func _server_disconnected():
 	if get_tree().get_network_unique_id() > 1:
 		quit_game()
 
-func create_server() -> void:
+func create_server(mp) -> void:
 	server = NetworkedMultiplayerENet.new()
-	var err = server.create_server(DEFAULT_PORT, MAX_CLIENTS)
+	var port = DEFAULT_PORT
+	if mp == false:
+		port += 1203
+	var err = server.create_server(port, MAX_CLIENTS)
 	
 	if (err != OK):
 		# warning-ignore:standalone_expression

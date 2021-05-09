@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_PATH = "user://savegame.save"
+const SAVE_PATH = "res://savegame.save"
 
 var is_loading = false
 var custom_data = {
