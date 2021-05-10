@@ -9,7 +9,7 @@
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/offset = 0.5
-shader_param/speed = 0.2
+shader_param/speed = 0.5
 shader_param/starting = -20.0
 shader_param/spread = 0.03
 shader_param/Shift_Hue = 0.0

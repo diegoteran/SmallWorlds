@@ -4,17 +4,19 @@ signal return_pressed
 
 onready var musicSlider = $ScrollContainer/VBoxContainer/Music/Music
 onready var sfxSlider = $ScrollContainer/VBoxContainer/Sfx/Sfx
+onready var fullscreenCheckbox = $ScrollContainer/VBoxContainer/FullScreen/FullScreen
 
 func _ready():
 	musicSlider.value = Globals.get_music_volume()
 	sfxSlider.value = Globals.get_sfx_volume()
+	fullscreenCheckbox.pressed = OS.window_fullscreen
 	$ScrollContainer/VBoxContainer/ReturnButton.grab_focus()
 
 func save_settings():
 	Settings.save_settings()
 
 func _on_FullScreen_toggled(_button_pressed):
-	OS.window_fullscreen = !OS.window_fullscreen
+	OS.window_fullscreen = fullscreenCheckbox.pressed
 	play_menu_select()
 
 func _on_ReturnButton_pressed():
