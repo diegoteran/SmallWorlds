@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Effects/noise_combined.png" type="Texture" id=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise_img;
+uniform float time = 1.0;
+uniform vec4 smoke_color : hint_color;
+
+
+void fragment() {
+	vec2 uv1 = vec2(UV.x + TIME * time, UV.y);
+	vec2 uv2 = vec2(UV.x - TIME * time * 1.2, UV.y);
+	vec2 uv3 = vec2(UV.x, UV.y + TIME * time + 1.5);
+	
+	float noise_r = texture(noise_img, uv1).r;
+	float noise_g = texture(noise_img, uv2).g;
+	float noise_b = texture(noise_img, uv3).b;
+	
+	vec3 new_color = vec3(noise_r, noise_g, noise_b);
+	
+	float new_alpha = noise_r * noise_g * noise_b;
+	
+	COLOR.rgb = smoke_color.rgb;
+	COLOR.a = clamp(new_alpha * 2.0, 0.0, 1.0);
+}"
+custom_defines = ""
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/time = 0.05
+shader_param/smoke_color = Color( 0.411765, 0.243137, 0.027451, 1 )
+shader_param/noise_img = ExtResource( 2 )
+
+[node name="Weather" type="Node2D"]
+
+[node name="Fog" type="Sprite" parent="."]
+material = SubResource( 2 )
+position = Vector2( 340.869, 189.523 )
+scale = Vector2( 23.4732, 17.3278 )
+texture = ExtResource( 1 )
