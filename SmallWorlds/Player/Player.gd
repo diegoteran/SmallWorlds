@@ -70,7 +70,11 @@ func _physics_process(delta):
 				roll_state()
 				
 			ATTACK:
-				rpc("attack_state")
+				var attack_vector = global_position.direction_to(get_global_mouse_position())
+				var controller_id_arr = Input.get_connected_joypads()
+				if controller_id_arr.size() > 0 and Input.is_joy_button_pressed(controller_id_arr[0], JOY_BUTTON_0): #  Input.is_joy_button_pressed()
+					attack_vector = Vector2(2, 2)
+				rpc("attack_state", attack_vector)
 		
 		if server.players.size() > 1:  # Expensive?
 			rset_unreliable("puppet_position", global_position)
@@ -95,7 +99,7 @@ func move_state(delta):
 	if input_vector != Vector2.ZERO:
 		animationTree.set("parameters/Idle/blend_position", input_vector)
 		animationTree.set("parameters/Run/blend_position", input_vector)
-		animationTree.set("parameters/Attack/blend_position", input_vector)
+		animationTree.set("parameters/Attack/blend_position", input_vector)  # For controller input
 		animationTree.set("parameters/Roll/blend_position", input_vector)
 		animationState.travel("Run")
 		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
@@ -120,10 +124,14 @@ remotesync func roll():
 	puppetState = "Roll"
 	animationState.travel("Roll")
 
-remotesync func attack_state():
-	puppetState = "Attack"
-	velocity = Vector2.ZERO
-	animationState.travel("Attack")
+remotesync func attack_state(attack_vector):
+	if puppetState != "Attack":
+		puppetState = "Attack"
+		velocity = Vector2.ZERO
+		animationState.travel("Attack")
+		if attack_vector != Vector2(2, 2):
+			animationTree.set("parameters/Attack/blend_position", attack_vector)
+			animationTree.set("parameters/Idle/blend_position", attack_vector)
 
 func move():
 	velocity = move_and_slide(velocity)
