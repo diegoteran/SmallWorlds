@@ -20,7 +20,7 @@ func _ready():
 func ServerDied():
 	# warning-ignore:return_value_discarded
 #	Music.list_stop()
-	get_tree().change_scene("res://Menus/TitleScreen.tscn")
+	get_tree().call_deferred("change_scene", "res://Menus/TitleScreen.tscn")
 	queue_free()
 
 func SpawnNewPlayer(player_id: int, spawn_position: Vector2):

@@ -2,6 +2,7 @@ extends Node
 
 var music = 100
 var sfx = 100
+var player = null
 
 func get_music_volume():
 	return Settings._settings["audio"]["music"]

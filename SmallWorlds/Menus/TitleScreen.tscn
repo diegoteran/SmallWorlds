@@ -65,3 +65,5 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="FadeIn"]
 anims/fade_in = SubResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]

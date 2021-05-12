@@ -2,14 +2,15 @@ extends KinematicBody2D
 
 export var ACCELERATION = 500
 export var MAX_SPEED = 100
-export var ROLL_SPEED = 125
-export var FRICTION = 500
+export var ROLL_SPEED = 150
+export var FRICTION = 1000
 
 enum {
 	MOVE,
 	ROLL,
 	ATTACK,
-	DEAD
+	DEAD,
+	PAUSED
 }
 
 var state = MOVE
@@ -19,6 +20,7 @@ var stats = PlayerStats
 var server = Network
 var player_state = {}
 var animation_vector = Vector2()
+var paused = false
 
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
@@ -38,6 +40,7 @@ func _ready():
 	animationTree.active = true
 	label.text = server.players[int(name)]["Name"]
 	if is_network_master():
+		Globals.player = self
 		stats._ready()
 		stats.connect("no_health", self, "_on_no_health")
 		var remoteTransform = RemoteTransform2D.new()
@@ -58,9 +61,11 @@ func SetDamage(damage):
 	swordHitBox.damage = damage
 
 func _physics_process(delta):
+	
+	if paused:
+		return
+	
 	if is_network_master():
-		if Input.is_action_just_pressed("ui_cancel"):
-			server.quit_game()
 		
 		match(state):
 			MOVE:
@@ -72,7 +77,7 @@ func _physics_process(delta):
 			ATTACK:
 				var attack_vector = global_position.direction_to(get_global_mouse_position())
 				var controller_id_arr = Input.get_connected_joypads()
-				if controller_id_arr.size() > 0 and Input.is_joy_button_pressed(controller_id_arr[0], JOY_BUTTON_0): #  Input.is_joy_button_pressed()
+				if controller_id_arr.size() > 0 and Input.is_joy_button_pressed(controller_id_arr[0], JOY_BUTTON_2):
 					attack_vector = Vector2(2, 2)
 				rpc("attack_state", attack_vector)
 		
@@ -141,7 +146,7 @@ func attack_animation_finished():
 	puppetState = "Idle"
 
 func roll_animation_finished():
-	velocity = velocity * 0.8
+#	velocity = velocity * 0.8
 	state = MOVE
 	puppetState = "Idle"
 
