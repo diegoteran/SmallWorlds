@@ -3,8 +3,10 @@ extends Node
 var sounds_path = "res://SoundFX/Sounds/"
 
 var sounds = {
+	"BatDefeated" : load(sounds_path + "BatDefeated.wav"),
 	"BatFlap" : load(sounds_path + "BatFlap.wav"),
-	"BatHurt" : load(sounds_path + "BatHurt.wav"),
+	"BatHurt1" : load(sounds_path + "BatHurt1.wav"),
+	"BatHurt2" : load(sounds_path + "BatHurt2.wav"),
 	"Click" : load(sounds_path + "Click.wav"),
 	"EnemyDie" : load(sounds_path + "EnemyDie.wav"),
 	"Evade" : load(sounds_path + "Evade.wav"),

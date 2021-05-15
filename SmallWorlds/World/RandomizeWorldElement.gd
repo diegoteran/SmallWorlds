@@ -6,10 +6,12 @@ onready var col = $CollisionShape2D
 
 func _ready():
 	# Shader
-	sprite.get_material().set_shader_param("offset", randf() * 100)
+#	sprite.get_material().set_shader_param("offset", randf() * 100)
+	if (randf() < 0.5):
+		sprite.material = null
 	
 	# Scaling
-	var scale_factor = rand_range(0.7, 1) 
+	var scale_factor = rand_range(1.3, 1.6) 
 	var scale_vec = Vector2(scale_factor, scale_factor)
 	sprite.scale = scale_vec
 	shadowSprite.scale *= scale_vec

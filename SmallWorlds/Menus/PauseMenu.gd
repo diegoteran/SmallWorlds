@@ -1,6 +1,6 @@
 extends Control
 
-const SettingsMenu = preload("res://Menus/SettingsMenu.tscn")
+export var SettingsMenu: PackedScene # = preload("res://Menus/SettingsMenu.tscn")
 
 onready var panel = $PanelContainer
 onready var pause_menu = $PanelContainer/VBoxContainer
@@ -22,7 +22,7 @@ func _process(delta):
 		play_menu_select()
 		self.paused = !paused
 		Globals.player.paused = self.paused
-		if not self.paused:
+		if not self.paused and settings_menu != null:
 			_On_Settings_exited()
 			
 		

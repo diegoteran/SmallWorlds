@@ -6,13 +6,11 @@
 [ext_resource path="res://World/WorldElementSwing.shader" type="Shader" id=4]
 
 [sub_resource type="ShaderMaterial" id=1]
-resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/offset = 0.5
 shader_param/speed = 0.5
-shader_param/starting = -20.0
+shader_param/starting = -5.0
 shader_param/spread = 0.03
-shader_param/Shift_Hue = 0.0
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 7.00002
@@ -35,5 +33,6 @@ texture = ExtResource( 2 )
 offset = Vector2( -1.76327, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 rotation = -1.5708
 shape = SubResource( 2 )

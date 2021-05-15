@@ -1,8 +1,8 @@
 extends Control
 
-const MainMenu = preload("res://Menus/MainMenu.tscn")
-const SettingsMenu = preload("res://Menus/SettingsMenu.tscn")
-const MultiplayerMenu = preload("res://Menus/NetworkSetup.tscn")
+export var MainMenu: PackedScene # = preload("res://Menus/MainMenu.tscn")
+export var SettingsMenu: PackedScene #  = preload("res://Menus/SettingsMenu.tscn")
+export var MultiplayerMenu: PackedScene #  = preload("res://Menus/NetworkSetup.tscn")
 
 onready var panel = $PanelContainer
 onready var tween = $Tween

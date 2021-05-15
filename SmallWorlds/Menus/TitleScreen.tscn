@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://PixelArt/Menu/placeholder_screen.png" type="Texture" id=1]
 [ext_resource path="res://World/Weather.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Menus/TitleScreen.gd" type="Script" id=3]
+[ext_resource path="res://Menus/SettingsMenu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Menus/MainMenu.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Menus/NetworkSetup.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "fade_in"
@@ -27,6 +30,9 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+MainMenu = ExtResource( 5 )
+SettingsMenu = ExtResource( 4 )
+MultiplayerMenu = ExtResource( 6 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -51,7 +57,7 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 206.0
-margin_bottom = 263.0
+margin_bottom = 353.0
 color = Color( 0.12549, 0.101961, 0.227451, 1 )
 
 [node name="FadeIn" type="ColorRect" parent="."]

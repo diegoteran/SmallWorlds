@@ -3,7 +3,7 @@ extends Control
 var hearts = 4 setget set_hearts
 var max_hearts = 4 setget set_max_hearts
 
-var Heart = preload("res://UI/Heart.tscn")
+export var Heart: PackedScene # = preload("res://UI/Heart.tscn")
 
 onready var heartUIFull = $HeartUIFull
 onready var heartUIEmpty = $HeartUIEmpty

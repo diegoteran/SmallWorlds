@@ -1,7 +1,7 @@
 extends Node2D
 
-var playerTemplate = preload("res://Player/Player.tscn")
-var enemy_spawn = preload("res://Enemies/Bat.tscn")
+export var playerTemplate: PackedScene # = preload("res://Player/Player.tscn")
+export var enemy_spawn: PackedScene # = preload("res://Enemies/Bat.tscn")
 var last_world_state_time = 0
 
 var world_state_buffer = []

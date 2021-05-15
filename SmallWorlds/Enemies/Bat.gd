@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
+export var EnemyDeathEffect:PackedScene # = preload("res://Effects/EnemyDeathEffect.tscn")
 
 export var ACCELERATION = 300
 export var MAX_SPEED = 50
@@ -106,7 +106,11 @@ func play_flap():
 	SoundFx.play("BatFlap", global_position, rand_range(1.5, 2), -35)
 
 func play_hurt():
-	SoundFx.play("BatHurt", global_position, rand_range(0.8, 1.2), -30)
+	var num = (randi() % 2) + 1
+	SoundFx.play("BatHurt" + str(num), global_position, rand_range(0.8, 1.2), -30)
+
+func play_defeated():
+	SoundFx.play("BatDefeated", global_position, rand_range(0.8, 1.2), -30)
 
 func accelerate_towards_point(point, delta):
 	var direction = global_position.direction_to(point)
@@ -137,7 +141,8 @@ func OnDeath():
 		server.NPCKilled(int(name))
 	
 	queue_free()
-	SoundFx.play("EnemyDie", global_position, rand_range(0.9, 1.1), -30)
+#	SoundFx.play("EnemyDie", global_position, rand_range(0.9, 1.1), -30)
+	play_defeated()
 	var enemyDeathEffect = EnemyDeathEffect.instance()
 	get_parent().add_child(enemyDeathEffect)
 	enemyDeathEffect.global_position = global_position

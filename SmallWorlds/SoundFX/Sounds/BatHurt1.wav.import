@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BatHurt1.wav-dd4fc27dc81b96e1129dfac7f956e327.sample"
+
+[deps]
+
+source_file="res://SoundFX/Sounds/BatHurt1.wav"
+dest_files=[ "res://.import/BatHurt1.wav-dd4fc27dc81b96e1129dfac7f956e327.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

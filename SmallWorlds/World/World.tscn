@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PixelArt/TileSet/Background.tres" type="TileSet" id=2]
@@ -12,6 +12,11 @@
 [ext_resource path="res://World/World.gd" type="Script" id=10]
 [ext_resource path="res://PixelArt/FloraAssetPack/Tileset/Grass Tileset.png" type="Texture" id=11]
 [ext_resource path="res://Menus/PauseMenu.tscn" type="PackedScene" id=12]
+[ext_resource path="res://PixelArt/Player/test2.png" type="Texture" id=13]
+[ext_resource path="res://PixelArt/Player/test1.png" type="Texture" id=14]
+[ext_resource path="res://Action RPG Resources/Shadows/SmallShadow.png" type="Texture" id=15]
+[ext_resource path="res://Enemies/Bat.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=17]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Grass 1"
@@ -530,6 +535,8 @@ tracks/0/keys = {
 
 [node name="World" type="Node2D"]
 script = ExtResource( 10 )
+playerTemplate = ExtResource( 17 )
+enemy_spawn = ExtResource( 16 )
 
 [node name="ExperimentGrass" type="Node2D" parent="."]
 
@@ -574,6 +581,22 @@ tile_data = PoolIntArray( -393218, 0, 3, -327686, 0, 0, -327685, 0, 1, -327684, 
 position = Vector2( 128, 64 )
 current = true
 smoothing_enabled = true
+
+[node name="Sprite" type="Sprite" parent="Camera2D"]
+position = Vector2( -161.113, 37.5827 )
+texture = ExtResource( 14 )
+
+[node name="Sprite" type="Sprite" parent="Camera2D/Sprite"]
+position = Vector2( -1.04106, 24.5027 )
+texture = ExtResource( 15 )
+
+[node name="Sprite2" type="Sprite" parent="Camera2D"]
+position = Vector2( -124.071, 51.0522 )
+texture = ExtResource( 13 )
+
+[node name="Sprite2" type="Sprite" parent="Camera2D/Sprite2"]
+position = Vector2( 0.8643, 20.6955 )
+texture = ExtResource( 15 )
 
 [node name="YSort" type="YSort" parent="."]
 
@@ -1525,3 +1548,4 @@ anims/Cycle = SubResource( 51 )
 [node name="Foreground" type="Node2D" parent="."]
 
 [node name="Weather" parent="Foreground" instance=ExtResource( 4 )]
+visible = false
