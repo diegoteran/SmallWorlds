@@ -33,7 +33,7 @@ func _on_multiplayer_pressed():
 func _on_settings_pressed():
 	settings_menu = SettingsMenu.instance()
 	panel.call_deferred("add_child", settings_menu)
-	tween.interpolate_property(panel, "rect_size", panel.rect_size, panel.rect_size + Vector2(150, 0), 0.1)
+	tween.interpolate_property(panel, "rect_size", panel.rect_size, panel.rect_size + Vector2(150, 0), 0.5, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 	tween.start()
 	settings_menu.connect("return_pressed", self, "_On_Settings_exited")
 	main_menu.visible = false
@@ -44,7 +44,7 @@ func _on_exit_pressed():
 func _On_Settings_exited():
 	settings_menu.save_settings()
 	settings_menu.queue_free()
-	tween.interpolate_property(panel, "rect_size", panel.rect_size, panel.rect_size - Vector2(150, 0), 0.1)
+	tween.interpolate_property(panel, "rect_size", panel.rect_size, panel.rect_size - Vector2(150, 0), 0.5, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 	tween.start()
 	main_menu.visible = true
 	main_menu.enable_keyboard()

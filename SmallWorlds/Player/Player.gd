@@ -22,6 +22,10 @@ var player_state = {}
 var animation_vector = Vector2()
 var paused = false
 
+# Tilemap experiment
+var grass_tilemap
+var dirt_tilemap
+
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
@@ -49,6 +53,10 @@ func _ready():
 		add_child(remoteTransform)
 		
 		hurtBox.connect("area_entered", self, "_on_HurtBox_area_entered")
+	
+	# Tilemap Experiment
+	grass_tilemap = get_node("../../../Background/GrassTileMap")
+	dirt_tilemap = get_node("../../../Background/DirtTileMap")
 
 func _on_no_health():
 	rpc("player_died", int(name))
@@ -157,7 +165,12 @@ func play_roll_sound():
 	SoundFx.play("Evade", global_position, rand_range(0.9, 1.1), -20)
 
 func run_step():
-	SoundFx.play("Step", global_position, rand_range(0.9, 1.1), -35)
+	var grass_cell = grass_tilemap.world_to_map(global_position)
+	var grass_id = grass_tilemap.get_cellv(grass_cell)
+	var step = "Step"
+	if grass_id == TileMap.INVALID_CELL:
+		step += "Dirt"
+	SoundFx.play(step, global_position, rand_range(0.9, 1.3), -35)
 
 func _on_HurtBox_area_entered(_area):
 	stats.health -= 1
