@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://PixelArt/Player/16x16.png" type="Texture" id=1]
+[ext_resource path="res://Player/Sword.gd" type="Script" id=2]
+
+[node name="Sword" type="Node2D"]
+position = Vector2( 0, -8 )
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 24, 0 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 1 )
+vframes = 7
+hframes = 16
+frame = 6
+
+[node name="Tween" type="Tween" parent="."]

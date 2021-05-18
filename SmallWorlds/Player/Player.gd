@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+export var Wheel: PackedScene
 export var ACCELERATION = 500
 export var MAX_SPEED = 100
 export var ROLL_SPEED = 150
@@ -26,6 +27,11 @@ var paused = false
 var grass_tilemap
 var dirt_tilemap
 
+# Wheel experiment
+var wheel
+var selecting = false
+var wheel_id = -1
+
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
@@ -33,6 +39,7 @@ onready var hurtBox = $HurtBox
 onready var swordHitBox = $HitBoxPivot/SwordHitBox
 onready var tween = $Tween
 onready var label = $Label
+onready var sword = $YSort/Sword
 
 var puppetState = "Idle"
 
@@ -75,6 +82,9 @@ func _physics_process(delta):
 	
 	if is_network_master():
 		
+		# Wheel Experiment
+		menu_wheel()
+		
 		match(state):
 			MOVE:
 				move_state(delta)
@@ -83,11 +93,12 @@ func _physics_process(delta):
 				roll_state()
 				
 			ATTACK:
-				var attack_vector = global_position.direction_to(get_global_mouse_position())
-				var controller_id_arr = Input.get_connected_joypads()
-				if controller_id_arr.size() > 0 and Input.is_joy_button_pressed(controller_id_arr[0], JOY_BUTTON_2):
-					attack_vector = Vector2(2, 2)
-				rpc("attack_state", attack_vector)
+				if !selecting:
+					var attack_vector = global_position.direction_to(get_global_mouse_position())
+					var controller_id_arr = Input.get_connected_joypads()
+					if controller_id_arr.size() > 0 and Input.is_joy_button_pressed(controller_id_arr[0], JOY_BUTTON_2):
+						attack_vector = Vector2(2, 2)
+					rpc("attack_state", attack_vector)
 		
 		if server.players.size() > 1:  # Expensive?
 			rset_unreliable("puppet_position", global_position)
@@ -142,6 +153,7 @@ remotesync func attack_state(attack_vector):
 		puppetState = "Attack"
 		velocity = Vector2.ZERO
 		animationState.travel("Attack")
+		sword.attack()
 		if attack_vector != Vector2(2, 2):
 			animationTree.set("parameters/Attack/blend_position", attack_vector)
 			animationTree.set("parameters/Idle/blend_position", attack_vector)
@@ -157,6 +169,22 @@ func roll_animation_finished():
 #	velocity = velocity * 0.8
 	state = MOVE
 	puppetState = "Idle"
+
+func menu_wheel():
+	if Input.is_action_pressed("wheel"):
+		if wheel == null:
+			wheel = Wheel.instance()
+			wheel.position.y -= 20
+			add_child(wheel)
+			tween.interpolate_property(wheel, "scale", Vector2.ZERO, Vector2.ONE, 0.5, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+			tween.start()
+	
+	if Input.is_action_just_released("wheel"):
+		SoundFx.play_menu("Menu Select", rand_range(0.9, 1.1), -20)
+		tween.interpolate_property(wheel, "scale", Vector2.ONE, Vector2.ZERO, 0.1, Tween.TRANS_ELASTIC, Tween.EASE_IN)
+		tween.start()
+		yield(get_tree().create_timer(0.1), "timeout") 
+		wheel.call_deferred("queue_free")
 
 func play_attack_sound():
 	SoundFx.play("Swipe", global_position, rand_range(0.9, 1.1), -20)
@@ -199,3 +227,17 @@ func MovePuppetPlayer():
 				animationState.travel("Run")
 			tween.interpolate_property(self, "global_position", global_position, puppet_position, 0.1)
 			tween.start()
+
+# Wheel experiment
+func _on_SelectionWheel_colour_change(id):
+	if !selecting or id != wheel_id:
+		wheel_id = id
+		selecting = true
+		SoundFx.play_menu("Menu Move", rand_range(0.9, 1.1), -20)
+		sword.select_item(wheel_id)
+		print("color changed: ", wheel_id)
+
+func _on_SelectionWheel_mouse_exited():
+	if selecting:
+		selecting = false
+		print("exit wheel")

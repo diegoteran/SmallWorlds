@@ -1,0 +1,146 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://UI/Wheel.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec2 centre = vec2(0.5);
+
+uniform float smoothing = 0.01; 	// The smaller this value is, the rougher looking the edges of the wheel are
+
+uniform float initial_outer_r = 0.45;	// The default outer radius value. 
+uniform float inner_r = 0.2;	// The inner radius value
+
+uniform int no_of_colours = 4;	// The number of colours. This is set automatically by the script
+uniform float gap = 0.05;	// The gap between each wheel segment
+
+/*  All of these colour values are placeholders. These correspond to the colours of each segment starting from the bottom right and going clockwise
+	It was done like this because there are no arrays for shaders.
+	The list can be expanded to your liking */
+uniform vec3 colour0 = vec3(1.0, 1.0, 1.0);
+uniform vec3 colour1 = vec3(1.0, 1.0, 1.0);
+uniform vec3 colour2 = vec3(1.0, 1.0, 1.0);
+uniform vec3 colour3 = vec3(1.0, 1.0, 1.0);
+uniform vec3 colour4 = vec3(1.0, 1.0, 1.0);
+uniform vec3 colour5 = vec3(1.0, 1.0, 1.0);
+uniform vec3 colour6 = vec3(1.0, 1.0, 1.0);
+uniform vec3 colour7 = vec3(1.0, 1.0, 1.0);
+
+
+uniform int selected_colour = -1;	// If a colour is selected then this value corresponds to that colour label. If the value is -1, then no colour is selected.
+uniform float elapsed_time = 0;		/*	This is changed within the script continuously as the mouse hovers over a segment 
+										How much time has elapsed since the mouse hovered over the button. This is for animations. 
+										This was used instead of TIME so that the animation could start from the segment's initial size */
+
+void fragment(){
+	float PI = 3.14159;
+	
+	vec2 pos = UV-centre;	// Position of the pixel relative to the centre
+	
+	float r = length(pos);	// Distance of a point from the centre
+	float a = atan(pos.y, pos.x);	// Angle of a point starting from the right going clockwise
+	
+	float norm_a = fract(a/(2.0*PI));	// The angle but it is normalized so it goes from 0 to 1 around the circle clockwise starting from the right
+	
+	vec3 colour_rgb = vec3(1.0);		// This represents the colour of the pixel without the alpha value
+	
+	float outer_r = initial_outer_r;	// This value can change due to the animation of the segment whilst being hovered over
+	float anim_r =  0.04*(0.5*(1.0+sin(2.0*PI*fract(elapsed_time))));	// Used for the animation for the outer radius increasing and decreasing in size
+	
+	float gap_alpha = 1.0;	// The alpha value within the gaps. This variable is used to help smoothen the borders of the gaps
+	
+	for (float i=0.0;i<=float(no_of_colours);i++){
+		
+		if ((norm_a <  (i/float(no_of_colours)) + (gap/(2.0*PI)/2.0))&&(norm_a >  (i/float(no_of_colours)))){
+			gap_alpha = smoothstep((i/float(no_of_colours)), (i/float(no_of_colours)) + (gap/(2.0*PI)/2.0), norm_a);
+		}
+		else if ((norm_a >  (i/float(no_of_colours)) - (gap/(2.0*PI)/2.0))&&(norm_a <  (i/float(no_of_colours)))){
+			gap_alpha = 1.0-smoothstep((i/float(no_of_colours)) - (gap/(2.0*PI)/2.0), (i/float(no_of_colours)), norm_a);
+		}
+		
+		// Each of the following sections of code correspond to one uniform colour variable listed prior.. The pixel is set to that colour
+		else if ((norm_a > (0./float(no_of_colours))) && (norm_a < (1./float(no_of_colours)))){
+			if (selected_colour == 0){
+				outer_r = initial_outer_r + anim_r;
+			}
+			colour_rgb = colour0;
+		}
+		else if ((norm_a > (1./float(no_of_colours))) && (norm_a < (2./float(no_of_colours)))){
+			if (selected_colour == 1){
+				outer_r = initial_outer_r + anim_r;
+			}
+			colour_rgb = colour1;
+		}
+		else if ((norm_a > (2./float(no_of_colours))) && (norm_a < (3./float(no_of_colours)))){
+			if (selected_colour == 2){
+				outer_r = initial_outer_r + anim_r;
+			}
+			colour_rgb = colour2;
+		}
+		else if ((norm_a > (3./float(no_of_colours))) && (norm_a < (4./float(no_of_colours)))){
+			if (selected_colour == 3){
+				outer_r = initial_outer_r + anim_r;
+			}
+			colour_rgb = colour3;
+		}
+		else if ((norm_a > (4./float(no_of_colours))) && (norm_a < (5./float(no_of_colours)))){
+			if (selected_colour == 4){
+				outer_r = initial_outer_r + anim_r;
+			}
+			colour_rgb = colour4;
+		}
+		else if ((norm_a > (5./float(no_of_colours))) && (norm_a < (6./float(no_of_colours)))){
+			if (selected_colour == 5){
+				outer_r = initial_outer_r + anim_r;
+			}
+			colour_rgb = colour5;
+		}
+		else if ((norm_a > (6./float(no_of_colours))) && (norm_a < (7./float(no_of_colours)))){
+			if (selected_colour == 6){
+				outer_r = initial_outer_r + anim_r;
+			}
+			colour_rgb = colour6;
+		}
+		else if ((norm_a > (7./float(no_of_colours))) && (norm_a < (8./float(no_of_colours)))){
+			if (selected_colour == 7){
+				outer_r = initial_outer_r + anim_r;
+			}
+			colour_rgb = colour7;
+		}
+	}
+	
+	if (r >= initial_outer_r){
+		COLOR = vec4( colour_rgb, (1.-smoothstep(outer_r,outer_r+smoothing,r))*gap_alpha ); 	// Makes the outside of the circle transparent with a smoothing factor
+	}
+	else{
+		COLOR = vec4( colour_rgb, smoothstep(inner_r,inner_r+smoothing,r)*gap_alpha );	// Makes the inside of the circle transparent with a smoothing factor
+	}
+}"
+custom_defines = ""
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/centre = Vector2( 0.5, 0.5 )
+shader_param/smoothing = 0.01
+shader_param/initial_outer_r = 0.3
+shader_param/inner_r = 0.1
+shader_param/no_of_colours = 4
+shader_param/gap = 0.2
+shader_param/colour0 = Vector3( 1, 1, 1 )
+shader_param/colour1 = Vector3( 1, 1, 1 )
+shader_param/colour2 = Vector3( 1, 1, 1 )
+shader_param/colour3 = Vector3( 1, 1, 1 )
+shader_param/colour4 = Vector3( 1, 1, 1 )
+shader_param/colour5 = Vector3( 1, 1, 1 )
+shader_param/colour6 = Vector3( 1, 1, 1 )
+shader_param/colour7 = Vector3( 1, 1, 1 )
+shader_param/selected_colour = -1
+shader_param/elapsed_time = 0.0
+
+[node name="Wheel" type="Sprite"]
+self_modulate = Color( 1, 1, 1, 0.39 )
+material = SubResource( 2 )
+texture = ExtResource( 2 )
+script = ExtResource( 1 )

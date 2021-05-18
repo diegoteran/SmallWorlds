@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://PixelArt/FloraAssetPack/Ground Sprites/Flora/Flora Ground Grass.png" type="Texture" id=1]
 [ext_resource path="res://World/TallGrass.gd" type="Script" id=2]
@@ -6,17 +6,30 @@
 [ext_resource path="res://World/WorldElementSwing.shader" type="Shader" id=4]
 
 [sub_resource type="ShaderMaterial" id=1]
-resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/offset = 0.5
 shader_param/speed = 1.0
-shader_param/starting = -10.0
+shader_param/starting = 0.0
 shader_param/spread = 0.05
-shader_param/Shift_Hue = 1.0
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 2.43771
 height = 0.0
+
+[sub_resource type="Animation" id=3]
+resource_name = "shake"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5, 0.7, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ -10.0, 10.0, -10.0, 10.0, -10.0, 10.0, -10.0, 0.0 ]
+}
 
 [node name="TallGrass" type="Node2D"]
 script = ExtResource( 2 )
@@ -28,8 +41,10 @@ texture = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 1 )
-position = Vector2( 0, -5.37796 )
+position = Vector2( 0, 2.5 )
+rotation = -0.174533
 texture = ExtResource( 1 )
+offset = Vector2( 0, -7.87796 )
 vframes = 4
 hframes = 3
 
@@ -39,5 +54,8 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( 0.062714, 0.37754 )
 shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/shake = SubResource( 3 )
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

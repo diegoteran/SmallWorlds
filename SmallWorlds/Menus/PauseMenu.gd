@@ -21,7 +21,8 @@ func _process(delta):
 	if Input.is_action_just_pressed("pause"):
 		play_menu_select()
 		self.paused = !paused
-		Globals.player.paused = self.paused
+		if Globals.player != null:
+			Globals.player.paused = self.paused
 		if not self.paused and settings_menu != null:
 			_On_Settings_exited()
 			

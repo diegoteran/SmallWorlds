@@ -34,7 +34,8 @@ func SpawnNewPlayer(player_id: int, spawn_position: Vector2):
 func DespawnPlayer(player_id: int):
 	yield(get_tree().create_timer(0.2), "timeout")  # 13 episode, better way to do it
 	var player = players.get_node(str(player_id))
-	player.queue_free()
+	if player != null:
+		player.queue_free()
 
 func KillPlayer(player_id: int):
 	DespawnPlayer(player_id)

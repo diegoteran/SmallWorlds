@@ -4,6 +4,7 @@ var frames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 onready var sprite = $Sprite
 onready var shadowSprite = $ShadowSprite
+onready var animationPlayer = $AnimationPlayer
 
 const ParticleEffect = preload("res://Effects/ParticleEffect.tscn")
 
@@ -20,9 +21,10 @@ func _ready():
 
 func shake():
 	SoundFx.play("Evade", global_position, rand_range(0.5, 0.6), -40)
-	sprite.get_material().set_shader_param("speed", 10)
-	yield(get_tree().create_timer(1.0), "timeout")
-	sprite.get_material().set_shader_param("speed", 1)
+	animationPlayer.play("shake")
+#	sprite.get_material().set_shader_param("speed", 10)
+#	yield(get_tree().create_timer(1.0), "timeout")
+#	sprite.get_material().set_shader_param("speed", 1)
 
 func create_grass_effect():
 	var particleEffect = ParticleEffect.instance()
