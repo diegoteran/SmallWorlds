@@ -21,7 +21,6 @@ func SpawnEnemy():
 	if enemy_list.size() >= enemy_maximum:
 		pass
 	else:
-		randomize()
 		var type = enemy_types[randi() % enemy_types.size()]
 		var rng_location_index = randi() % open_locations.size()
 		var location = enemy_spawn_points[open_locations[rng_location_index]]

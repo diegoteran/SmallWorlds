@@ -8,7 +8,8 @@ onready var createServer = $MultiplayerConfigure/CenterContainer/VBoxContainer/C
 
 
 func _ready():
-	randomize()
+	seed(69)
+#	randomize()
 	address.text = Network.ip_address
 	SaverAndLoader.load_game()
 	

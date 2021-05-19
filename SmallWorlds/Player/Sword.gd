@@ -4,6 +4,7 @@ var offset = 90
 
 onready var tween = $Tween
 onready var sprite = $Sprite
+onready var hitbox = $HitBox/CollisionShape2D
 
 puppet var p_rotation = 0
 puppet var p_flip = false
@@ -26,12 +27,15 @@ func _process(delta):
 		sprite.flip_v = p_flip
 
 func attack():
+	hitbox.disabled = false
 	tween.interpolate_property(self, "offset", offset, offset*-1, 0.2, Tween.TRANS_CIRC)
 	tween.start()
 	sprite.flip_v = !sprite.flip_v
+	yield(get_tree().create_timer(0.2), "timeout") 
+	hitbox.disabled = true
 
-func select_item(id):
-	rpc("changing_item", id)
+func select_item(item_id):
+	rpc("changing_item", item_id)
 
-remotesync func changing_item(id):
-	sprite.frame = id
+remotesync func changing_item(item_id):
+	sprite.frame = item_id

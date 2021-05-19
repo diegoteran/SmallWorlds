@@ -42,7 +42,6 @@ texture = ExtResource( 3 )
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 1 )
 position = Vector2( 0, 2.5 )
-rotation = -0.174533
 texture = ExtResource( 1 )
 offset = Vector2( 0, -7.87796 )
 vframes = 4
