@@ -47,3 +47,27 @@ func _on_ReturnButton_focus_entered():
 
 func _on_ReturnButton_mouse_entered():
 	play_menu_move()
+
+
+func _on_Music_focus_entered():
+	play_menu_move()
+
+
+func _on_Sfx_focus_entered():
+	play_menu_move()
+
+
+func _on_Music_mouse_entered():
+	play_menu_move()
+
+
+func _on_Sfx_mouse_entered():
+	play_menu_move()
+
+
+func _on_FullScreen_focus_entered():
+	play_menu_move()
+
+
+func _on_FullScreen_mouse_entered():
+	play_menu_move()

@@ -586,6 +586,7 @@ smoothing_enabled = true
 
 [node name="Sprite" type="Sprite" parent="Camera2D"]
 position = Vector2( -161.113, 37.5827 )
+scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 14 )
 
 [node name="Sprite" type="Sprite" parent="Camera2D/Sprite"]
