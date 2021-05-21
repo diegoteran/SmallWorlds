@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 export var Wheel: PackedScene
+export var StepDustEffect: PackedScene
 export var ACCELERATION = 500
 export var MAX_SPEED = 100
 export var ROLL_SPEED = 150
@@ -193,12 +194,22 @@ func play_roll_sound():
 	SoundFx.play("Evade", global_position, rand_range(0.9, 1.1), -20)
 
 func run_step():
+	# Step sound
 	var grass_cell = grass_tilemap.world_to_map(global_position)
 	var grass_id = grass_tilemap.get_cellv(grass_cell)
 	var step = "Step"
 	if grass_id == TileMap.INVALID_CELL:
 		step += "Dirt"
 	SoundFx.play(step, global_position, rand_range(0.9, 1.3), -35)
+	
+	# Dust Particle
+	
+	var effect = StepDustEffect.instance()  #Globals.instance_scene_on_node(StepDustEffect, get_parent(), global_position - velocity.normalized())
+	effect.modulate = Color("ffe486")
+	if grass_id == TileMap.INVALID_CELL:
+		effect.modulate = Color("919191")
+	get_parent().call_deferred("add_child", effect)
+	effect.global_position = global_position - velocity.normalized()*2
 
 func _on_HurtBox_area_entered(_area):
 	stats.health -= 1

@@ -1,6 +1,6 @@
 extends Node2D
 
-var color = Color.aquamarine
+var color = Color.red
 
 onready var deathTimer = $DeathTimer
 onready var particles = $Particles2D
@@ -15,4 +15,3 @@ func _on_DeathTimer_timeout():
 
 func set_particles_color(new_color: Color):
 	color = new_color
-	pass

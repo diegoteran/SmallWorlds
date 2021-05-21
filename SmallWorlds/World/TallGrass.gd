@@ -6,7 +6,7 @@ onready var sprite = $Sprite
 onready var shadowSprite = $ShadowSprite
 onready var animationPlayer = $AnimationPlayer
 
-const ParticleEffect = preload("res://Effects/ParticleEffect.tscn")
+export var ParticleEffect: PackedScene
 
 func _ready():
 	sprite.flip_h = true if randi() % 2 == 0 else false
