@@ -158,3 +158,4 @@ wheel={
 
 quality/2d/use_pixel_snap=true
 environment/default_environment="res://default_env.tres"
+2d/snapping/use_gpu_pixel_snap=true
