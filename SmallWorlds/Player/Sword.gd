@@ -3,26 +3,29 @@ extends Node2D
 var offset = 90
 
 onready var tween = $Tween
-onready var sprite = $Sprite
-onready var hitbox = $HitBox/CollisionShape2D
+onready var pos = $P
+onready var sprite = $P/Sprite
+onready var hitbox = $P/HitBox/CollisionShape2D
+onready var smokeTrail = $SmokeTrail
 
 puppet var p_rotation = 0
 puppet var p_flip = false
 
-
 remotesync var id
 
 func _process(delta):
+	smokeTrail.add_point(sprite.global_position)
+	
 	if is_network_master():
-		look_at(get_global_mouse_position())
-		rotation_degrees += offset
+		pos.look_at(get_global_mouse_position())
+		pos.rotation_degrees += offset
 		
 		if Network.players.size() > 1:
-			rset_unreliable("p_rotation", rotation_degrees)
+			rset_unreliable("p_rotation", pos.rotation_degrees)
 			rset_unreliable("p_flip", sprite.flip_v)
 	
 	else:
-		tween.interpolate_property(self, "rotation_degrees", rotation_degrees, p_rotation, 0.1)
+		tween.interpolate_property(pos, "rotation_degrees", pos.rotation_degrees, p_rotation, 0.1)
 		tween.start()
 		sprite.flip_v = p_flip
 

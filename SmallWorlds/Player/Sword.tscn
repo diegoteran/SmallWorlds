@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://PixelArt/Player/16x16.png" type="Texture" id=1]
 [ext_resource path="res://Player/Sword.gd" type="Script" id=2]
 [ext_resource path="res://Hitboxes and Hurtboxes/HitBox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Effects/SmokeTrail.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 5.33333
@@ -12,23 +13,28 @@ height = 10.6667
 position = Vector2( 0, -8 )
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 24, 0 )
-scale = Vector2( 1.5, 1.5 )
-texture = ExtResource( 1 )
-vframes = 7
-hframes = 16
-frame = 6
+[node name="SmokeTrail" parent="." instance=ExtResource( 4 )]
+points = PoolVector2Array( 24, 0 )
 
-[node name="HitBox" parent="." instance=ExtResource( 3 )]
+[node name="P" type="Position2D" parent="."]
+
+[node name="HitBox" parent="P" instance=ExtResource( 3 )]
 position = Vector2( 24, 0 )
 scale = Vector2( 1.5, 1.5 )
 collision_mask = 9
 
-[node name="CollisionShape2D" parent="HitBox" index="0"]
+[node name="CollisionShape2D" parent="P/HitBox" index="0"]
 shape = SubResource( 1 )
 disabled = true
 
+[node name="Sprite" type="Sprite" parent="P"]
+position = Vector2( 24, 0 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 1 )
+hframes = 16
+vframes = 7
+frame = 6
+
 [node name="Tween" type="Tween" parent="."]
 
-[editable path="HitBox"]
+[editable path="P/HitBox"]

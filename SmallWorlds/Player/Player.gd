@@ -29,7 +29,7 @@ var grass_tilemap
 var dirt_tilemap
 
 # Wheel experiment
-var wheel
+var wheel = null
 var selecting = false
 var wheel_id = -1
 
@@ -186,6 +186,7 @@ func menu_wheel():
 		tween.start()
 		yield(get_tree().create_timer(0.1), "timeout") 
 		wheel.call_deferred("queue_free")
+		wheel = null
 
 func play_attack_sound():
 	SoundFx.play("Swipe", global_position, rand_range(0.9, 1.1), -20)
