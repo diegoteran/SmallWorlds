@@ -3,8 +3,9 @@ extends Line2D
 export var limited_lifetime = false
 export var wildness = 3.0
 export var min_spawn_distance = 5.0
+export var gravity = Vector2.ZERO
+export var gradient_col : Gradient = Gradient.new()
 
-var gravity = Vector2.UP
 var lifetime = [1.0, 2.0]
 var tick_speed = 0.05
 var tick = 0.0
@@ -14,6 +15,7 @@ var point_age = [0.0]
 onready var tween = $DecayTween
 
 func _ready():
+	gradient = gradient_col
 	set_as_toplevel(true)
 	clear_points()
 	if limited_lifetime:

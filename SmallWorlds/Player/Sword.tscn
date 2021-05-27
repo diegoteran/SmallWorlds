@@ -1,20 +1,32 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://PixelArt/Player/16x16.png" type="Texture" id=1]
 [ext_resource path="res://Player/Sword.gd" type="Script" id=2]
 [ext_resource path="res://Hitboxes and Hurtboxes/HitBox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Effects/SmokeTrail.tscn" type="PackedScene" id=4]
 
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.968153 )
+colors = PoolColorArray( 0.713726, 0.713726, 0.713726, 0.2, 0.459587, 0.785156, 0.0889435, 1 )
+
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 5.33333
 height = 10.6667
+
+[sub_resource type="Environment" id=3]
+glow_enabled = true
 
 [node name="Sword" type="Node2D"]
 position = Vector2( 0, -8 )
 script = ExtResource( 2 )
 
 [node name="SmokeTrail" parent="." instance=ExtResource( 4 )]
-points = PoolVector2Array( 24, 0 )
+position = Vector2( 1.90735e-06, 0 )
+scale = Vector2( 1, 1 )
+points = PoolVector2Array( 16, 8 )
+wildness = 1.0
+min_spawn_distance = 3.0
+gradient_col = SubResource( 2 )
 
 [node name="P" type="Position2D" parent="."]
 
@@ -29,12 +41,19 @@ disabled = true
 
 [node name="Sprite" type="Sprite" parent="P"]
 position = Vector2( 24, 0 )
+rotation = 0.785398
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 1 )
 hframes = 16
 vframes = 7
 frame = 6
 
+[node name="P" type="Position2D" parent="P"]
+position = Vector2( 18.75, 0.625 )
+
 [node name="Tween" type="Tween" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 3 )
 
 [editable path="P/HitBox"]

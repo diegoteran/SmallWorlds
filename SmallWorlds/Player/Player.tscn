@@ -747,5 +747,4 @@ shape = SubResource( 47 )
 [node name="Tween" type="Tween" parent="."]
 
 [editable path="HitBoxPivot/SwordHitBox"]
-
 [editable path="HurtBox"]
