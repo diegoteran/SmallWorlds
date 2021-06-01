@@ -253,3 +253,7 @@ func _on_SelectionWheel_mouse_exited():
 	if selecting:
 		selecting = false
 		print("exit wheel")
+
+func queue_free():
+	sword.queue_free()
+	.queue_free()

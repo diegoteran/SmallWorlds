@@ -16,7 +16,6 @@ onready var tween = $DecayTween
 
 func _ready():
 	gradient = gradient_col
-	set_as_toplevel(true)
 	clear_points()
 	if limited_lifetime:
 		tween.interpolate_property(self, "modulate:a", 1.0, 0.0, rand_range(lifetime[0], lifetime[1]), Tween.TRANS_CIRC, Tween.EASE_OUT)
@@ -38,6 +37,7 @@ func _process(delta):
 		tick += delta
 
 func add_point(point_pos:Vector2, at_pos := -1):
+	point_pos = point_pos - global_position
 	if get_point_count() > 0 and point_pos.distance_to(points[get_point_count() - 1]) < min_spawn_distance:
 		return
 	

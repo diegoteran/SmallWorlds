@@ -1,20 +1,29 @@
 extends Node2D
 
 var offset = 90
+var smoketrail : Object = null
+var trail_name
+var smokeTrail
+
+export var SmokeTrail : PackedScene
 
 onready var tween = $Tween
 onready var pos = $P
 onready var swordEnd = $P/P
 onready var sprite = $P/Sprite
 onready var hitbox = $P/HitBox/CollisionShape2D
-onready var smokeTrail = $SmokeTrail
 
 puppet var p_rotation = 0
 #puppet var p_flip = false
 
 remotesync var id
 
+func _ready():
+	trail_name = get_parent().get_parent().name + "_trail"
+	smokeTrail = Globals.instance_scene_on_world_with_name(SmokeTrail, Vector2.ZERO, trail_name)
+
 func _process(delta):
+	smokeTrail.global_position = global_position
 	smokeTrail.add_point(swordEnd.global_position)
 	
 	if is_network_master():
@@ -43,3 +52,7 @@ func select_item(item_id):
 
 remotesync func changing_item(item_id):
 	sprite.frame = item_id
+
+func queue_free():
+	smokeTrail.queue_free()
+	.queue_free()

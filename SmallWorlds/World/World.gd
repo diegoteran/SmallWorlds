@@ -13,9 +13,11 @@ var max_enemy_spawned = -1
 onready var players = $YSort/Players
 onready var enemies = $YSort/Enemies
 onready var dirt = $Background/DirtTileMap
+onready var world = $YSort
 
 func _ready():
 #	Music.list_play()
+	Globals.world = world
 	pass
 
 func ServerDied():
