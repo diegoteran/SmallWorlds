@@ -48,6 +48,9 @@ func set_hp(new_value):
 			OnDeath()
 
 func _physics_process(delta):
+	if get_tree().network_peer.get_connection_status() != get_tree().network_peer.CONNECTION_CONNECTED:
+		return
+	
 	if is_network_master():
 		knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
 		knockback = move_and_slide(knockback)
@@ -80,8 +83,7 @@ func _physics_process(delta):
 			velocity += softCollision.get_push_vector() * delta * 400
 		velocity = move_and_slide(velocity)
 		
-		rset("puppet_position", global_position)
-		rset("puppet_velocity", velocity)
+		rpc_unreliable("sync_puppet_variables", global_position, velocity)
 	
 	else:
 		MovePuppetBat()
@@ -129,6 +131,10 @@ func _on_HurtBox_area_entered(area):
 remotesync func hurt():
 	hurtBox.create_hit_effect()
 	play_hurt()
+
+remotesync func sync_puppet_variables(pos, vel):
+	puppet_position = pos
+	puppet_velocity = vel
 
 func _on_Stats_no_health():
 	queue_free()

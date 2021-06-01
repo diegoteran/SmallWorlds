@@ -102,9 +102,7 @@ func _physics_process(delta):
 					rpc("attack_state", attack_vector)
 		
 		if server.players.size() > 1:  # Expensive?
-			rset_unreliable("puppet_position", global_position)
-			rset_unreliable("puppet_velocity", velocity)
-			rset_unreliable("puppet_animation_vector", animation_vector)
+			rpc_unreliable("sync_puppet_variables", global_position, velocity, animation_vector)
 	else:
 		MovePuppetPlayer()
 		# Extrapolate if needed
@@ -158,6 +156,12 @@ remotesync func attack_state(attack_vector):
 		if attack_vector != Vector2(2, 2):
 			animationTree.set("parameters/Attack/blend_position", attack_vector)
 			animationTree.set("parameters/Idle/blend_position", attack_vector)
+
+remotesync func sync_puppet_variables(pos, vel, a_vector):
+	puppet_position = pos
+	puppet_velocity = vel
+	puppet_animation_vector = a_vector
+
 
 func move():
 	velocity = move_and_slide(velocity)

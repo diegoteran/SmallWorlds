@@ -10,7 +10,7 @@ onready var heartUIEmpty = $HeartUIEmpty
 onready var heartsUI = $Hearts
 onready var label = $Hearts/CenterContainer/Label
 
-func _process(delta):
+func _process(_delta):
 	label.text = str(Engine.get_frames_per_second())
 
 func set_hearts(value):

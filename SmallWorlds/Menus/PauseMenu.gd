@@ -17,7 +17,7 @@ func set_paused(value):
 #	get_tree().paused = paused
 	visible = paused
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
 		play_menu_select()
 		self.paused = !paused

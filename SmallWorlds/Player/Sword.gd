@@ -31,7 +31,7 @@ func _process(delta):
 		pos.rotation_degrees += offset
 		
 		if Network.players.size() > 1:
-			rset_unreliable("p_rotation", pos.rotation_degrees)
+			rpc_unreliable("sync_puppet_variables", pos.rotation_degrees)
 #			rset_unreliable("p_flip", sprite.flip_h)
 	
 	else:
@@ -52,6 +52,9 @@ func select_item(item_id):
 
 remotesync func changing_item(item_id):
 	sprite.frame = item_id
+
+remotesync func sync_puppet_variables(rot_degrees):
+	p_rotation = rot_degrees
 
 func queue_free():
 	smokeTrail.queue_free()
