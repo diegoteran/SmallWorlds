@@ -11,7 +11,7 @@ func _ready():
 		sprite.material = null
 	
 	# Scaling
-	var scale_factor = rand_range(1.3, 1.6) 
+	var scale_factor = rand_range(1, 1.2) 
 	var scale_vec = Vector2(scale_factor, scale_factor)
 	sprite.scale = scale_vec
 	shadowSprite.scale *= scale_vec

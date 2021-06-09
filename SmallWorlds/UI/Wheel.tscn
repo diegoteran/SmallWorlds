@@ -119,7 +119,6 @@ void fragment(){
 		COLOR = vec4( colour_rgb, smoothstep(inner_r,inner_r+smoothing,r)*gap_alpha );	// Makes the inside of the circle transparent with a smoothing factor
 	}
 }"
-custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )

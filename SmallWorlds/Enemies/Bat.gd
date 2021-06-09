@@ -48,7 +48,7 @@ func set_hp(new_value):
 			OnDeath()
 
 func _physics_process(delta):
-	if get_tree().network_peer.get_connection_status() != get_tree().network_peer.CONNECTION_CONNECTED:
+	if get_tree().network_peer == null or get_tree().network_peer.get_connection_status() != get_tree().network_peer.CONNECTION_CONNECTED:
 		return
 	
 	if is_network_master():
