@@ -46,7 +46,7 @@ func _ready():
 	
 	place_items()
 
-func _process(delta):
+func _process(_delta):
 	mouse_pos = get_global_mouse_position()
 	
 	rel_mouse_pos = mouse_pos - global_position

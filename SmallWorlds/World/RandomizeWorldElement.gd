@@ -1,10 +1,16 @@
 extends StaticBody2D
 
 onready var sprite = $Sprite
-onready var shadowSprite = $Sprite/ShadowSprite
+onready var shadowSprite = $ShadowSprite
 onready var col = $CollisionShape2D
+onready var visibilityArea = $VisibilityArea
+onready var tween = $Tween
 
 func _ready():
+	# Connections
+	visibilityArea.connect("body_entered", self, "_on_VisibilityArea_body_entered")
+	visibilityArea.connect("body_exited", self, "_on_VisibilityArea_body_exited")
+	
 	# Shader
 #	sprite.get_material().set_shader_param("offset", randf() * 100)
 	if (randf() < 0.5):
@@ -22,3 +28,10 @@ func _ready():
 	sprite.flip_h = switch_facing
 	shadowSprite.flip_h = switch_facing
 
+func _on_VisibilityArea_body_entered(_body):
+	tween.interpolate_property(sprite, "modulate", sprite.modulate, Color(1, 1, 1, 0.5), 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.start()
+
+func _on_VisibilityArea_body_exited(_body):
+	tween.interpolate_property(sprite, "modulate", sprite.modulate, Color(1, 1, 1, 1), 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.start()

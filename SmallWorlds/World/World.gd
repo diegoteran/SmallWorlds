@@ -34,8 +34,8 @@ func SpawnNewPlayer(player_id: int, spawn_position: Vector2):
 	players.call_deferred("add_child", new_player)
 
 func DespawnPlayer(player_id: int):
-	yield(get_tree().create_timer(0.2), "timeout")  # 13 episode, better way to do it
 	var player = players.get_node(str(player_id))
+	yield(get_tree().create_timer(0.2), "timeout")  # 13 episode, better way to do it
 	if player != null:
 		player.queue_free()
 

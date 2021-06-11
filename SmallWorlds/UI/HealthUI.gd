@@ -5,8 +5,6 @@ var max_hearts = 4 setget set_max_hearts
 
 export var Heart: PackedScene # = preload("res://UI/Heart.tscn")
 
-onready var heartUIFull = $HeartUIFull
-onready var heartUIEmpty = $HeartUIEmpty
 onready var heartsUI = $Hearts
 onready var label = $Hearts/CenterContainer/Label
 
@@ -39,15 +37,16 @@ func set_max_hearts(value):
 #		heartUIEmpty.rect_size.x = max_hearts * 15
 
 func _ready():
-	self.max_hearts = PlayerStats.max_health
-	self.hearts = PlayerStats.health
+	for i in PlayerStats.max_health:
+		create_heart_with_id(i)
+	
+	max_hearts = PlayerStats.max_health
+	hearts = PlayerStats.health
+		
 	# warning-ignore:return_value_discarded
 	PlayerStats.connect("health_changed", self, "set_hearts")
 	# warning-ignore:return_value_discarded
 	PlayerStats.connect("max_health_changed", self, "set_max_hearts")
-	
-	for i in self.max_hearts:
-		create_heart_with_id(i)
 
 func create_heart_with_id(id):
 	var container = CenterContainer.new()

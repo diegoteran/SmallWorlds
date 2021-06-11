@@ -32,7 +32,6 @@ disabled = true
 [node name="Sprite" type="Sprite" parent="P"]
 position = Vector2( 24, 0 )
 rotation = 0.785398
-scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 1 )
 hframes = 16
 vframes = 7

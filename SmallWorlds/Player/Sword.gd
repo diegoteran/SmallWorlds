@@ -22,7 +22,7 @@ func _ready():
 	trail_name = get_parent().get_parent().name + "_trail"
 	smokeTrail = Globals.instance_scene_on_world_with_name(SmokeTrail, Vector2.ZERO, trail_name)
 
-func _process(delta):
+func _process(_delta):
 	smokeTrail.global_position = global_position
 	smokeTrail.add_point(swordEnd.global_position)
 	

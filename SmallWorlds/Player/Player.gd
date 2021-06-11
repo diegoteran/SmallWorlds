@@ -78,7 +78,7 @@ func SetDamage(damage):
 
 func _physics_process(delta):
 	
-	if paused:
+	if paused or state == DEAD:
 		return
 	
 	if is_network_master():
@@ -217,7 +217,8 @@ func run_step():
 	effect.global_position = global_position - velocity.normalized()*2
 
 func _on_HurtBox_area_entered(_area):
-	stats.health -= 1
+	if stats.health > 0:
+		stats.health -= 1
 	hurtBox.start_invincibility(0.5)
 	rpc("hurt")
 
