@@ -69,13 +69,16 @@ func create_server(mp) -> void:
 		join_server()
 		return
 	
+	get_tree().set_network_peer(server)
 	add_child(preload("res://Network/ServerWorld.tscn").instance())
 	add_child(preload("res://Network/StateProcessing.tscn").instance())
-	get_tree().set_network_peer(server)
 	
 	var player_data = SaverAndLoader.custom_data
 	players[1] = {"Name" : player_data.player_name, "Position" : Vector2(player_data.position_x, player_data.position_y)}
 	get_node("../World").SpawnNewPlayer(get_tree().get_network_unique_id(), players[1]["Position"])
+	
+	# Add Enemy spawns created by background
+	Globals.add_all_spawns()
 
 func join_server() -> void:
 	client = NetworkedMultiplayerENet.new()
@@ -140,6 +143,7 @@ func quit_game():
 		position_x = player_info["Position"].x,
 		position_y = player_info["Position"].y,
 	}
+	Globals.quit_game()
 	SaverAndLoader.custom_data = custom_data
 	SaverAndLoader.save_game()
 	if(get_tree().is_network_server()):

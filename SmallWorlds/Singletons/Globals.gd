@@ -4,6 +4,7 @@ var music = 100
 var sfx = 100
 var player : Object = null
 var world : Object = null
+var server_world : Object = null
 
 func get_music_volume():
 	return Settings._settings["audio"]["music"]
@@ -26,3 +27,18 @@ func instance_scene_on_world_with_name(scene, position, new_name):
 
 func delete_from_global(node_name):
 	world.get_node(node_name).queue_free()
+
+func add_enemy_spawn(g_position):
+	if server_world == null:
+		server_world = get_node("/root/Network/ServerWorld")
+	server_world.add_spawn_point(g_position)
+
+func add_all_spawns():
+	var world_generator = get_node("/root/World/Background")
+	for pos in world_generator.enemy_positions:
+		add_enemy_spawn(pos)
+
+func quit_game():
+	server_world = null
+	world = null
+	player = null
