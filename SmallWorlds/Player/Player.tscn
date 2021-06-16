@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://PixelArt/SmallPlayer/Idle.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://PixelArt/Player/Character Idle.png" type="Texture" id=10]
 [ext_resource path="res://PixelArt/SmallPlayer/Run.png" type="Texture" id=11]
 [ext_resource path="res://PixelArt/SmallPlayer/Dash.png" type="Texture" id=12]
+[ext_resource path="res://Effects/ShockWaveEffect.tscn" type="PackedScene" id=13]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.0
@@ -1111,6 +1112,7 @@ collision_layer = 2
 script = ExtResource( 2 )
 Wheel = ExtResource( 8 )
 StepDustEffect = ExtResource( 9 )
+ShockWaveEffect = ExtResource( 13 )
 
 [node name="Light2D" type="Light2D" parent="."]
 visible = false

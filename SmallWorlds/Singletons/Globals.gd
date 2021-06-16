@@ -18,6 +18,12 @@ func instance_scene_on_node(scene, node, position):
 	instance.global_position = position
 	return instance
 
+func instance_scene_on_world(scene, position):
+	var instance = scene.instance()
+	world.call_deferred("add_child", instance)
+	instance.global_position = position
+	return instance
+
 func instance_scene_on_world_with_name(scene, position, new_name):
 	var instance = scene.instance()
 	instance.name = new_name

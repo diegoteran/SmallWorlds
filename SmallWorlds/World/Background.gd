@@ -20,6 +20,7 @@ var enemy_positions = []
 onready var grass_tile = $GrassTileMap
 onready var dirt_tile = $DirtTileMap
 onready var flower_tile = $FlowerTileMap
+onready var water_tile = $WaterTileMap
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,10 +32,11 @@ func _ready():
 	make_grass_map()
 	make_dirt_map()
 	make_flower_map()
-	#clean_map()
+	clean_map()
 	
 	grass_tile.update_bitmask_region(Vector2.ZERO, map_size)
 	dirt_tile.update_bitmask_region(Vector2.ZERO, map_size)
+	water_tile.update_bitmask_region(Vector2.ZERO, map_size)
 	flower_tile.update_bitmask_region(Vector2.ZERO, map_size)
 
 func make_grass_map() -> void:
@@ -45,6 +47,7 @@ func make_grass_map() -> void:
 			if a < grass_cap:
 				grass_tile.set_cell(x, y, 1)
 			else:
+				water_tile.set_cell(x, y, 4)
 				dirt_tile.set_cell(x, y, -1)
 
 func make_dirt_map() -> void:
@@ -82,7 +85,7 @@ func clean_map() -> void:
 		for y in map_size.y:
 			if grass_tile.get_cell(x, y) == -1 and dirt_tile.get_cell(x, y) == -1:
 				for dir in directions:
-					dirt_tile.set_cell(x + dir.x, y + dir.y, -1)
+					water_tile.set_cell(x + dir.x, y + dir.y, 4)
 
 #func get_subtile_coord(tilemap: TileMap, id: int) -> Vector2:
 #	var tiles = tilemap

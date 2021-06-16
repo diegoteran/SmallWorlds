@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 export var Wheel: PackedScene
 export var StepDustEffect: PackedScene
+export var ShockWaveEffect: PackedScene
 export var ACCELERATION = 500
 export var MAX_SPEED = 100
 export var ROLL_SPEED = 150
@@ -27,6 +28,7 @@ var paused = false
 # Tilemap experiment
 var grass_tilemap
 var dirt_tilemap
+var water_tilemap
 
 # Wheel experiment
 var wheel = null
@@ -64,6 +66,7 @@ func _ready():
 	
 	# Tilemap Experiment
 	grass_tilemap = get_node("../../../Background/GrassTileMap")
+	water_tilemap = get_node("../../../Background/WaterTileMap")
 	dirt_tilemap = get_node("../../../Background/DirtTileMap")
 
 func _on_no_health():
@@ -201,18 +204,27 @@ func play_roll_sound():
 func run_step():
 	# Step sound
 	var grass_cell = grass_tilemap.world_to_map(global_position)
+	var water_cell = water_tilemap.world_to_map(global_position)
 	var grass_id = grass_tilemap.get_cellv(grass_cell)
+	var water_id = water_tilemap.get_cellv(water_cell)
 	var step = "Step"
 	if grass_id == TileMap.INVALID_CELL:
-		step += "Dirt"
-	SoundFx.play(step, global_position, rand_range(0.9, 1.3), -35)
+		if water_id == TileMap.INVALID_CELL:
+			step += "Dirt"
+		else:
+			step += "Water"
+	SoundFx.play(step, global_position, rand_range(0.9, 1.3), -25)
 	
 	# Dust Particle
 	
 	var effect = StepDustEffect.instance()  #Globals.instance_scene_on_node(StepDustEffect, get_parent(), global_position - velocity.normalized())
 	effect.modulate = Color("ffe486")
 	if grass_id == TileMap.INVALID_CELL:
-		effect.modulate = Color("919191")
+		if water_id == TileMap.INVALID_CELL:
+			effect.modulate = Color("919191")
+		else:
+			Globals.instance_scene_on_world(ShockWaveEffect, global_position)
+			effect.modulate = Color.aqua
 	get_parent().call_deferred("add_child", effect)
 	effect.global_position = global_position - velocity.normalized()*2
 
