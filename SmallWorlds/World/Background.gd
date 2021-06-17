@@ -62,9 +62,10 @@ func make_flower_map() -> void:
 		for y in map_size.y:
 			var a = noise.get_noise_2d(x, y)
 			if a < environment_caps.x and a > environment_caps.y or a < environment_caps.z:
+				var pos_a = abs(a)
 				var local_position = flower_tile.map_to_world(Vector2(x, y))
 				var g_position = flower_tile.to_global(local_position)
-				var chance = randi() % 100
+				var chance = int(((pos_a * 10000) - int(pos_a * 10000)) * 100)
 				if chance < 10:
 					flower_tile.set_cell(x, y, 2, false, false, false, Vector2(randi() % 4, randi() % 4))
 				elif chance < 12:
