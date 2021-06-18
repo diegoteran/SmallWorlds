@@ -43,6 +43,7 @@ onready var swordHitBox = $HitBoxPivot/SwordHitBox
 onready var tween = $Tween
 onready var label = $Label
 onready var sword = $YSort/Sword
+onready var sprite = $YSort/Sprite
 
 var puppetState = "Idle"
 
@@ -63,6 +64,9 @@ func _ready():
 		add_child(remoteTransform)
 		
 		hurtBox.connect("area_entered", self, "_on_HurtBox_area_entered")
+	
+	var remote_transform = Globals.create_reflection(sprite, name)
+	add_child(remote_transform)
 	
 	# Tilemap Experiment
 	grass_tilemap = get_node("../../../Background/GrassTileMap")
@@ -223,9 +227,10 @@ func run_step():
 		if water_id == TileMap.INVALID_CELL:
 			effect.modulate = Color("919191")
 		else:
-			Globals.instance_scene_on_world(ShockWaveEffect, global_position)
-			effect.modulate = Color.aqua
-	get_parent().call_deferred("add_child", effect)
+			Globals.instance_scene_on_node(ShockWaveEffect, water_tilemap, global_position)
+#			effect.modulate = Color.aqua
+	if water_id == TileMap.INVALID_CELL or grass_id != TileMap.INVALID_CELL:
+		get_parent().call_deferred("add_child", effect)
 	effect.global_position = global_position - velocity.normalized()*2
 
 func _on_HurtBox_area_entered(_area):
@@ -273,4 +278,5 @@ func _on_SelectionWheel_mouse_exited():
 
 func queue_free():
 	sword.queue_free()
+	Globals.delete_reflection(name)
 	.queue_free()

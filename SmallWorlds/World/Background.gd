@@ -87,6 +87,11 @@ func clean_map() -> void:
 			if grass_tile.get_cell(x, y) == -1 and dirt_tile.get_cell(x, y) == -1:
 				for dir in directions:
 					water_tile.set_cell(x + dir.x, y + dir.y, 4)
+	
+	for x in map_size.x:
+		for y in map_size.y:
+			if grass_tile.get_cell(x, y) != -1 and dirt_tile.get_cell(x, y) != -1 and water_tile.get_cell(x, y) != -1:
+				dirt_tile.set_cell(x, y, -1)
 
 #func get_subtile_coord(tilemap: TileMap, id: int) -> Vector2:
 #	var tiles = tilemap

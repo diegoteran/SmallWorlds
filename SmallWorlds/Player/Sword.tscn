@@ -6,7 +6,7 @@
 [ext_resource path="res://Effects/SmokeTrail.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 5.33333
+radius = 6.82892
 height = 10.6667
 
 [sub_resource type="Environment" id=2]
@@ -26,6 +26,7 @@ scale = Vector2( 1.5, 1.5 )
 collision_mask = 9
 
 [node name="CollisionShape2D" parent="P/HitBox" index="0"]
+position = Vector2( -0.882886, 0 )
 shape = SubResource( 1 )
 disabled = true
 
