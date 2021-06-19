@@ -29,7 +29,7 @@ remotesync var knockback = Vector2.ZERO
 
 onready var stats = $Stats
 onready var playerDetectionZone = $PlayerDetectionZone
-onready var sprite = $AnimatedSprite
+onready var sprite = $Sprite
 onready var hurtBox = $HurtBox
 onready var softCollision = $SoftCollision
 onready var wanderController = $WanderController
@@ -40,6 +40,10 @@ func _ready():
 		state = IDLE
 	else:
 		OnDeath()
+	
+	# Reflection
+	var remote_transform = Globals.create_reflection(sprite, "bat"+name)
+	add_child(remote_transform)
 
 func set_hp(new_value):
 	if new_value != hp:
@@ -105,7 +109,7 @@ func pick_random_state(state_list):
 	return state_list.pop_front()
 
 func play_flap():
-	SoundFx.play("BatFlap", global_position, rand_range(1.5, 2), -35)
+	SoundFx.play("BatFlap", global_position, rand_range(1.5, 2), -30)
 
 func play_hurt():
 	var num = (randi() % 2) + 1
@@ -146,6 +150,7 @@ func OnDeath():
 	if (get_tree().is_network_server()):
 		server.NPCKilled(int(name))
 	
+	Globals.delete_reflection("bat"+name)
 	queue_free()
 #	SoundFx.play("EnemyDie", global_position, rand_range(0.9, 1.1), -30)
 	play_defeated()
@@ -158,9 +163,3 @@ func Health(health):
 		hp = health
 		if hp <= 0:
 			OnDeath()
-
-
-
-func _on_AnimatedSprite_frame_changed():
-	if sprite.frame == 2:
-		play_flap()

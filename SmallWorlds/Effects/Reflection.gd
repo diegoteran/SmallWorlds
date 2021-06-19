@@ -13,7 +13,7 @@ func _process(delta):
 		sprite.vframes = copy_sprite.vframes
 		sprite.hframes = copy_sprite.hframes
 		sprite.position.y = -copy_sprite.position.y
-		sprite.offset.y = -copy_sprite.offset.y
+#		sprite.offset.y = -copy_sprite.offset.y
 	
 	sprite.frame = copy_sprite.frame
 	sprite.flip_h = copy_sprite.flip_h

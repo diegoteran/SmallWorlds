@@ -65,6 +65,7 @@ func _ready():
 		
 		hurtBox.connect("area_entered", self, "_on_HurtBox_area_entered")
 	
+	# Reflection
 	var remote_transform = Globals.create_reflection(sprite, name)
 	add_child(remote_transform)
 	

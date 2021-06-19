@@ -37,6 +37,15 @@ func play(sound_string, from_location, pitch_scale = 1, volume_db = 0):
 			soundPlayer.play()
 			return
 	print("Too many sounds playing at once.")
+#	var new_sp = AudioStreamPlayer2D.new()
+#	get_node("2D").add_child(new_sp)
+#	sound_players.append(new_sp)
+#	new_sp.attenuation = 10
+#	new_sp.pitch_scale = pitch_scale
+#	new_sp.volume_db = volume_db + linear2db(Globals.get_sfx_volume())
+#	new_sp.stream = sounds[sound_string]
+#	new_sp.global_position = from_location
+#	new_sp.play()
 
 func play_menu(sound_string, pitch_scale = 1, volume_db = 0):
 	for soundPlayer in sound_players_menu:
