@@ -73,12 +73,15 @@ func _ready():
 	grass_tilemap = get_node("../../../Background/GrassTileMap")
 	water_tilemap = get_node("../../../Background/WaterTileMap")
 	dirt_tilemap = get_node("../../../Background/DirtTileMap")
+	
+	Globals.dead = false
 
 func _on_no_health():
 	rpc("player_died", int(name))
 
 remotesync func player_died(player_id: int):
 	state = DEAD
+	Globals.dead = true
 	get_node("../../../../World").KillPlayer(player_id)
 
 func SetDamage(damage):

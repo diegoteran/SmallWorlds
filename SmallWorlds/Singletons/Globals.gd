@@ -3,6 +3,7 @@ extends Node
 var music = 100
 var sfx = 100
 var player : Object = null
+var dead = true
 var world : Object = null
 var server_world : Object = null
 

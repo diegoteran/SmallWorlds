@@ -94,7 +94,7 @@ func _physics_process(delta):
 
 func MovePuppetBat():
 	global_position = puppet_position
-	sprite.flip_h = puppet_velocity.x > 0
+	sprite.flip_h = puppet_velocity.x < 0
 
 func update_wander_controller():
 	state = pick_random_state([IDLE, WANDER])
