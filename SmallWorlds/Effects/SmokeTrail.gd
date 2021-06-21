@@ -22,9 +22,8 @@ func _ready():
 
 func _process(delta):
 	if tick > tick_speed:
-		tick = 0
 		for p in range(get_point_count()):
-			point_age[p] += 5 * delta
+			point_age[p] += tick
 			var rand_vector = Vector2(rand_range(-wild_speed, wild_speed), rand_range(-wild_speed, wild_speed))
 			points[p] += gravity + (rand_vector * wildness * point_age[p])
 		
@@ -32,6 +31,8 @@ func _process(delta):
 			if point_age[p] > 1:
 				remove_point(p)
 				point_age.remove(p)
+		
+		tick = 0
 	
 	else:
 		tick += delta

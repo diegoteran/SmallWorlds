@@ -233,7 +233,7 @@ func run_step():
 		else:
 			Globals.instance_scene_on_node(ShockWaveEffect, water_tilemap, global_position)
 #			effect.modulate = Color.aqua
-	if water_id == TileMap.INVALID_CELL or grass_id != TileMap.INVALID_CELL:
+	if water_id == TileMap.INVALID_CELL or grass_id != TileMap.INVALID_CELL: # No dust on water
 		get_parent().call_deferred("add_child", effect)
 	effect.global_position = global_position - velocity.normalized()*2
 
