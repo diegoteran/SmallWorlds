@@ -16,9 +16,9 @@ export(Vector3) var environment_caps = Vector3(0.4, 0.3, 0.05)
 # Tilemap Logic
 export(int) var chunk_size = 20
 export(int) var tile_size = 16
+export(Vector2) var map_size = Vector2(10, 10)
 
 var noise : Object = null
-var map_size : Vector2 = Vector2(200, 200)
 var offsets = [[-1, -1], [0, -1], [1, -1], 
 			   [-1,  0], [0,  0], [1,  0],
 			   [-1,  1], [0,  1], [1,  1]]
@@ -46,18 +46,25 @@ func _ready():
 #	make_dirt_map()
 #	make_flower_map()
 #	clean_map()
+	update_tilemaps(true)
 
-func _process(delta):
-	if Globals.player == null:
-		return
-	
-	if Globals.player != null and Globals.dead == false:
-		last_player_position = Globals.player.global_position
-	
-	update_tilemaps()
+#func _process(delta):
+#	if Globals.player == null:
+#		return
+#
+#	if Globals.player != null and Globals.dead == false:
+#		last_player_position = Globals.player.global_position
+#
+#	update_tilemaps(false)
 
-func update_tilemaps():
-	var new_chunks = get_3x3_chunks_around_current()
+func update_tilemaps(all_tiles: bool):
+	var new_chunks = []
+	if all_tiles:
+		for x in map_size.x:
+			for y in map_size.y:
+				new_chunks.append(Vector2(x, y))
+	else:
+		new_chunks = get_3x3_chunks_around_current()
 	
 	var diff = new_chunks.size() != displayed_chunks.size() 
 	for new_chunk in new_chunks:
@@ -66,18 +73,23 @@ func update_tilemaps():
 			diff = true
 
 	if diff:
-		for old_chunk in displayed_chunks:
-			if !new_chunks.has(old_chunk):
-				delete_chunk(old_chunk)
+#		for old_chunk in displayed_chunks:
+#			if !new_chunks.has(old_chunk):
+#				delete_chunk(old_chunk)
 		
 		displayed_chunks = new_chunks
 		for chunk in displayed_chunks:
 			clean_map(chunk)
+		
+		# Not for chunk logic
+		for chunk in displayed_chunks:
+			clean_map(chunk)
+#		scenes_on_node.clear()
 
-		grass_tile.update_bitmask_region(Vector2.ZERO, map_size)
-		dirt_tile.update_bitmask_region(Vector2.ZERO, map_size)
-		water_tile.update_bitmask_region(Vector2.ZERO, map_size)
-		flower_tile.update_bitmask_region(Vector2.ZERO, map_size)
+		grass_tile.update_bitmask_region(Vector2.ZERO, map_size * chunk_size)
+		dirt_tile.update_bitmask_region(Vector2.ZERO, map_size * chunk_size)
+		water_tile.update_bitmask_region(Vector2.ZERO, map_size * chunk_size)
+		flower_tile.update_bitmask_region(Vector2.ZERO, map_size * chunk_size)
 
 func create_chunk(new_chunk_coords: Vector2) -> void:
 	scenes_on_node[new_chunk_coords] = []
@@ -122,10 +134,13 @@ func make_flower_map(x, y, new_chunk_coords) -> void:
 			scenes_on_node[new_chunk_coords].append(Globals.instance_scene_on_node(TreeScene, get_parent().get_node("YSort/Trees"), g_position))
 		elif chance < 14:
 			scenes_on_node[new_chunk_coords].append(Globals.instance_scene_on_node(BushScene, get_parent().get_node("YSort/Bushes"), g_position))
-		elif chance < 17:
+		elif chance < 16:
 			scenes_on_node[new_chunk_coords].append(Globals.instance_scene_on_node(GrassScene, get_parent().get_node("YSort/Grass"), g_position))
-		elif chance < 25:
+		elif chance < 20:
 			scenes_on_node[new_chunk_coords].append(Globals.instance_scene_on_node(TallGrassScene, get_parent().get_node("YSort/TallGrass"), g_position))
+#			scenes_on_node[new_chunk_coords].append(Globals.instance_scene_on_node(TallGrassScene, get_parent().get_node("YSort/TallGrass"), g_position + Vector2(10, 10)))
+#			scenes_on_node[new_chunk_coords].append(Globals.instance_scene_on_node(TallGrassScene, get_parent().get_node("YSort/TallGrass"), g_position + Vector2(0, 15)))
+#			scenes_on_node[new_chunk_coords].append(Globals.instance_scene_on_node(TallGrassScene, get_parent().get_node("YSort/TallGrass"), g_position + Vector2(10, 0)))
 #					Globals.instance_scene_on_node(TallGrassScene, get_parent().get_node("YSort/TallGrass"), g_position + Vector2(10, 10))
 #					Globals.instance_scene_on_node(TallGrassScene, get_parent().get_node("YSort/TallGrass"), g_position + Vector2(0, 15))
 #					Globals.instance_scene_on_node(TallGrassScene, get_parent().get_node("YSort/TallGrass"), g_position + Vector2(10, 0))

@@ -506,7 +506,6 @@ TreeScene = ExtResource( 9 )
 BushScene = ExtResource( 1 )
 GrassScene = ExtResource( 6 )
 TallGrassScene = ExtResource( 7 )
-dirt_caps = Vector2( 0.3, 0.1 )
 
 [node name="WaterTileMap" type="TileMap" parent="Background"]
 tile_set = ExtResource( 2 )
