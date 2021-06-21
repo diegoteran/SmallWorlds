@@ -7,6 +7,7 @@ export var ACCELERATION = 500
 export var MAX_SPEED = 100
 export var ROLL_SPEED = 150
 export var FRICTION = 1000
+export var ATTACK_SPEED = 15
 
 enum {
 	MOVE,
@@ -93,7 +94,6 @@ func _physics_process(delta):
 		return
 	
 	if is_network_master():
-		
 		# Wheel Experiment
 		menu_wheel()
 		
@@ -110,7 +110,9 @@ func _physics_process(delta):
 					var controller_id_arr = Input.get_connected_joypads()
 					if controller_id_arr.size() > 0 and Input.is_joy_button_pressed(controller_id_arr[0], JOY_BUTTON_2):
 						attack_vector = Vector2(2, 2)
-					rpc("attack_state", attack_vector)
+					attack_state(attack_vector)
+		
+		move()
 		
 		if server.players.size() > 1:  # Expensive?
 			rpc_unreliable("sync_puppet_variables", global_position, velocity, animation_vector)
@@ -146,22 +148,22 @@ func move_state(delta):
 		
 	if Input.is_action_just_pressed("roll"):
 		state = ROLL
-	
-	move()
 
 func roll_state():
 	velocity = animation_vector * ROLL_SPEED
 	rpc("roll")
-	move()
+
+func attack_state(attack_vector):
+	velocity = attack_vector * ATTACK_SPEED
+	rpc("attack", attack_vector)
 
 remotesync func roll():
 	puppetState = "Roll"
 	animationState.travel("Roll")
 
-remotesync func attack_state(attack_vector):
+remotesync func attack(attack_vector):
 	if puppetState != "Attack":
 		puppetState = "Attack"
-		velocity = Vector2.ZERO
 		animationState.travel("Attack")
 		sword.attack()
 		if attack_vector != Vector2(2, 2):
