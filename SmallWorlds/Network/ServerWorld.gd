@@ -18,11 +18,11 @@ func _ready():
 
 
 func SpawnEnemy():
-	enemy_spawn_points = []
-	open_locations = []
-	for i in range(enemy_maximum):
-		enemy_spawn_points.append(Vector2(2*i, 2*i))
-		open_locations.append(i)
+#	enemy_spawn_points = []
+#	open_locations = []
+#	for i in range(enemy_maximum):
+#		enemy_spawn_points.append(Vector2(2*i, 2*i))
+#		open_locations.append(i)
 	
 	if enemy_list.size() >= enemy_maximum or enemy_spawn_points.size() == 0:
 		pass
