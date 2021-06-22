@@ -14,9 +14,9 @@
 [ext_resource path="res://Menus/PauseMenu.tscn" type="PackedScene" id=12]
 [ext_resource path="res://icon.png" type="Texture" id=13]
 [ext_resource path="res://World/Background.gd" type="Script" id=14]
-[ext_resource path="res://World/WorldParticles.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Enemies/Bat.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=17]
+[ext_resource path="res://World/WorldParticles.tscn" type="PackedScene" id=18]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -583,17 +583,15 @@ margin_bottom = 42.7027
 follow_viewport_enable = true
 follow_viewport_scale = 1.2
 
-[node name="WorldParticles" parent="CanvasLayer2" instance=ExtResource( 15 )]
-modulate = Color( 0.745098, 0.85098, 0.882353, 0.6 )
-position = Vector2( 0, 135 )
+[node name="WorldParticles2" parent="CanvasLayer2" instance=ExtResource( 18 )]
+modulate = Color( 0.929412, 0.509804, 0.87451, 1 )
 
 [node name="CanvasLayer3" type="CanvasLayer" parent="."]
 follow_viewport_enable = true
 follow_viewport_scale = 1.5
 
-[node name="WorldParticles" parent="CanvasLayer3" instance=ExtResource( 15 )]
-modulate = Color( 0.862745, 0.827451, 0.564706, 0.6 )
-position = Vector2( 0, 135 )
+[node name="WorldParticles2" parent="CanvasLayer3" instance=ExtResource( 18 )]
+modulate = Color( 0.945098, 0.415686, 0.360784, 1 )
 
 [node name="DayNightCycle" type="CanvasModulate" parent="."]
 visible = false
