@@ -25,6 +25,7 @@ var server = Network
 var player_state = {}
 var animation_vector = Vector2()
 var paused = false
+var buffer_attack = false
 
 # Tilemap experiment
 var grass_tilemap
@@ -106,6 +107,9 @@ func _physics_process(delta):
 				
 			ATTACK:
 				if !selecting:
+					if Input.is_action_just_pressed("attack") and !buffer_attack:
+						rpc("sync_buffer_attack")
+					
 					var attack_vector = global_position.direction_to(get_global_mouse_position())
 					var controller_id_arr = Input.get_connected_joypads()
 					if controller_id_arr.size() > 0 and Input.is_joy_button_pressed(controller_id_arr[0], JOY_BUTTON_2):
@@ -175,12 +179,22 @@ remotesync func sync_puppet_variables(pos, vel, a_vector):
 	puppet_velocity = vel
 	puppet_animation_vector = a_vector
 
+remotesync func sync_buffer_attack():
+	buffer_attack = true
 
 func move():
 	velocity = move_and_slide(velocity)
 
+func check_buffered_attack():
+	if buffer_attack:
+		sword.attack()
+		play_attack_sound()
+	else:
+		attack_animation_finished()
+
 func attack_animation_finished():
 	state = MOVE
+	buffer_attack = false
 	puppetState = "Idle"
 
 func roll_animation_finished():
