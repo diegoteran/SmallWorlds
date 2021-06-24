@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PixelArt/TileSet/Background.tres" type="TileSet" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Menus/PauseMenu.tscn" type="PackedScene" id=12]
 [ext_resource path="res://icon.png" type="Texture" id=13]
 [ext_resource path="res://World/Background.gd" type="Script" id=14]
+[ext_resource path="res://Enemies/StingFly.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Enemies/Bat.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=17]
 [ext_resource path="res://World/WorldParticles.tscn" type="PackedScene" id=18]
@@ -566,6 +567,15 @@ texture = ExtResource( 13 )
 [node name="Trees" type="YSort" parent="YSort"]
 
 [node name="Enemies" type="YSort" parent="YSort"]
+
+[node name="StingFly" parent="YSort/Enemies" instance=ExtResource( 15 )]
+position = Vector2( 459.705, 203.125 )
+
+[node name="StingFly2" parent="YSort/Enemies" instance=ExtResource( 15 )]
+position = Vector2( 569.285, 206.689 )
+
+[node name="StingFly3" parent="YSort/Enemies" instance=ExtResource( 15 )]
+position = Vector2( 476.632, 308.251 )
 
 [node name="TallGrass" type="YSort" parent="YSort"]
 
