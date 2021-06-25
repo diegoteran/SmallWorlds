@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/FlyFlap.wav-2b47672ddc02416ebf4bdc1ed0ae4447.sample"
+
+[deps]
+
+source_file="res://SoundFX/Sounds/FlyFlap.wav"
+dest_files=[ "res://.import/FlyFlap.wav-2b47672ddc02416ebf4bdc1ed0ae4447.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

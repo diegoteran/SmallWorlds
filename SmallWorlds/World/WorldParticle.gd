@@ -12,7 +12,7 @@ func _ready():
 
 
 func on_Timer_timeout():
-	if Globals.dead == false:
+	if Globals.dead == false and Globals.player != null:
 		global_position = Globals.player.global_position
 	var new_lifetime = lifetime + randf() * lifetime_variation
 	particle.lifetime = new_lifetime

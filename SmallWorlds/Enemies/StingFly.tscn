@@ -82,11 +82,11 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0.7, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
-"args": [ null, null ],
-"method": "telegraph_attack"
+"args": [  ],
+"method": "play_attack"
 }, {
 "args": [  ],
 "method": "attack_finished"
@@ -172,7 +172,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-length = 0.3
+length = 0.9
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -205,10 +205,24 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2 ]
+"values": [ 0, 1, 2, 0, 1, 2, 0, 1, 2 ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play_flap"
+} ]
 }
 
 [sub_resource type="CircleShape2D" id=5]
@@ -229,8 +243,8 @@ shape = SubResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -16 )
 texture = ExtResource( 1 )
+flip_h = true
 hframes = 3
-frame = 2
 
 [node name="ShadowSprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/FlyHurt.wav-b2590261d4782b949f2c61246d53deb7.sample"
+
+[deps]
+
+source_file="res://SoundFX/Sounds/FlyHurt.wav"
+dest_files=[ "res://.import/FlyHurt.wav-b2590261d4782b949f2c61246d53deb7.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

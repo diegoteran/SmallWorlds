@@ -22,7 +22,6 @@ var velocity = Vector2.ZERO
 var hp = 5 setget set_hp
 var knockback = Vector2.ZERO
 var stateServer = "Idle"
-var type
 
 puppet var puppet_velocity = Vector2.ZERO
 puppet var puppet_position = Vector2.ZERO

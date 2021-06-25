@@ -155,24 +155,25 @@ func move_state(delta):
 
 func roll_state():
 	velocity = animation_vector * ROLL_SPEED
-	rpc("roll")
+	if puppetState != "Roll":
+		rpc("roll")
 
 func attack_state(attack_vector):
 	velocity = attack_vector * ATTACK_SPEED
-	rpc("attack", attack_vector)
+	if puppetState != "Attack":
+		rpc("attack", attack_vector)
 
 remotesync func roll():
 	puppetState = "Roll"
 	animationState.travel("Roll")
 
 remotesync func attack(attack_vector):
-	if puppetState != "Attack":
-		puppetState = "Attack"
-		animationState.travel("Attack")
-		sword.attack()
-		if attack_vector != Vector2(2, 2):
-			animationTree.set("parameters/Attack/blend_position", attack_vector)
-			animationTree.set("parameters/Idle/blend_position", attack_vector)
+	puppetState = "Attack"
+	animationState.travel("Attack")
+	sword.attack()
+	if attack_vector != Vector2(2, 2):
+		animationTree.set("parameters/Attack/blend_position", attack_vector)
+		animationTree.set("parameters/Idle/blend_position", attack_vector)
 
 remotesync func sync_puppet_variables(pos, vel, a_vector):
 	puppet_position = pos
