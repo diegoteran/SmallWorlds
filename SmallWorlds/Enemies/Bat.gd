@@ -19,13 +19,13 @@ var server = Network
 var state = IDLE
 var velocity = Vector2.ZERO
 
-remotesync var hp = 5 setget set_hp
-var stateServer
+var hp = 5 setget set_hp
+var knockback = Vector2.ZERO
+var stateServer = "Idle"
 var type
 
 puppet var puppet_velocity = Vector2.ZERO
 puppet var puppet_position = Vector2.ZERO
-remotesync var knockback = Vector2.ZERO
 
 onready var stats = $Stats
 onready var playerDetectionZone = $PlayerDetectionZone
@@ -123,20 +123,20 @@ func accelerate_towards_point(point, delta):
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 	sprite.flip_h = velocity.x < 0
 
-func _on_HurtBox_area_entered(area):
+func _on_HurtBox_area_entered(area) -> void:
 #	stats.health -= area.damage
 	if area.is_network_master():
 		var new_knockback = (global_position - area.get_parent().global_position).normalized() * KNOCKBACK_FRICTION
-		rset("knockback", new_knockback)
 		var new_hp = hp - area.damage
-		rset("hp", new_hp)
-		rpc("hurt")
+		rpc("hurt", new_knockback, new_hp)
 
-remotesync func hurt():
+remotesync func hurt(new_knockback: Vector2, new_hp: float) -> void:
+	self.hp = new_hp
+	knockback = new_knockback
 	hurtBox.create_hit_effect()
 	play_hurt()
 
-remotesync func sync_puppet_variables(pos, vel):
+puppet func sync_puppet_variables(pos: Vector2, vel: Vector2) -> void:
 	puppet_position = pos
 	puppet_velocity = vel
 

@@ -54,6 +54,15 @@ func add_all_spawns() -> void:
 	for pos in world_generator.enemy_positions:
 		add_enemy_spawn(pos)
 
+func create_reflection_ignore_pos(current_sprite: Sprite, new_name: String) -> RemoteTransform2D:
+	var remote_transform = RemoteTransform2D.new()
+	var water_tilemap = get_node("/root/World/Background/WaterTileMap")
+	var reflection = instance_scene_on_node_with_name(Reflection, water_tilemap, Vector2.ZERO, new_name)
+	reflection.copy_sprite = current_sprite
+	reflection.ignore_pos = true
+	remote_transform.call_deferred("set_remote_node", "/root/World/Background/WaterTileMap/" + new_name)
+	return remote_transform
+
 func create_reflection(current_sprite: Sprite, new_name: String) -> RemoteTransform2D:
 	var remote_transform = RemoteTransform2D.new()
 	var water_tilemap = get_node("/root/World/Background/WaterTileMap")

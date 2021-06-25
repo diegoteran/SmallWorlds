@@ -577,6 +577,12 @@ position = Vector2( 569.285, 206.689 )
 [node name="StingFly3" parent="YSort/Enemies" instance=ExtResource( 15 )]
 position = Vector2( 476.632, 308.251 )
 
+[node name="Bat" parent="YSort/Enemies" instance=ExtResource( 16 )]
+position = Vector2( 310.033, 230.743 )
+
+[node name="Bat2" parent="YSort/Enemies" instance=ExtResource( 16 )]
+position = Vector2( 354.578, 334.979 )
+
 [node name="TallGrass" type="YSort" parent="YSort"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

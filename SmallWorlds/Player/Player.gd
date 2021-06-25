@@ -253,9 +253,9 @@ func run_step():
 		get_parent().call_deferred("add_child", effect)
 	effect.global_position = global_position - velocity.normalized()*2
 
-func _on_HurtBox_area_entered(_area):
+func _on_HurtBox_area_entered(area):
 	if stats.health > 0:
-		stats.health -= 1
+		stats.health -= area.damage
 	hurtBox.start_invincibility(0.5)
 	rpc("hurt")
 
