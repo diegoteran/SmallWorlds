@@ -42,8 +42,8 @@ onready var shadowSprite = $ShadowSprite
 onready var sprite = $Sprite
 onready var hurtBox = $HurtBox
 onready var hitBox = $HitBox
-#onready var softCollision = $SoftCollision
-#onready var wanderController = $WanderController
+onready var softCollision = $SoftCollision
+onready var wanderController = $WanderController
 onready var timer = $Timer
 
 # Called when the node enters the scene tree for the first time.
@@ -86,26 +86,25 @@ func _physics_process(delta):
 		# Player detection
 		var player = playerDetectionZone.player
 		if player == null:
-			state = IDLE
-			puppetState = "Idle"
+			attack_finished()
 		
 		match state:
 			IDLE:
 				animationPlayer.play("Fly")
 				velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 				seek_player()
-#				if wanderController.get_time_left() == 0:
-#					update_wander_controller()
-				
-#			WANDER:
-#				seek_player()
-#				if wanderController.get_time_left() == 0:
-#					update_wander_controller()
-#
-#				accelerate_towards_point(wanderController.target_position, delta)
-#
-#				if global_position.distance_to(wanderController.target_position) <= 4:
-#					update_wander_controller()
+				if wanderController.get_time_left() == 0:
+					update_wander_controller()
+
+			WANDER:
+				seek_player()
+				if wanderController.get_time_left() == 0:
+					update_wander_controller()
+
+				accelerate_towards_point(wanderController.target_position, delta)
+
+				if global_position.distance_to(wanderController.target_position) <= 4:
+					update_wander_controller()
 				
 			CHASE:
 				seek_player()
@@ -125,8 +124,8 @@ func _physics_process(delta):
 			ATTACK:
 				attack(delta)
 		
-#		if softCollision.is_colliding():
-#			velocity += softCollision.get_push_vector() * delta * 400
+		if softCollision.is_colliding():
+			velocity += softCollision.get_push_vector() * delta * 400
 		
 		velocity = move_and_slide(velocity)
 		
@@ -165,6 +164,14 @@ remotesync func hurt(new_knockback: Vector2, new_hp: float) -> void:
 	hurtBox.create_hit_effect()
 	if puppetState != "Attack":
 		knockback = new_knockback
+
+func update_wander_controller():
+	state = pick_random_state([IDLE, WANDER])
+	wanderController.start_wander_timer(rand_range(1, 3))
+
+func pick_random_state(state_list):
+	state_list.shuffle()
+	return state_list.pop_front()
 
 func seek_player():
 	if playerDetectionZone.can_see_player():

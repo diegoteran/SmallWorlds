@@ -99,13 +99,13 @@ func update_wander_controller():
 	state = pick_random_state([IDLE, WANDER])
 	wanderController.start_wander_timer(rand_range(1, 3))
 
-func seek_player():
-	if playerDetectionZone.can_see_player():
-		state = CHASE
-
 func pick_random_state(state_list):
 	state_list.shuffle()
 	return state_list.pop_front()
+
+func seek_player():
+	if playerDetectionZone.can_see_player():
+		state = CHASE
 
 func play_flap():
 	SoundFx.play("BatFlap", global_position, rand_range(1.5, 2), -30)
