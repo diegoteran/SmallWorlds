@@ -1,8 +1,8 @@
 extends Node
 
 var enemy_id_counter = 1
-var enemy_maximum = 20
-var enemy_types = ["Bat"]
+var enemy_maximum = 5
+var enemy_types = ["Bat", "StingFly"]
 var enemy_spawn_points = []
 var open_locations = []
 var occupied_locations = {}
@@ -18,11 +18,11 @@ func _ready():
 
 
 func SpawnEnemy():
-#	enemy_spawn_points = []
-#	open_locations = []
-#	for i in range(enemy_maximum):
-#		enemy_spawn_points.append(Vector2(2*i, 2*i))
-#		open_locations.append(i)
+	enemy_spawn_points = []
+	open_locations = []
+	for i in range(enemy_maximum):
+		enemy_spawn_points.append(Vector2(2*i, 2*i))
+		open_locations.append(i)
 	
 	if enemy_list.size() >= enemy_maximum or enemy_spawn_points.size() == 0:
 		pass

@@ -1,7 +1,7 @@
 extends Node2D
 
 export var playerTemplate: PackedScene # = preload("res://Player/Player.tscn")
-export var enemy_spawn: PackedScene # = preload("res://Enemies/Bat.tscn")
+var enemy_spawn: Dictionary = {"Bat": preload("res://Enemies/Bat.tscn"), "StingFly": preload("res://Enemies/StingFly.tscn")}
 var last_world_state_time = 0
 
 var world_state_buffer = []
@@ -46,10 +46,10 @@ func KillPlayer(player_id: int):
 
 
 func SpawnNewEnemy(enemy_id, enemy_dict):
-	var new_enemy = enemy_spawn.instance()
+	var new_enemy = enemy_spawn[enemy_dict["EnemyType"]].instance()
 	new_enemy.position = enemy_dict["EnemyLocation"]
 	new_enemy.hp = enemy_dict["EnemyHealth"]
-	new_enemy.type = enemy_dict["EnemyType"]
+#	new_enemy.type = enemy_dict["EnemyType"]
 	new_enemy.stateServer = enemy_dict["EnemyState"]
 	new_enemy.name = str(enemy_id)
 	enemies.add_child(new_enemy, true)

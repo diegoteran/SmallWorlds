@@ -26,7 +26,7 @@ var stateServer = "Idle"
 puppet var puppet_velocity = Vector2.ZERO
 puppet var puppet_position = Vector2.ZERO
 
-onready var stats = $Stats
+#onready var stats = $Stats
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var sprite = $Sprite
 onready var hurtBox = $HurtBox
@@ -34,7 +34,7 @@ onready var softCollision = $SoftCollision
 onready var wanderController = $WanderController
 
 func _ready():
-	stats.connect("no_health", self, "_on_Stats_no_health")
+#	stats.connect("no_health", self, "_on_Stats_no_health")
 	if stateServer == "Idle":
 		state = IDLE
 	else:

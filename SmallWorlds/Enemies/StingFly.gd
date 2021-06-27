@@ -28,7 +28,7 @@ var cd = 0
 var can_attack = true
 
 remotesync var hp = 3 setget set_hp
-#var stateServer
+var stateServer = "Idle"
 
 puppet var puppet_velocity = Vector2.ZERO
 puppet var puppet_position = Vector2.ZERO
@@ -48,6 +48,10 @@ onready var timer = $Timer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if stateServer == "Idle":
+		state = IDLE
+	else:
+		_on_death()
 	# Reflection
 	var remote_transform = Globals.create_reflection_ignore_pos(sprite, "fly"+name)
 	add_child(remote_transform)
