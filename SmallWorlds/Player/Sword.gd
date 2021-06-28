@@ -4,6 +4,7 @@ var offset = 90
 var smoketrail : Object = null
 var trail_name
 var smokeTrail
+#var sword_dict = {"Starting": {}}
 
 export var SmokeTrail : PackedScene
 
@@ -11,7 +12,7 @@ onready var tween = $Tween
 onready var pos = $P
 onready var swordEnd = $P/P
 onready var sprite = $P/Sprite
-onready var hitbox = $P/HitBox/CollisionShape2D
+onready var hitboxCollision = $P/HitBox/CollisionShape2D
 
 puppet var p_rotation = 0
 #puppet var p_flip = false
@@ -40,12 +41,12 @@ func _process(_delta):
 #		sprite.flip_h = p_flip
 
 func attack():
-	hitbox.disabled = false
+	hitboxCollision.disabled = false
 	tween.interpolate_property(self, "offset", offset, offset*-1, 0.2, Tween.TRANS_CIRC)
 	tween.start()
 #	sprite.flip_h = !sprite.flip_h
 	yield(get_tree().create_timer(0.2), "timeout") 
-	hitbox.disabled = true
+	hitboxCollision.disabled = true
 
 func select_item(item_id):
 	rpc("changing_item", item_id)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=95 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PixelArt/TileSet/Background.tres" type="TileSet" id=2]
@@ -14,9 +14,12 @@
 [ext_resource path="res://Menus/PauseMenu.tscn" type="PackedScene" id=12]
 [ext_resource path="res://icon.png" type="Texture" id=13]
 [ext_resource path="res://World/Background.gd" type="Script" id=14]
-[ext_resource path="res://Enemies/StingFly.tscn" type="PackedScene" id=15]
+[ext_resource path="res://PixelArt/OldShadows/LargeShadow.png" type="Texture" id=15]
+[ext_resource path="res://PixelArt/Structures/Campfire.png" type="Texture" id=16]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=17]
 [ext_resource path="res://World/WorldParticles.tscn" type="PackedScene" id=18]
+[ext_resource path="res://PixelArt/Structures/Tent.png" type="Texture" id=19]
+[ext_resource path="res://PixelArt/Structures/FlyingObelisk_no_lightnings_no_letter.png" type="Texture" id=20]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -480,7 +483,107 @@ void fragment() {
 shader = SubResource( 49 )
 shader_param/lod = null
 
-[sub_resource type="Animation" id=51]
+[sub_resource type="AtlasTexture" id=51]
+atlas = ExtResource( 16 )
+region = Rect2( 0, 0, 18, 26 )
+
+[sub_resource type="AtlasTexture" id=52]
+atlas = ExtResource( 16 )
+region = Rect2( 18, 0, 18, 26 )
+
+[sub_resource type="AtlasTexture" id=53]
+atlas = ExtResource( 16 )
+region = Rect2( 36, 0, 18, 26 )
+
+[sub_resource type="AtlasTexture" id=54]
+atlas = ExtResource( 16 )
+region = Rect2( 54, 0, 18, 26 )
+
+[sub_resource type="AtlasTexture" id=55]
+atlas = ExtResource( 16 )
+region = Rect2( 72, 0, 18, 26 )
+
+[sub_resource type="AtlasTexture" id=56]
+atlas = ExtResource( 16 )
+region = Rect2( 90, 0, 18, 26 )
+
+[sub_resource type="AtlasTexture" id=57]
+atlas = ExtResource( 16 )
+region = Rect2( 108, 0, 18, 26 )
+
+[sub_resource type="AtlasTexture" id=58]
+atlas = ExtResource( 16 )
+region = Rect2( 126, 0, 18, 26 )
+
+[sub_resource type="SpriteFrames" id=59]
+animations = [ {
+"frames": [ SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=61]
+atlas = ExtResource( 20 )
+region = Rect2( 0, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=62]
+atlas = ExtResource( 20 )
+region = Rect2( 200, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=63]
+atlas = ExtResource( 20 )
+region = Rect2( 400, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=64]
+atlas = ExtResource( 20 )
+region = Rect2( 600, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=65]
+atlas = ExtResource( 20 )
+region = Rect2( 800, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=66]
+atlas = ExtResource( 20 )
+region = Rect2( 1000, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=67]
+atlas = ExtResource( 20 )
+region = Rect2( 1200, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=68]
+atlas = ExtResource( 20 )
+region = Rect2( 1400, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=69]
+atlas = ExtResource( 20 )
+region = Rect2( 1600, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=70]
+atlas = ExtResource( 20 )
+region = Rect2( 1800, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=71]
+atlas = ExtResource( 20 )
+region = Rect2( 2000, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=72]
+atlas = ExtResource( 20 )
+region = Rect2( 2200, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=73]
+atlas = ExtResource( 20 )
+region = Rect2( 2400, 0, 200, 400 )
+
+[sub_resource type="SpriteFrames" id=74]
+animations = [ {
+"frames": [ SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ), SubResource( 73 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=60]
 length = 24.0
 loop = true
 tracks/0/type = "value"
@@ -566,10 +669,38 @@ texture = ExtResource( 13 )
 
 [node name="Enemies" type="YSort" parent="YSort"]
 
-[node name="StingFly" parent="YSort/Enemies" instance=ExtResource( 15 )]
-position = Vector2( 265.489, 133.635 )
-
 [node name="TallGrass" type="YSort" parent="YSort"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="YSort"]
+position = Vector2( 359.314, 225.892 )
+frames = SubResource( 59 )
+frame = 7
+speed_scale = 1.5
+playing = true
+
+[node name="Sprite" type="Sprite" parent="YSort/AnimatedSprite"]
+show_behind_parent = true
+position = Vector2( -0.190247, 5.31649 )
+scale = Vector2( 0.623392, 0.900675 )
+texture = ExtResource( 15 )
+
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="YSort"]
+position = Vector2( 453.753, 145.121 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 74 )
+frame = 9
+playing = true
+offset = Vector2( -1.34698, -159.17 )
+
+[node name="Tent" type="Sprite" parent="YSort"]
+position = Vector2( 359.314, 186.649 )
+texture = ExtResource( 19 )
+
+[node name="Sprite" type="Sprite" parent="YSort/Tent"]
+show_behind_parent = true
+position = Vector2( -0.487523, 14.6815 )
+scale = Vector2( 2.29571, 1.39122 )
+texture = ExtResource( 15 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -601,7 +732,7 @@ color = Color( 0.0509804, 0.0509804, 0.054902, 1 )
 script = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DayNightCycle"]
-anims/Cycle = SubResource( 51 )
+anims/Cycle = SubResource( 60 )
 
 [node name="Foreground" type="Node2D" parent="."]
 
