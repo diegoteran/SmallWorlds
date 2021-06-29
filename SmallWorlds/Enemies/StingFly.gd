@@ -154,7 +154,10 @@ func _on_HurtBox_area_entered(area):
 	if area.is_network_master() and state != DEAD:
 		var new_knockback = (global_position - area.get_parent().global_position).normalized() * KNOCKBACK_FRICTION
 #		rset("knockback", new_knockback)
+		print(hp)
 		var new_hp = hp - area.damage
+		print(area.damage)
+		print(new_hp)
 #		rset("hp", new_hp)
 #		rpc("hurt")
 		rpc("hurt", new_knockback, new_hp)
