@@ -523,67 +523,67 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="AtlasTexture" id=61]
+[sub_resource type="AtlasTexture" id=60]
 atlas = ExtResource( 20 )
 region = Rect2( 0, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=62]
+[sub_resource type="AtlasTexture" id=61]
 atlas = ExtResource( 20 )
 region = Rect2( 200, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=63]
+[sub_resource type="AtlasTexture" id=62]
 atlas = ExtResource( 20 )
 region = Rect2( 400, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=64]
+[sub_resource type="AtlasTexture" id=63]
 atlas = ExtResource( 20 )
 region = Rect2( 600, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=65]
+[sub_resource type="AtlasTexture" id=64]
 atlas = ExtResource( 20 )
 region = Rect2( 800, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=66]
+[sub_resource type="AtlasTexture" id=65]
 atlas = ExtResource( 20 )
 region = Rect2( 1000, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=67]
+[sub_resource type="AtlasTexture" id=66]
 atlas = ExtResource( 20 )
 region = Rect2( 1200, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=68]
+[sub_resource type="AtlasTexture" id=67]
 atlas = ExtResource( 20 )
 region = Rect2( 1400, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=69]
+[sub_resource type="AtlasTexture" id=68]
 atlas = ExtResource( 20 )
 region = Rect2( 1600, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=70]
+[sub_resource type="AtlasTexture" id=69]
 atlas = ExtResource( 20 )
 region = Rect2( 1800, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=71]
+[sub_resource type="AtlasTexture" id=70]
 atlas = ExtResource( 20 )
 region = Rect2( 2000, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=72]
+[sub_resource type="AtlasTexture" id=71]
 atlas = ExtResource( 20 )
 region = Rect2( 2200, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=73]
+[sub_resource type="AtlasTexture" id=72]
 atlas = ExtResource( 20 )
 region = Rect2( 2400, 0, 200, 400 )
 
-[sub_resource type="SpriteFrames" id=74]
+[sub_resource type="SpriteFrames" id=73]
 animations = [ {
-"frames": [ SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ), SubResource( 73 ) ],
+"frames": [ SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=60]
+[sub_resource type="Animation" id=74]
 length = 24.0
 loop = true
 tracks/0/type = "value"
@@ -674,7 +674,7 @@ texture = ExtResource( 13 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="YSort"]
 position = Vector2( 359.314, 225.892 )
 frames = SubResource( 59 )
-frame = 7
+frame = 6
 speed_scale = 1.5
 playing = true
 
@@ -685,12 +685,12 @@ scale = Vector2( 0.623392, 0.900675 )
 texture = ExtResource( 15 )
 
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="YSort"]
-position = Vector2( 453.753, 145.121 )
+position = Vector2( 1041, 269 )
 scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 74 )
-frame = 9
+frames = SubResource( 73 )
+frame = 4
 playing = true
-offset = Vector2( -1.34698, -159.17 )
+offset = Vector2( -1175.84, -406.928 )
 
 [node name="Tent" type="Sprite" parent="YSort"]
 position = Vector2( 359.314, 186.649 )
@@ -732,7 +732,7 @@ color = Color( 0.0509804, 0.0509804, 0.054902, 1 )
 script = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DayNightCycle"]
-anims/Cycle = SubResource( 60 )
+anims/Cycle = SubResource( 74 )
 
 [node name="Foreground" type="Node2D" parent="."]
 

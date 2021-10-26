@@ -6,7 +6,7 @@ export(int) var particle_num = 15
 var particles = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for i in range(particle_num):
+	for _i in range(particle_num):
 		var new_particle = Globals.instance_scene_on_node(WorldParticle, self, global_position)
 		particles.append(new_particle)
 

@@ -1,54 +1,11 @@
-extends KinematicBody2D
+extends "res://Enemies/Enemy.gd"
 
 export var EnemyDeathEffect:PackedScene # = preload("res://Effects/EnemyDeathEffect.tscn")
 
-export var ACCELERATION = 300
-export var MAX_SPEED = 50
-export var FRICTION = 200
-
-enum {
-	IDLE,
-	WANDER,
-	CHASE
-}
-
-var KNOCKBACK_FRICTION = 120
-
-var server = Network
-
-var state = IDLE
-var velocity = Vector2.ZERO
-
-var hp = 5 setget set_hp
-var knockback = Vector2.ZERO
-var stateServer = "Idle"
-
-puppet var puppet_velocity = Vector2.ZERO
-puppet var puppet_position = Vector2.ZERO
-
-#onready var stats = $Stats
-onready var playerDetectionZone = $PlayerDetectionZone
-onready var sprite = $Sprite
-onready var hurtBox = $HurtBox
-onready var softCollision = $SoftCollision
-onready var wanderController = $WanderController
-
 func _ready():
-#	stats.connect("no_health", self, "_on_Stats_no_health")
-	if stateServer == "Idle":
-		state = IDLE
-	else:
-		OnDeath()
-	
 	# Reflection
 	var remote_transform = Globals.create_reflection(sprite, "bat"+name)
 	add_child(remote_transform)
-
-func set_hp(new_value):
-	if new_value != hp:
-		hp = new_value
-		if hp <= 0:
-			OnDeath()
 
 func _physics_process(delta):
 	if get_tree().network_peer == null or get_tree().network_peer.get_connection_status() != get_tree().network_peer.CONNECTION_CONNECTED:
@@ -122,13 +79,6 @@ func accelerate_towards_point(point, delta):
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 	sprite.flip_h = velocity.x < 0
 
-func _on_HurtBox_area_entered(area) -> void:
-#	stats.health -= area.damage
-	if area.is_network_master():
-		var new_knockback = (global_position - area.get_parent().global_position).normalized() * KNOCKBACK_FRICTION
-		var new_hp = hp - area.damage
-		rpc("hurt", new_knockback, new_hp)
-
 remotesync func hurt(new_knockback: Vector2, new_hp: float) -> void:
 	self.hp = new_hp
 	knockback = new_knockback
@@ -145,7 +95,7 @@ func _on_Stats_no_health():
 	get_parent().add_child(enemyDeathEffect)
 	enemyDeathEffect.global_position = global_position
 
-func OnDeath():
+func _on_death():
 	if (get_tree().is_network_server()):
 		server.NPCKilled(int(name))
 	
@@ -161,4 +111,4 @@ func Health(health):
 	if health != hp:
 		hp = health
 		if hp <= 0:
-			OnDeath()
+			_on_death()
