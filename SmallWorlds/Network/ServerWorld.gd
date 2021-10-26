@@ -8,6 +8,7 @@ var open_locations = []
 var occupied_locations = {}
 var enemy_list = {}
 
+export var DISTANCE_TO_PLAYERS = 300
 
 func _ready():
 	var timer = Timer.new()
@@ -18,15 +19,25 @@ func _ready():
 
 
 func SpawnEnemy():
-	enemy_spawn_points = []
-	open_locations = []
-	for i in range(enemy_maximum):
-		enemy_spawn_points.append(Vector2(2*i, 2*i))
-		open_locations.append(i)
-	
-	if enemy_list.size() >= enemy_maximum or enemy_spawn_points.size() == 0:
+#	enemy_spawn_points = []
+#	open_locations = []
+#	for i in range(enemy_maximum):
+#		enemy_spawn_points.append(Vector2(2*i, 2*i))
+#		open_locations.append(i)
+	if enemy_list.size() >= enemy_maximum or !Network.players.has(1):# or enemy_spawn_points.size() == 0:
 		pass
 	else:
+		# Generate random
+		enemy_spawn_points = []
+		open_locations = []
+		
+		while enemy_spawn_points.size() < enemy_maximum:
+			enemy_spawn_points.append_array(generate_possible_spawn_points())
+		
+		for i in range(enemy_spawn_points.size()):
+			open_locations.append(i)
+		
+		# previous code
 		var type = enemy_types[randi() % enemy_types.size()]
 		var rng_location_index = randi() % open_locations.size()
 		var location = enemy_spawn_points[open_locations[rng_location_index]]
@@ -34,6 +45,9 @@ func SpawnEnemy():
 		open_locations.remove(rng_location_index)
 		enemy_list[enemy_id_counter] = {"EnemyType": type, "EnemyLocation": location, "EnemyHealth": 5, "EnemyState": "Idle", "time_out": 1}
 		enemy_id_counter += 1
+
+
+
 	for enemy in enemy_list.keys():
 		if enemy_list[enemy]["EnemyState"] == "Dead":
 			if enemy_list[enemy]["time_out"] == 0:
@@ -51,3 +65,21 @@ func NPCKilled(enemy_id):
 func add_spawn_point(g_position):
 	enemy_spawn_points.append(g_position)
 	open_locations.append(open_locations.size())
+
+func generate_possible_spawn_points() -> Vector2:
+	var possible_spawn_points = []
+	var player_positions = []
+	for player_data in Network.players.values():
+		player_positions.append(player_data["Position"])
+	
+	for pos in player_positions:
+		var new_spawn = pos + Vector2(randf(), randf()).normalized() * DISTANCE_TO_PLAYERS
+		var possible = true
+		for pos2 in player_positions:
+			if new_spawn.distance_to(pos2) < DISTANCE_TO_PLAYERS - 0.1:
+				possible = false
+				break
+		if possible:
+			possible_spawn_points.append(new_spawn)
+	
+	return possible_spawn_points
