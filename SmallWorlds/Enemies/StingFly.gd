@@ -1,68 +1,21 @@
-extends KinematicBody2D
+extends "res://Enemies/Enemy.gd"
 
-export var ACCELERATION = 300
-export var MAX_SPEED = 50
 export var MAX_ATTACK_SPEED = 200
-export var FRICTION = 200
 export var TELEGRAPHING = false
 export var ATTACK_RANGE = 40
 export var ATTACK_COOLDOWN = 0.8
 
-enum {
-	IDLE,
-	WANDER,
-	CHASE,
-	TELEGRAPH,
-	ATTACK,
-	DEAD
-}
-
-var KNOCKBACK_FRICTION = 120
-
-var server = Network
-
-var state = IDLE
-var velocity = Vector2.ZERO
 var last_direction = Vector2.ZERO
 var cd = 0
 var can_attack = true
 
-remotesync var hp = 3 setget set_hp
-var stateServer = "Idle"
-
-puppet var puppet_velocity = Vector2.ZERO
-puppet var puppet_position = Vector2.ZERO
 puppet var puppet_rotation = 0
-remotesync var knockback = Vector2.ZERO
 var puppetState = "Idle"
 
-onready var playerDetectionZone = $PlayerDetectionZone
-onready var animationPlayer = $AnimationPlayer
-onready var shadowSprite = $ShadowSprite
-onready var sprite = $Sprite
-onready var hurtBox = $HurtBox
-onready var hitBox = $HitBox
-onready var softCollision = $SoftCollision
-onready var wanderController = $WanderController
-onready var timer = $Timer
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	if stateServer == "Idle":
-		state = IDLE
-	else:
-		_on_death()
 	# Reflection
 	var remote_transform = Globals.create_reflection_ignore_pos(sprite, "fly"+name)
 	add_child(remote_transform)
-
-
-func set_hp(new_value):
-	if new_value != hp:
-		hp = new_value
-		if hp <= 0 and state != DEAD:
-			_on_death()
-
 
 func _physics_process(delta):
 	if get_tree().network_peer == null or get_tree().network_peer.get_connection_status() != get_tree().network_peer.CONNECTION_CONNECTED:
@@ -144,13 +97,11 @@ puppet func sync_puppet_variables(pos: Vector2, vel: Vector2, rot: float, f_v :b
 puppet func move_puppet_fly():
 	global_position = puppet_position
 	sprite.rotation = puppet_rotation
-#	sprite.flip_h = puppet_velocity.x > 0
 	
 	if puppetState == "Idle":
 		animationPlayer.play("Fly")
 
 func _on_HurtBox_area_entered(area):
-#	stats.health -= area.damage
 	if area.is_network_master() and state != DEAD:
 		var new_knockback = (global_position - area.get_parent().global_position).normalized() * KNOCKBACK_FRICTION
 		var new_hp = hp - area.damage
@@ -162,14 +113,6 @@ remotesync func hurt(new_knockback: Vector2, new_hp: float) -> void:
 	if puppetState != "Attack":
 		knockback = new_knockback
 
-func update_wander_controller():
-	state = pick_random_state([IDLE, WANDER])
-	wanderController.start_wander_timer(rand_range(1, 3))
-
-func pick_random_state(state_list):
-	state_list.shuffle()
-	return state_list.pop_front()
-
 func seek_player():
 	if playerDetectionZone.can_see_player():
 		state = CHASE
@@ -177,8 +120,7 @@ func seek_player():
 		state = IDLE
 
 func accelerate_towards_point(point: Vector2, delta: float):
-	var direction = global_position.direction_to(point)
-	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+	.accelerate_towards_point(point, delta)
 	sprite.flip_h = velocity.x > 0
 
 func telegraph_attack_state(point: Vector2, delta: float) -> void:
@@ -238,7 +180,6 @@ func dead():
 		if !(node is Sprite or node is Timer):
 			node.queue_free()
 	timer.start(20)
-
 
 func _on_Timer_timeout():
 	queue_free()

@@ -7,7 +7,10 @@ export var FRICTION = 200
 enum {
 	IDLE,
 	WANDER,
-	CHASE
+	CHASE,
+	TELEGRAPH,
+	ATTACK,
+	DEAD
 }
 
 var KNOCKBACK_FRICTION = 120
@@ -24,11 +27,15 @@ var stateServer = "Idle"
 puppet var puppet_velocity = Vector2.ZERO
 puppet var puppet_position = Vector2.ZERO
 
-onready var playerDetectionZone = $PlayerDetectionZone
+onready var animationPlayer = $AnimationPlayer
+onready var shadowSprite = $ShadowSprite
 onready var sprite = $Sprite
 onready var hurtBox = $HurtBox
+onready var hitBox = $HitBox
 onready var softCollision = $SoftCollision
 onready var wanderController = $WanderController
+onready var playerDetectionZone = $PlayerDetectionZone
+onready var timer = $Timer
 
 func _ready():
 	if stateServer == "Idle":

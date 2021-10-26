@@ -81,8 +81,8 @@ func accelerate_towards_point(point, delta):
 
 remotesync func hurt(new_knockback: Vector2, new_hp: float) -> void:
 	self.hp = new_hp
-	knockback = new_knockback
 	hurtBox.create_hit_effect()
+	knockback = new_knockback
 	play_hurt()
 
 puppet func sync_puppet_variables(pos: Vector2, vel: Vector2) -> void:
