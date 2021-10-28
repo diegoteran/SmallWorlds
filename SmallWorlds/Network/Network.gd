@@ -153,6 +153,9 @@ func quit_game():
 	players.clear()
 	get_node("../World").ServerDied()
 
+remotesync func set_player_position(player_id: int, pos : Vector2):
+	players[player_id]["Position"] = pos
+
 # ----------------------------------------------------------------------------
 # ---------------------------- CLIENT CODE -----------------------------------
 # ----------------------------------------------------------------------------

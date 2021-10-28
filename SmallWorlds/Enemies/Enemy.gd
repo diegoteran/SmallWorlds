@@ -36,6 +36,7 @@ onready var softCollision = $SoftCollision
 onready var wanderController = $WanderController
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var timer = $Timer
+onready var proximityTimer = $ProximityTimer
 
 func _ready():
 	if stateServer == "Idle":
@@ -44,6 +45,9 @@ func _ready():
 		_on_death()
 	
 	hurtBox.connect("area_entered", self, "_on_HurtBox_area_entered")
+	
+	if is_network_master():
+		proximityTimer.start(10)
 
 func set_hp(new_value):
 	if new_value != hp:
@@ -83,3 +87,21 @@ func Health(health):
 		hp = health
 		if hp <= 0:
 			_on_death()
+
+func _on_ProximityTimer_timeout():
+	var player_positions = Globals.get_player_positions()
+	
+	for pos in player_positions:
+		if global_position.distance_to(pos) < Globals.ENEMY_DISTANCE_TO_PLAYERS * 3:
+			proximityTimer.start(10)
+			return
+	
+	Network.NPCKilled(int(name))
+	rpc("despawn")
+
+remotesync func despawn():
+	delete_reflection()
+	queue_free()
+
+func delete_reflection():
+	pass

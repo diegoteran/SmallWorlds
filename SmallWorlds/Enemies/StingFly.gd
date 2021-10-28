@@ -165,15 +165,17 @@ func play_attack():
 func _on_death():
 	if (get_tree().is_network_server()):
 		server.NPCKilled(int(name))
-		server.NPCKilled(int(name))
 	
 	play_hurt()
-	Globals.delete_reflection("fly"+name)
+	delete_reflection()
 	attack_finished()
 	state = DEAD
 	shadowSprite.queue_free()
 	hitBox.set_deferred("monitorable", false)
 	animationPlayer.play("Death")
+
+func delete_reflection():
+	Globals.delete_reflection("fly"+name)
 
 func dead():
 	for node in get_children():

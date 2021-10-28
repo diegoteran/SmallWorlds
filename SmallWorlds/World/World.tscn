@@ -674,7 +674,7 @@ texture = ExtResource( 13 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="YSort"]
 position = Vector2( 359.314, 225.892 )
 frames = SubResource( 59 )
-frame = 6
+frame = 2
 speed_scale = 1.5
 playing = true
 
@@ -688,7 +688,7 @@ texture = ExtResource( 15 )
 position = Vector2( 1041, 269 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 73 )
-frame = 4
+frame = 2
 playing = true
 offset = Vector2( -1175.84, -406.928 )
 

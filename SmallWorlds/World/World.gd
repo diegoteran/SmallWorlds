@@ -20,6 +20,14 @@ func _ready():
 	Globals.world = world
 	pass
 
+func _process(_delta):
+	if get_tree().is_network_server():
+		for player_id in server.players:
+			# TODO: check for alive players instead
+			var player = players.get_node(str(player_id))
+			if player != null:
+				server.players[player_id]["Position"] = player.global_position
+
 func ServerDied():
 	# warning-ignore:return_value_discarded
 #	Music.list_stop()

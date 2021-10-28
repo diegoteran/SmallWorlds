@@ -99,14 +99,17 @@ func _on_death():
 	if (get_tree().is_network_server()):
 		server.NPCKilled(int(name))
 	
-	Globals.delete_reflection("bat"+name)
+	delete_reflection()
 	queue_free()
 #	SoundFx.play("EnemyDie", global_position, rand_range(0.9, 1.1), -30)
 	play_defeated()
 	var enemyDeathEffect = EnemyDeathEffect.instance()
 	get_parent().add_child(enemyDeathEffect)
 	enemyDeathEffect.global_position = global_position
-	
+
+func delete_reflection():
+	Globals.delete_reflection("bat"+name)
+
 func Health(health):
 	if health != hp:
 		hp = health

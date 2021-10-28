@@ -8,8 +8,6 @@ var open_locations = []
 var occupied_locations = {}
 var enemy_list = {}
 
-export var DISTANCE_TO_PLAYERS = 300
-
 func _ready():
 	var timer = Timer.new()
 	timer.wait_time = 0.01
@@ -68,15 +66,13 @@ func add_spawn_point(g_position):
 
 func generate_possible_spawn_points() -> Vector2:
 	var possible_spawn_points = []
-	var player_positions = []
-	for player_data in Network.players.values():
-		player_positions.append(player_data["Position"])
+	var player_positions = Globals.get_player_positions()
 	
 	for pos in player_positions:
-		var new_spawn = pos + Vector2(randf(), randf()).normalized() * DISTANCE_TO_PLAYERS
+		var new_spawn = pos + Vector2(randf(), randf()).normalized() * Globals.ENEMY_DISTANCE_TO_PLAYERS
 		var possible = true
 		for pos2 in player_positions:
-			if new_spawn.distance_to(pos2) < DISTANCE_TO_PLAYERS - 0.1:
+			if new_spawn.distance_to(pos2) < Globals.ENEMY_DISTANCE_TO_PLAYERS - 0.1:
 				possible = false
 				break
 		if possible:
