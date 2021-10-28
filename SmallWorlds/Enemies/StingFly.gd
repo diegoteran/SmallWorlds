@@ -101,12 +101,6 @@ puppet func move_puppet_fly():
 	if puppetState == "Idle":
 		animationPlayer.play("Fly")
 
-func _on_HurtBox_area_entered(area):
-	if area.is_network_master() and state != DEAD:
-		var new_knockback = (global_position - area.get_parent().global_position).normalized() * KNOCKBACK_FRICTION
-		var new_hp = hp - area.damage
-		rpc("hurt", new_knockback, new_hp)
-
 remotesync func hurt(new_knockback: Vector2, new_hp: float) -> void:
 	self.hp = new_hp
 	hurtBox.create_hit_effect()

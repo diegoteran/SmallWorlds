@@ -89,6 +89,9 @@ remotesync func player_died(player_id: int):
 func SetDamage(damage):
 	swordHitBox.damage = damage
 
+func add_soul(soul):
+	stats.soul += soul
+
 func _physics_process(delta):
 	
 	if paused or state == DEAD:

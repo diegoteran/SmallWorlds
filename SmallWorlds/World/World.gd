@@ -24,6 +24,9 @@ func _process(_delta):
 	if get_tree().is_network_server():
 		for player_id in server.players:
 			# TODO: check for alive players instead
+			if !players.has_node(str(player_id)):
+				return
+			
 			var player = players.get_node(str(player_id))
 			if player != null:
 				server.players[player_id]["Position"] = player.global_position
