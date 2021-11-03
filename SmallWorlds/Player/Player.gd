@@ -46,6 +46,8 @@ onready var tween = $Tween
 onready var label = $Label
 onready var sword = $YSort/Sword
 onready var sprite = $YSort/Sprite
+onready var light1 = $Light1
+onready var light2 = $Light2
 
 var puppetState = "Idle"
 
@@ -76,6 +78,9 @@ func _ready():
 	water_tilemap = get_node("../../../Background/WaterTileMap")
 	dirt_tilemap = get_node("../../../Background/DirtTileMap")
 	
+	# Light Handler
+	get_node("../../../DayNightCycle").connect("light_changed", self, "set_lights")
+	
 	Globals.dead = false
 
 func _on_no_health():
@@ -88,6 +93,17 @@ remotesync func player_died(player_id: int):
 
 func SetDamage(damage):
 	swordHitBox.damage = damage
+
+func set_lights(value: bool):
+	print("player light")
+	if value:
+		tween.interpolate_property(light1, "energy", light1.energy, 0.8, 1.0)
+		tween.interpolate_property(light2, "energy", light2.energy, 0.8, 1.0)
+	else:
+		tween.interpolate_property(light1, "energy", light1.energy, 0.0, 1.0)
+		tween.interpolate_property(light2, "energy", light2.energy, 0.0, 1.0)
+	
+	tween.start()
 
 func add_soul(soul):
 	stats.soul += soul

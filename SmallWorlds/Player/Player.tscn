@@ -1319,10 +1319,20 @@ Wheel = ExtResource( 8 )
 StepDustEffect = ExtResource( 9 )
 ShockWaveEffect = ExtResource( 13 )
 
-[node name="Light2D" type="Light2D" parent="."]
-visible = false
+[node name="Light1" type="Light2D" parent="."]
 texture = ExtResource( 7 )
-color = Color( 1, 1, 1, 0.47451 )
+texture_scale = 1.5
+energy = 0.8
+mode = 2
+shadow_enabled = true
+shadow_gradient_length = 2.0
+shadow_filter = 3
+shadow_filter_smooth = 10.0
+
+[node name="Light2" type="Light2D" parent="."]
+texture = ExtResource( 7 )
+texture_scale = 1.5
+energy = 0.8
 mode = 2
 
 [node name="ShadowSprite" type="Sprite" parent="."]

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PixelArt/TileSet/Background.tres" type="TileSet" id=2]
-[ext_resource path="res://World/DayNightCycle.gd" type="Script" id=3]
+[ext_resource path="res://World/DayNightCycle.tscn" type="PackedScene" id=3]
 [ext_resource path="res://World/Weather.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Action RPG Resources/World/CliffTileset.png" type="Texture" id=5]
 [ext_resource path="res://World/Grass.tscn" type="PackedScene" id=6]
@@ -20,6 +20,7 @@
 [ext_resource path="res://World/WorldParticles.tscn" type="PackedScene" id=18]
 [ext_resource path="res://PixelArt/Structures/Tent.png" type="Texture" id=19]
 [ext_resource path="res://PixelArt/Structures/FlyingObelisk_no_lightnings_no_letter.png" type="Texture" id=20]
+[ext_resource path="res://PixelArt/Test/LightTest.png" type="Texture" id=21]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -583,22 +584,6 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=74]
-length = 24.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 3, 5, 7, 12, 14, 17, 19, 22, 24 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0.87451, 0.690196, 0.372549, 1 ), Color( 0.913725, 0.858824, 0.670588, 1 ), Color( 1, 1, 1, 1 ), Color( 0.94902, 0.898039, 0.788235, 1 ), Color( 0.937255, 0.682353, 0.572549, 1 ), Color( 0.47451, 0.682353, 0.92549, 1 ), Color( 0.137255, 0.247059, 0.380392, 1 ), Color( 0, 0, 0, 1 ) ]
-}
-
 [node name="World" type="Node2D"]
 script = ExtResource( 10 )
 playerTemplate = ExtResource( 17 )
@@ -674,7 +659,7 @@ texture = ExtResource( 13 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="YSort"]
 position = Vector2( 359.314, 225.892 )
 frames = SubResource( 59 )
-frame = 2
+frame = 3
 speed_scale = 1.5
 playing = true
 
@@ -684,11 +669,16 @@ position = Vector2( -0.190247, 5.31649 )
 scale = Vector2( 0.623392, 0.900675 )
 texture = ExtResource( 15 )
 
+[node name="Light2D" type="Light2D" parent="YSort/AnimatedSprite"]
+texture = ExtResource( 21 )
+mode = 2
+shadow_enabled = true
+
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="YSort"]
 position = Vector2( 1041, 269 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 73 )
-frame = 2
+frame = 4
 playing = true
 offset = Vector2( -1175.84, -406.928 )
 
@@ -726,15 +716,11 @@ follow_viewport_scale = 1.5
 [node name="WorldParticles2" parent="CanvasLayer3" instance=ExtResource( 18 )]
 modulate = Color( 0.945098, 0.415686, 0.360784, 1 )
 
-[node name="DayNightCycle" type="CanvasModulate" parent="."]
-visible = false
-color = Color( 0.0509804, 0.0509804, 0.054902, 1 )
-script = ExtResource( 3 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="DayNightCycle"]
-anims/Cycle = SubResource( 74 )
+[node name="DayNightCycle" parent="." instance=ExtResource( 3 )]
 
 [node name="Foreground" type="Node2D" parent="."]
 
 [node name="Weather" parent="Foreground" instance=ExtResource( 4 )]
 visible = false
+
+[editable path="DayNightCycle"]
