@@ -1,8 +1,8 @@
 extends CanvasModulate
 
 var time = 0
-var seconds = 0
-var seconds_check = 0
+var seconds = 30
+var seconds_check = 30
 var current_light
 
 signal light_changed(value)

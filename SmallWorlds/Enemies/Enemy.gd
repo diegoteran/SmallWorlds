@@ -3,6 +3,8 @@ extends KinematicBody2D
 export var ACCELERATION = 300
 export var MAX_SPEED = 50
 export var FRICTION = 200
+export var KNOCKBACK_FRICTION = 120
+export var hp = 5 setget set_hp
 var soul_given = 1
 
 enum {
@@ -14,14 +16,10 @@ enum {
 	DEAD
 }
 
-var KNOCKBACK_FRICTION = 120
-
 var server = Network
 
 var state = IDLE
 var velocity = Vector2.ZERO
-
-var hp = 5 setget set_hp
 var knockback = Vector2.ZERO
 var stateServer = "Idle"
 
@@ -38,6 +36,7 @@ onready var wanderController = $WanderController
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var timer = $Timer
 onready var proximityTimer = $ProximityTimer
+onready var particles = $Particles2D
 
 func _ready():
 	if stateServer == "Idle":
@@ -49,12 +48,23 @@ func _ready():
 	
 	if is_network_master():
 		proximityTimer.start(10)
+	
+	# Light Handler
+	get_node("/root/World/DayNightCycle").connect("light_changed", self, "set_lights")
 
 func set_hp(new_value):
 	if new_value != hp:
 		hp = new_value
 		if hp <= 0:
 			_on_death()
+
+func set_lights(value: bool):
+	if state != DEAD:
+		particles.emitting = value
+#		if value:
+#			hitBox.damage *= 2
+#		else:
+#			hitBox.damage /= 2
 
 func update_wander_controller():
 	state = pick_random_state([IDLE, WANDER])

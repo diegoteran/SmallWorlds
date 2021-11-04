@@ -74,12 +74,12 @@ func _ready():
 	add_child(remote_transform)
 	
 	# Tilemap Experiment
-	grass_tilemap = get_node("../../../Background/GrassTileMap")
-	water_tilemap = get_node("../../../Background/WaterTileMap")
-	dirt_tilemap = get_node("../../../Background/DirtTileMap")
+	grass_tilemap = get_node("/root/World/Background/GrassTileMap")
+	water_tilemap = get_node("/root/World/Background/WaterTileMap")
+	dirt_tilemap = get_node("/root/World/Background/DirtTileMap")
 	
 	# Light Handler
-	get_node("../../../DayNightCycle").connect("light_changed", self, "set_lights")
+	get_node("/root/World/DayNightCycle").connect("light_changed", self, "set_lights")
 	
 	Globals.dead = false
 
@@ -89,7 +89,7 @@ func _on_no_health():
 remotesync func player_died(player_id: int):
 	state = DEAD
 	Globals.dead = true
-	get_node("../../../../World").KillPlayer(player_id)
+	get_node("/root/World").KillPlayer(player_id)
 
 func SetDamage(damage):
 	swordHitBox.damage = damage

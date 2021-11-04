@@ -1322,7 +1322,7 @@ ShockWaveEffect = ExtResource( 13 )
 [node name="Light1" type="Light2D" parent="."]
 texture = ExtResource( 7 )
 texture_scale = 1.5
-energy = 0.8
+energy = 0.0
 mode = 2
 shadow_enabled = true
 shadow_gradient_length = 2.0
@@ -1332,7 +1332,7 @@ shadow_filter_smooth = 10.0
 [node name="Light2" type="Light2D" parent="."]
 texture = ExtResource( 7 )
 texture_scale = 1.5
-energy = 0.8
+energy = 0.0
 mode = 2
 
 [node name="ShadowSprite" type="Sprite" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=2]
+[gd_scene load_steps=97 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PixelArt/TileSet/Background.tres" type="TileSet" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://PixelArt/Structures/Tent.png" type="Texture" id=19]
 [ext_resource path="res://PixelArt/Structures/FlyingObelisk_no_lightnings_no_letter.png" type="Texture" id=20]
 [ext_resource path="res://PixelArt/Test/LightTest.png" type="Texture" id=21]
+[ext_resource path="res://Enemies/StingFly.tscn" type="PackedScene" id=22]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -584,6 +585,10 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="Environment" id=74]
+background_mode = 4
+glow_enabled = true
+
 [node name="World" type="Node2D"]
 script = ExtResource( 10 )
 playerTemplate = ExtResource( 17 )
@@ -659,7 +664,7 @@ texture = ExtResource( 13 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="YSort"]
 position = Vector2( 359.314, 225.892 )
 frames = SubResource( 59 )
-frame = 3
+frame = 1
 speed_scale = 1.5
 playing = true
 
@@ -678,7 +683,7 @@ shadow_enabled = true
 position = Vector2( 1041, 269 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 73 )
-frame = 4
+frame = 2
 playing = true
 offset = Vector2( -1175.84, -406.928 )
 
@@ -722,5 +727,11 @@ modulate = Color( 0.945098, 0.415686, 0.360784, 1 )
 
 [node name="Weather" parent="Foreground" instance=ExtResource( 4 )]
 visible = false
+
+[node name="StingFly" parent="." instance=ExtResource( 22 )]
+position = Vector2( 299.462, 232.33 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 74 )
 
 [editable path="DayNightCycle"]
