@@ -27,6 +27,7 @@ SaverAndLoader="*res://Singletons/SaverAndLoader.gd"
 Music="*res://SoundFX/Music.tscn"
 Globals="*res://Singletons/Globals.gd"
 Settings="*res://Singletons/Settings.gd"
+Shake="*res://Singletons/Shake.gd"
 
 [debug]
 

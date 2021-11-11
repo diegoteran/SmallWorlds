@@ -92,10 +92,14 @@ func _on_HurtBox_area_entered(area) -> void:
 		area.get_parent().get_parent().get_parent().get_parent().add_soul(soul_given)
 		var new_knockback = (global_position - area.get_parent().global_position).normalized() * KNOCKBACK_FRICTION
 		var new_hp = hp - area.damage
+		Shake.shake(0.8, 0.3, 2)
 		rpc("hurt", new_knockback, new_hp)
 
 func _on_death():
 	pass
+
+func play_hit_sound():
+	SoundFx.play("SwordHit", global_position, rand_range(0.9, 1.1), -20)
 	
 func Health(health):
 	if health != hp:

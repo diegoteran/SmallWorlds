@@ -82,6 +82,7 @@ func accelerate_towards_point(point, delta):
 remotesync func hurt(new_knockback: Vector2, new_hp: float) -> void:
 	self.hp = new_hp
 	hurtBox.create_hit_effect()
+	.play_hit_sound()
 	knockback = new_knockback
 	play_hurt()
 

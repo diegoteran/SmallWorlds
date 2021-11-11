@@ -23,6 +23,7 @@ var sounds = {
 	"StepDirt" : load(sounds_path + "StepDirt.wav"),
 	"StepWater" : load(sounds_path + "StepWater.wav"),
 	"Swipe" : load(sounds_path + "Swipe.wav"),
+	"SwordHit" : load(sounds_path + "SwordHit.wav"),
 	"Unpause" : load(sounds_path + "Unpause.wav"),
 }
 
