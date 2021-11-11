@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Menus/NetworkSetup.gd" type="Script" id=1]
+[ext_resource path="res://Menus/WhiteRabbit.tres" type="DynamicFont" id=2]
 
 [node name="NetworkSetup" type="Control"]
 anchor_right = 1.0
@@ -22,43 +23,48 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MultiplayerConfigure/CenterContainer"]
-margin_left = 191.0
-margin_top = 76.0
-margin_right = 288.0
-margin_bottom = 194.0
+margin_left = 175.0
+margin_top = 78.0
+margin_right = 304.0
+margin_bottom = 191.0
 
 [node name="Address" type="Label" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
-margin_right = 97.0
-margin_bottom = 14.0
+margin_right = 129.0
+margin_bottom = 13.0
+custom_fonts/font = ExtResource( 2 )
 
 [node name="PlayerName" type="LineEdit" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
-margin_top = 18.0
-margin_right = 97.0
-margin_bottom = 42.0
+margin_top = 17.0
+margin_right = 129.0
+margin_bottom = 40.0
+custom_fonts/font = ExtResource( 2 )
 align = 1
-placeholder_text = "Player Name"
+placeholder_text = "Name"
 
 [node name="CreateServerButton" type="Button" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
-margin_top = 46.0
-margin_right = 97.0
-margin_bottom = 66.0
+margin_top = 44.0
+margin_right = 129.0
+margin_bottom = 63.0
+custom_fonts/font = ExtResource( 2 )
 text = "Create Server"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="JoinServerButton" type="Button" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
-margin_top = 70.0
-margin_right = 97.0
-margin_bottom = 90.0
+margin_top = 67.0
+margin_right = 129.0
+margin_bottom = 86.0
+custom_fonts/font = ExtResource( 2 )
 text = "Join Server"
 
 [node name="ServerAddress" type="LineEdit" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
-margin_top = 94.0
-margin_right = 97.0
-margin_bottom = 118.0
+margin_top = 90.0
+margin_right = 129.0
+margin_bottom = 113.0
+custom_fonts/font = ExtResource( 2 )
 align = 1
-placeholder_text = "Enter IP"
+placeholder_text = "IP"
 
 [connection signal="focus_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/CreateServerButton" to="." method="_on_CreateServerButton_focus_entered"]
 [connection signal="mouse_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/CreateServerButton" to="." method="_on_CreateServerButton_mouse_entered"]

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SubDrop.wav-2eea5821d766a90329bb8b31188424aa.sample"
+
+[deps]
+
+source_file="res://SoundFX/Sounds/SubDrop.wav"
+dest_files=[ "res://.import/SubDrop.wav-2eea5821d766a90329bb8b31188424aa.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

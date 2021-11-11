@@ -3,7 +3,7 @@ extends CanvasModulate
 var time = 0
 var seconds = 30
 var seconds_check = 30
-var current_light
+var is_night = false
 
 signal light_changed(value)
 
@@ -26,7 +26,6 @@ func set_time(set_seconds):
 	$AnimationPlayer.seek(currentFrame)
 
 func set_light(value: bool):
-	print(" set light")
 	if get_tree().is_network_server():
 		rpc("change_light", value)
 
@@ -35,5 +34,5 @@ remotesync func sync_time(seconds_check_rpc):
 	set_time(seconds)
 
 remotesync func change_light(value: bool):
-	print("change light")
+	is_night = value
 	emit_signal("light_changed", value)

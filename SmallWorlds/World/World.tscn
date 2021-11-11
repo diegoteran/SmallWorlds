@@ -662,9 +662,9 @@ texture = ExtResource( 13 )
 [node name="TallGrass" type="YSort" parent="YSort"]
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="YSort"]
+visible = false
 position = Vector2( 359.314, 225.892 )
 frames = SubResource( 59 )
-frame = 1
 speed_scale = 1.5
 playing = true
 
@@ -683,7 +683,7 @@ shadow_enabled = true
 position = Vector2( 1041, 269 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 73 )
-frame = 2
+frame = 7
 playing = true
 offset = Vector2( -1175.84, -406.928 )
 

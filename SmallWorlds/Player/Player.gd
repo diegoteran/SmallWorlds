@@ -240,7 +240,7 @@ func menu_wheel():
 		wheel = null
 
 func play_attack_sound():
-	SoundFx.play("Swipe", global_position, rand_range(0.9, 1.1), -20)
+	SoundFx.play("Swipe", global_position, rand_range(0.5, 1.7), -20)
 
 func play_roll_sound():
 	SoundFx.play("Evade", global_position, rand_range(0.9, 1.1), -20)

@@ -50,7 +50,10 @@ func _ready():
 		proximityTimer.start(10)
 	
 	# Light Handler
-	get_node("/root/World/DayNightCycle").connect("light_changed", self, "set_lights")
+	var cycle = get_node("/root/World/DayNightCycle")
+	cycle.connect("light_changed", self, "set_lights")
+	if cycle.is_night:
+		set_lights(true)
 
 func set_hp(new_value):
 	if new_value != hp:
@@ -61,10 +64,10 @@ func set_hp(new_value):
 func set_lights(value: bool):
 	if state != DEAD:
 		particles.emitting = value
-#		if value:
-#			hitBox.damage *= 2
-#		else:
-#			hitBox.damage /= 2
+		if value:
+			hitBox.damage *= 2
+		else:
+			hitBox.damage /= 2
 
 func update_wander_controller():
 	state = pick_random_state([IDLE, WANDER])

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Menus/PauseMenu.gd" type="Script" id=1]
-[ext_resource path="res://Menus/PixelFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Menus/WhiteRabbit.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Menus/SettingsMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Menus/TitleScreenPanel.tres" type="StyleBox" id=4]
 
 [node name="PauseMenu" type="Control"]
 pause_mode = 2
@@ -16,9 +17,9 @@ __meta__ = {
 SettingsMenu = ExtResource( 3 )
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-self_modulate = Color( 0.588235, 0.0588235, 0.0588235, 1 )
 anchor_bottom = 1.0
 margin_right = 213.0
+custom_styles/panel = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -28,7 +29,7 @@ margin_left = 7.0
 margin_top = 7.0
 margin_right = 206.0
 margin_bottom = 353.0
-color = Color( 0.243137, 0.137255, 0.0941176, 1 )
+color = Color( 0, 0, 0, 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 margin_left = 7.0
@@ -60,6 +61,7 @@ text = "Exit to Menu"
 flat = true
 
 [node name="Tween" type="Tween" parent="."]
+
 [connection signal="focus_entered" from="PanelContainer/VBoxContainer/ResumeButton" to="." method="_on_ResumeButton_focus_entered"]
 [connection signal="mouse_entered" from="PanelContainer/VBoxContainer/ResumeButton" to="." method="_on_ResumeButton_mouse_entered"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/ResumeButton" to="." method="_on_ResumeButton_pressed"]
