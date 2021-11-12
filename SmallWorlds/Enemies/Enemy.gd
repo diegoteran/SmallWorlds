@@ -22,6 +22,8 @@ var state = IDLE
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
 var stateServer = "Idle"
+var high_damage = 0
+var damage = 0
 
 puppet var puppet_velocity = Vector2.ZERO
 puppet var puppet_position = Vector2.ZERO
@@ -44,6 +46,9 @@ func _ready():
 	else:
 		_on_death()
 	
+	damage = hitBox.damage
+	high_damage = damage * 2
+	
 	hurtBox.connect("area_entered", self, "_on_HurtBox_area_entered")
 	
 	if is_network_master():
@@ -65,9 +70,9 @@ func set_lights(value: bool):
 	if state != DEAD:
 		particles.emitting = value
 		if value:
-			hitBox.damage *= 2
+			hitBox.damage = high_damage
 		else:
-			hitBox.damage /= 2
+			hitBox.damage = damage
 
 func update_wander_controller():
 	state = pick_random_state([IDLE, WANDER])

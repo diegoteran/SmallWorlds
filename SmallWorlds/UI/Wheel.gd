@@ -32,7 +32,9 @@ var icons = []
 func _ready():
 	# These signals are connected to another script that spawns this wheel
 	if get_parent():
+# warning-ignore:return_value_discarded
 		connect("colour_change", get_parent(), "_on_SelectionWheel_colour_change")
+# warning-ignore:return_value_discarded
 		connect("mouse_exited", get_parent(), "_on_SelectionWheel_mouse_exited")
 	size = get_texture().get_size()
 	mat = self.get_material()

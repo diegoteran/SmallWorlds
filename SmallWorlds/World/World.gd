@@ -52,7 +52,7 @@ func DespawnPlayer(player_id: int):
 func KillPlayer(player_id: int):
 	DespawnPlayer(player_id)
 	yield(get_tree().create_timer(1.0), "timeout")
-	SpawnNewPlayer(player_id, server.players[player_id]["Position"])
+	SpawnNewPlayer(player_id, server.players[player_id]["Position"] + Vector2(50, 50))
 
 
 func SpawnNewEnemy(enemy_id, enemy_dict):

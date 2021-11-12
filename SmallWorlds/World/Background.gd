@@ -16,6 +16,7 @@ export(Vector3) var environment_caps = Vector3(0.4, 0.3, 0.05)
 # Tilemap Logic
 export(int) var chunk_size = 20
 export(int) var tile_size = 16
+export(int) var cliff_size = 32
 export(Vector2) var map_size = Vector2(10, 10)
 
 var noise : Object = null
@@ -34,6 +35,7 @@ onready var grass_tile = $GrassTileMap
 onready var dirt_tile = $DirtTileMap
 onready var flower_tile = $FlowerTileMap
 onready var water_tile = $WaterTileMap
+onready var cliff_tile = $DirtCliffTileMap
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -86,10 +88,52 @@ func update_tilemaps(all_tiles: bool):
 			clean_map(chunk)
 #		scenes_on_node.clear()
 
-		grass_tile.update_bitmask_region(Vector2.ZERO, map_size * chunk_size)
-		dirt_tile.update_bitmask_region(Vector2.ZERO, map_size * chunk_size)
-		water_tile.update_bitmask_region(Vector2.ZERO, map_size * chunk_size)
-		flower_tile.update_bitmask_region(Vector2.ZERO, map_size * chunk_size)
+		var render_start = Vector2.ONE * -1000
+		
+		# separate from chunck logic
+		create_cliff()
+		cliff_tile.update_bitmask_region(render_start, map_size * chunk_size)
+		
+		grass_tile.update_bitmask_region(render_start, map_size * chunk_size)
+		dirt_tile.update_bitmask_region(render_start, map_size * chunk_size)
+		water_tile.update_bitmask_region(render_start, map_size * chunk_size)
+		flower_tile.update_bitmask_region(render_start, map_size * chunk_size)
+
+func create_cliff() -> void:
+	var last_grass = map_size.y * chunk_size
+	var last_pos = (last_grass)/2 + 1
+	for i in range(-1, last_pos):
+		cliff_tile.set_cell(-1, i, 0)
+		cliff_tile.set_cell(i, -1, 0)
+		cliff_tile.set_cell(last_pos-1, i, 0)
+		cliff_tile.set_cell(i, last_pos-1, 0)
+		
+		grass_tile.set_cell(-2, i*2, 1)
+		grass_tile.set_cell(-2, i*2 + 1, 1)
+		grass_tile.set_cell(-1, i*2, 1)
+		grass_tile.set_cell(-1, i*2 + 1, 1)
+		
+		grass_tile.set_cell(i*2, -2, 1)
+		grass_tile.set_cell(i*2 + 1, -2, 1)
+		grass_tile.set_cell(i*2, -1, 1)
+		grass_tile.set_cell(i*2 + 1, -1, 1)
+		
+		grass_tile.set_cell(last_grass + 1, i*2, 1)
+		grass_tile.set_cell(last_grass + 1, i*2 + 1, 1)
+		grass_tile.set_cell(last_grass, i*2, 1)
+		grass_tile.set_cell(last_grass, i*2 + 1, 1)
+		
+		grass_tile.set_cell(i*2, last_grass + 1, 1)
+		grass_tile.set_cell(i*2 + 1, last_grass + 1, 1)
+		grass_tile.set_cell(i*2, last_grass, 1)
+		grass_tile.set_cell(i*2 + 1, last_grass, 1)
+	
+	# Delete entrance
+	for i in range(4, 7):
+		cliff_tile.set_cell(i, -1, -1)
+	for i in range(3, 8):
+		grass_tile.set_cell(i*2, 0, 1)
+		grass_tile.set_cell(i*2 + 1, 0, 1)
 
 func create_chunk(new_chunk_coords: Vector2) -> void:
 	scenes_on_node[new_chunk_coords] = []

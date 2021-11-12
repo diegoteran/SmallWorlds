@@ -5,7 +5,7 @@ onready var sprite = $Sprite
 var copy_sprite : Sprite = null
 var ignore_pos = false
 
-func _process(delta):
+func _process(_delta):
 	if copy_sprite == null:
 		return
 	

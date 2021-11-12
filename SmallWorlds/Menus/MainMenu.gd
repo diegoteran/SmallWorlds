@@ -16,6 +16,7 @@ func enable_keyboard():
 func _on_StartButton_pressed():
 	emit_signal("start_pressed")
 	play_menu_select()
+	# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://World/World.tscn")
 	Network.call_deferred("create_server", false)
 	queue_free()

@@ -6,7 +6,7 @@ var player : Object = null
 var dead = true
 var world : Object = null
 var server_world : Object = null
-var ENEMY_DISTANCE_TO_PLAYERS = 500
+var ENEMY_DISTANCE_TO_PLAYERS = 400
 
 var Reflection = preload("res://Effects/Reflection.tscn")
 
@@ -73,7 +73,9 @@ func create_reflection(current_sprite: Sprite, new_name: String) -> RemoteTransf
 	return remote_transform
 
 func delete_reflection(new_name: String) -> void:
-	get_node("/root/World/Background/WaterTileMap/" + new_name).queue_free()
+	var tilemap = get_node("/root/World/Backgroudnd/WaterTileMap/")
+	if tilemap.has_node(name):
+	 tilemap.queue_free()
 
 func get_player_positions() -> Vector2:
 	var player_positions = []

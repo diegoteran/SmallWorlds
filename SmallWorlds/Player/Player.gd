@@ -48,6 +48,7 @@ onready var sword = $YSort/Sword
 onready var sprite = $YSort/Sprite
 onready var light1 = $Light1
 onready var light2 = $Light2
+onready var collisionShape = $CollisionShape2D
 
 var puppetState = "Idle"
 
@@ -79,17 +80,35 @@ func _ready():
 	dirt_tilemap = get_node("/root/World/Background/DirtTileMap")
 	
 	# Light Handler
+# warning-ignore:return_value_discarded
 	get_node("/root/World/DayNightCycle").connect("light_changed", self, "set_lights")
 	
 	Globals.dead = false
 
 func _on_no_health():
-	rpc("player_died", int(name))
+	rpc("player_died")
 
-remotesync func player_died(player_id: int):
+remotesync func player_died():
+	if is_network_master():
+		Globals.dead = true
+	kill_player()
+#	get_node("/root/World").KillPlayer(player_id)
+
+func kill_player():
 	state = DEAD
-	Globals.dead = true
-	get_node("/root/World").KillPlayer(player_id)
+	hurtBox.set_deferred('monitoring', false)
+	collisionShape.set_deferred('disabled', true)
+	yield(get_tree().create_timer(1.0), "timeout")
+	revive_player()
+	pass
+
+func revive_player():
+	state = MOVE
+	stats.health = stats.max_health
+	global_position = Vector2(500, -500)
+	hurtBox.set_deferred('monitoring', true)
+	collisionShape.set_deferred('disabled', false)
+	pass
 
 func SetDamage(damage):
 	swordHitBox.damage = damage
