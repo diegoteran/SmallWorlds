@@ -1,4 +1,4 @@
-[gd_scene load_steps=101 format=2]
+[gd_scene load_steps=100 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PixelArt/TileSet/Background.tres" type="TileSet" id=2]
@@ -21,57 +21,45 @@
 [ext_resource path="res://PixelArt/Structures/Tent.png" type="Texture" id=19]
 [ext_resource path="res://PixelArt/Structures/FlyingObelisk_no_lightnings_no_letter.png" type="Texture" id=20]
 [ext_resource path="res://PixelArt/Test/LightTest.png" type="Texture" id=21]
-[ext_resource path="res://PixelArt/Test/pixel_stars.png" type="Texture" id=22]
 [ext_resource path="res://Overlap/SoftCollision.tscn" type="PackedScene" id=23]
 
-[sub_resource type="RectangleShape2D" id=79]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 106.453, 33.0373 )
 
-[sub_resource type="Shader" id=77]
+[sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
 
-uniform float tile_factor = 10.0;
-uniform float aspect_ratio = 0.5;
+uniform vec4 bg_color: hint_color;
 
-uniform vec2 time_factor = vec2(2.0, 3.0);
-uniform vec2 offset_factor = vec2(5.0, 2.0);
-uniform vec2 amplitude = vec2(0.05, 0.05);
+float rand(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+}
 
 void fragment() {
-	vec2 tiled_uvs = UV * tile_factor;
-	tiled_uvs.y *= aspect_ratio;
-	
-	vec2 wave_uv_offset;
-	wave_uv_offset.x += sin(TIME * time_factor.x + (tiled_uvs.x + tiled_uvs.y) * offset_factor.x);
-	wave_uv_offset.y += cos(TIME * time_factor.y + (tiled_uvs.x + tiled_uvs.y) * offset_factor.y);
-	
+	float size = 80.0;
+	float prob = 0.90;
+	vec2 pos = floor(1.0 / size * FRAGCOORD.xy);
+	float color = 0.0;
+	float starValue = rand(pos);
 
-	COLOR = texture(TEXTURE, tiled_uvs + wave_uv_offset * amplitude);
-
+	if (starValue > prob)
+	{
+		vec2 center = size * pos + vec2(size, size) * 0.5;
+		float t = 0.9 + 0.2 * sin(TIME * 8.0 + (starValue - prob) / (1.0 - prob) * 45.0);
+		color = 1.0 - distance(FRAGCOORD.xy, center) / (0.5 * size);
+		color = color * t / (abs(FRAGCOORD.y - center.y)) * t / (abs(FRAGCOORD.x - center.x));
+	}
+	else if (rand(SCREEN_UV.xy / 20.0) > 0.996)
+	{
+		float r = rand(SCREEN_UV.xy);
+		color = r * (0.85 * sin(TIME * (r * 5.0) + 720.0 * r) + 0.95);
+	}
+	COLOR = vec4(vec3(color),1.0) + bg_color;
 }"
 
-[sub_resource type="ShaderMaterial" id=78]
-shader = SubResource( 77 )
-shader_param/tile_factor = 2.0
-shader_param/aspect_ratio = 1.0
-shader_param/time_factor = Vector2( 1, 1 )
-shader_param/offset_factor = Vector2( 1, 1 )
-shader_param/amplitude = Vector2( 0.1, 0.1 )
-
-[sub_resource type="ConvexPolygonShape2D" id=1]
-points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
-
-[sub_resource type="ConvexPolygonShape2D" id=2]
-points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
-
-[sub_resource type="ConvexPolygonShape2D" id=3]
-points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
-
-[sub_resource type="ConvexPolygonShape2D" id=4]
-points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
-
-[sub_resource type="ConvexPolygonShape2D" id=5]
-points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/bg_color = Color( 0.145098, 0.0392157, 0.176471, 1 )
 
 [sub_resource type="ConvexPolygonShape2D" id=6]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -199,7 +187,22 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 [sub_resource type="ConvexPolygonShape2D" id=47]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
-[sub_resource type="TileSet" id=48]
+[sub_resource type="ConvexPolygonShape2D" id=48]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=49]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=50]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=51]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=52]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="TileSet" id=53]
 0/name = "CliffTileset.png 0"
 0/texture = ExtResource( 5 )
 0/tex_offset = Vector2( 0, 0 )
@@ -219,295 +222,295 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 0/navigation_offset = Vector2( 0, 0 )
 0/shape_offset = Vector2( 0, 0 )
 0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape = SubResource( 1 )
+0/shape = SubResource( 6 )
 0/shape_one_way = false
 0/shape_one_way_margin = 1.0
 0/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 1 ),
+"shape": SubResource( 6 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 1, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 2 ),
+"shape": SubResource( 7 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 2, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 3 ),
+"shape": SubResource( 8 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 0, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 4 ),
+"shape": SubResource( 9 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 1, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 5 ),
+"shape": SubResource( 10 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 2, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 6 ),
+"shape": SubResource( 11 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 2, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 7 ),
+"shape": SubResource( 12 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 1, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 8 ),
+"shape": SubResource( 13 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 0, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 9 ),
+"shape": SubResource( 14 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 0, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 10 ),
+"shape": SubResource( 15 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 1, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 11 ),
+"shape": SubResource( 16 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 2, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 12 ),
+"shape": SubResource( 17 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 3, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 13 ),
+"shape": SubResource( 18 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 3, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 14 ),
+"shape": SubResource( 19 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 3, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 15 ),
+"shape": SubResource( 20 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 3, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 16 ),
+"shape": SubResource( 21 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 4, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 17 ),
+"shape": SubResource( 22 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 4, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 18 ),
+"shape": SubResource( 23 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 4, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 19 ),
+"shape": SubResource( 24 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 4, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 20 ),
+"shape": SubResource( 25 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 4, 4 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 21 ),
+"shape": SubResource( 26 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 5, 4 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 22 ),
+"shape": SubResource( 27 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 5, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 23 ),
+"shape": SubResource( 28 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 5, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 24 ),
+"shape": SubResource( 29 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 5, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 25 ),
+"shape": SubResource( 30 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 5, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 26 ),
+"shape": SubResource( 31 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 6, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 27 ),
+"shape": SubResource( 32 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 6, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 28 ),
+"shape": SubResource( 33 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 6, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 29 ),
+"shape": SubResource( 34 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 6, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 30 ),
+"shape": SubResource( 35 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 6, 4 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 31 ),
+"shape": SubResource( 36 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 7, 4 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 32 ),
+"shape": SubResource( 37 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 7, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 33 ),
+"shape": SubResource( 38 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 7, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 34 ),
+"shape": SubResource( 39 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 7, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 35 ),
+"shape": SubResource( 40 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 7, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 36 ),
+"shape": SubResource( 41 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 8, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 37 ),
+"shape": SubResource( 42 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 9, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 38 ),
+"shape": SubResource( 43 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 9, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 39 ),
+"shape": SubResource( 44 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 10, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 40 ),
+"shape": SubResource( 45 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 10, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 41 ),
+"shape": SubResource( 46 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 9, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 42 ),
+"shape": SubResource( 47 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 8, 4 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 43 ),
+"shape": SubResource( 48 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 8, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 44 ),
+"shape": SubResource( 49 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 8, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 45 ),
+"shape": SubResource( 50 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 8, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 46 ),
+"shape": SubResource( 51 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 9, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 47 ),
+"shape": SubResource( 52 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 0/z_index = 0
 
-[sub_resource type="Shader" id=49]
+[sub_resource type="Shader" id=54]
 code = "shader_type canvas_item;
 
 uniform float lod: hint_range(0, 5);
@@ -516,111 +519,111 @@ void fragment() {
 	COLOR.rgb = texture(SCREEN_TEXTURE, SCREEN_UV, 2).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=50]
-shader = SubResource( 49 )
+[sub_resource type="ShaderMaterial" id=55]
+shader = SubResource( 54 )
 shader_param/lod = null
-
-[sub_resource type="AtlasTexture" id=51]
-atlas = ExtResource( 16 )
-region = Rect2( 0, 0, 18, 26 )
-
-[sub_resource type="AtlasTexture" id=52]
-atlas = ExtResource( 16 )
-region = Rect2( 18, 0, 18, 26 )
-
-[sub_resource type="AtlasTexture" id=53]
-atlas = ExtResource( 16 )
-region = Rect2( 36, 0, 18, 26 )
-
-[sub_resource type="AtlasTexture" id=54]
-atlas = ExtResource( 16 )
-region = Rect2( 54, 0, 18, 26 )
-
-[sub_resource type="AtlasTexture" id=55]
-atlas = ExtResource( 16 )
-region = Rect2( 72, 0, 18, 26 )
 
 [sub_resource type="AtlasTexture" id=56]
 atlas = ExtResource( 16 )
-region = Rect2( 90, 0, 18, 26 )
+region = Rect2( 0, 0, 18, 26 )
 
 [sub_resource type="AtlasTexture" id=57]
 atlas = ExtResource( 16 )
-region = Rect2( 108, 0, 18, 26 )
+region = Rect2( 18, 0, 18, 26 )
 
 [sub_resource type="AtlasTexture" id=58]
 atlas = ExtResource( 16 )
+region = Rect2( 36, 0, 18, 26 )
+
+[sub_resource type="AtlasTexture" id=59]
+atlas = ExtResource( 16 )
+region = Rect2( 54, 0, 18, 26 )
+
+[sub_resource type="AtlasTexture" id=60]
+atlas = ExtResource( 16 )
+region = Rect2( 72, 0, 18, 26 )
+
+[sub_resource type="AtlasTexture" id=61]
+atlas = ExtResource( 16 )
+region = Rect2( 90, 0, 18, 26 )
+
+[sub_resource type="AtlasTexture" id=62]
+atlas = ExtResource( 16 )
+region = Rect2( 108, 0, 18, 26 )
+
+[sub_resource type="AtlasTexture" id=63]
+atlas = ExtResource( 16 )
 region = Rect2( 126, 0, 18, 26 )
 
-[sub_resource type="SpriteFrames" id=59]
+[sub_resource type="SpriteFrames" id=64]
 animations = [ {
-"frames": [ SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ) ],
+"frames": [ SubResource( 56 ), SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
-
-[sub_resource type="AtlasTexture" id=60]
-atlas = ExtResource( 20 )
-region = Rect2( 0, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=61]
-atlas = ExtResource( 20 )
-region = Rect2( 200, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=62]
-atlas = ExtResource( 20 )
-region = Rect2( 400, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=63]
-atlas = ExtResource( 20 )
-region = Rect2( 600, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=64]
-atlas = ExtResource( 20 )
-region = Rect2( 800, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=65]
 atlas = ExtResource( 20 )
-region = Rect2( 1000, 0, 200, 400 )
+region = Rect2( 0, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=66]
 atlas = ExtResource( 20 )
-region = Rect2( 1200, 0, 200, 400 )
+region = Rect2( 200, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=67]
 atlas = ExtResource( 20 )
-region = Rect2( 1400, 0, 200, 400 )
+region = Rect2( 400, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=68]
 atlas = ExtResource( 20 )
-region = Rect2( 1600, 0, 200, 400 )
+region = Rect2( 600, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=69]
 atlas = ExtResource( 20 )
-region = Rect2( 1800, 0, 200, 400 )
+region = Rect2( 800, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=70]
 atlas = ExtResource( 20 )
-region = Rect2( 2000, 0, 200, 400 )
+region = Rect2( 1000, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=71]
 atlas = ExtResource( 20 )
-region = Rect2( 2200, 0, 200, 400 )
+region = Rect2( 1200, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=72]
 atlas = ExtResource( 20 )
+region = Rect2( 1400, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=73]
+atlas = ExtResource( 20 )
+region = Rect2( 1600, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=74]
+atlas = ExtResource( 20 )
+region = Rect2( 1800, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=75]
+atlas = ExtResource( 20 )
+region = Rect2( 2000, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=76]
+atlas = ExtResource( 20 )
+region = Rect2( 2200, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=77]
+atlas = ExtResource( 20 )
 region = Rect2( 2400, 0, 200, 400 )
 
-[sub_resource type="SpriteFrames" id=73]
+[sub_resource type="SpriteFrames" id=78]
 animations = [ {
-"frames": [ SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ) ],
+"frames": [ SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ), SubResource( 73 ), SubResource( 74 ), SubResource( 75 ), SubResource( 76 ), SubResource( 77 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="Environment" id=74]
+[sub_resource type="Environment" id=79]
 background_mode = 4
 glow_enabled = true
 
@@ -640,26 +643,13 @@ position = Vector2( 159.025, -22.7171 )
 
 [node name="CollisionShape2D" parent="Background/SoftCollision" index="0"]
 position = Vector2( 21.0237, -0.33371 )
-shape = SubResource( 79 )
+shape = SubResource( 1 )
 
-[node name="ColorRect" type="ColorRect" parent="Background"]
-visible = false
-margin_left = -1814.0
-margin_top = -1908.0
-margin_right = 4335.0
-margin_bottom = 2594.0
-color = Color( 0.176471, 0.0862745, 0.231373, 0.627451 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="Background/ColorRect"]
-visible = false
-material = SubResource( 78 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 22 )
-stretch_mode = 2
+[node name="StarSea" type="Sprite" parent="Background"]
+material = SubResource( 3 )
+position = Vector2( 1721.45, 1014.69 )
+scale = Vector2( 98.4047, 81.5995 )
+texture = ExtResource( 13 )
 
 [node name="WaterTileMap" type="TileMap" parent="Background"]
 tile_set = ExtResource( 2 )
@@ -689,7 +679,7 @@ cell_y_sort = true
 format = 1
 
 [node name="DirtCliffTileMap" type="TileMap" parent="Background"]
-tile_set = SubResource( 48 )
+tile_set = SubResource( 53 )
 cell_size = Vector2( 32, 32 )
 collision_mask = 0
 format = 1
@@ -704,7 +694,7 @@ script = ExtResource( 11 )
 
 [node name="BlurShader" type="Sprite" parent="Camera2D"]
 visible = false
-material = SubResource( 50 )
+material = SubResource( 55 )
 position = Vector2( -2.99999, 3 )
 scale = Vector2( 7.45312, 4.10938 )
 texture = ExtResource( 13 )
@@ -725,8 +715,8 @@ texture = ExtResource( 13 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="YSort"]
 position = Vector2( 647.836, -540.14 )
-frames = SubResource( 59 )
-frame = 3
+frames = SubResource( 64 )
+frame = 2
 speed_scale = 1.5
 playing = true
 __meta__ = {
@@ -747,7 +737,8 @@ shadow_enabled = true
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="YSort"]
 position = Vector2( 453.035, 155.247 )
 scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 73 )
+frames = SubResource( 78 )
+frame = 8
 playing = true
 offset = Vector2( 0.0905762, -179.422 )
 
@@ -797,7 +788,7 @@ visible = false
 visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 74 )
+environment = SubResource( 79 )
 
 [editable path="Background/SoftCollision"]
 [editable path="DayNightCycle"]

@@ -26,7 +26,7 @@ func set_time(set_seconds):
 	$AnimationPlayer.seek(currentFrame)
 
 func set_light(value: bool):
-	if get_tree().is_network_server():
+	if get_tree().is_network_server() and value != is_night:
 		rpc("change_light", value)
 
 remotesync func sync_time(seconds_check_rpc):

@@ -73,9 +73,9 @@ func create_reflection(current_sprite: Sprite, new_name: String) -> RemoteTransf
 	return remote_transform
 
 func delete_reflection(new_name: String) -> void:
-	var tilemap = get_node("/root/World/Backgroudnd/WaterTileMap/")
-	if tilemap.has_node(name):
-	 tilemap.queue_free()
+	var tilemap = get_node("/root/World/Background/WaterTileMap")
+	if tilemap.has_node(new_name):
+	 tilemap.get_node(new_name).queue_free()
 
 func get_player_positions() -> Vector2:
 	var player_positions = []
