@@ -7,7 +7,7 @@
 [ext_resource path="res://Action RPG Resources/World/CliffTileset.png" type="Texture" id=5]
 [ext_resource path="res://World/Grass.tscn" type="PackedScene" id=6]
 [ext_resource path="res://World/TallGrass.tscn" type="PackedScene" id=7]
-[ext_resource path="res://UI/HealthUI.tscn" type="PackedScene" id=8]
+[ext_resource path="res://UI/HUD.tscn" type="PackedScene" id=8]
 [ext_resource path="res://World/Tree.tscn" type="PackedScene" id=9]
 [ext_resource path="res://World/World.gd" type="Script" id=10]
 [ext_resource path="res://World/Camera2D.gd" type="Script" id=11]
@@ -524,100 +524,100 @@ shader = SubResource( 52 )
 shader_param/lod = null
 
 [sub_resource type="AtlasTexture" id=54]
-atlas = ExtResource( 16 )
-region = Rect2( 0, 0, 18, 26 )
+atlas = ExtResource( 20 )
+region = Rect2( 0, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=55]
-atlas = ExtResource( 16 )
-region = Rect2( 18, 0, 18, 26 )
+atlas = ExtResource( 20 )
+region = Rect2( 200, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=56]
-atlas = ExtResource( 16 )
-region = Rect2( 36, 0, 18, 26 )
+atlas = ExtResource( 20 )
+region = Rect2( 400, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=57]
-atlas = ExtResource( 16 )
-region = Rect2( 54, 0, 18, 26 )
+atlas = ExtResource( 20 )
+region = Rect2( 600, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=58]
-atlas = ExtResource( 16 )
-region = Rect2( 72, 0, 18, 26 )
+atlas = ExtResource( 20 )
+region = Rect2( 800, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=59]
-atlas = ExtResource( 16 )
-region = Rect2( 90, 0, 18, 26 )
+atlas = ExtResource( 20 )
+region = Rect2( 1000, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=60]
-atlas = ExtResource( 16 )
-region = Rect2( 108, 0, 18, 26 )
+atlas = ExtResource( 20 )
+region = Rect2( 1200, 0, 200, 400 )
 
 [sub_resource type="AtlasTexture" id=61]
-atlas = ExtResource( 16 )
-region = Rect2( 126, 0, 18, 26 )
+atlas = ExtResource( 20 )
+region = Rect2( 1400, 0, 200, 400 )
 
-[sub_resource type="SpriteFrames" id=62]
+[sub_resource type="AtlasTexture" id=62]
+atlas = ExtResource( 20 )
+region = Rect2( 1600, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=63]
+atlas = ExtResource( 20 )
+region = Rect2( 1800, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=64]
+atlas = ExtResource( 20 )
+region = Rect2( 2000, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=65]
+atlas = ExtResource( 20 )
+region = Rect2( 2200, 0, 200, 400 )
+
+[sub_resource type="AtlasTexture" id=66]
+atlas = ExtResource( 20 )
+region = Rect2( 2400, 0, 200, 400 )
+
+[sub_resource type="SpriteFrames" id=67]
 animations = [ {
-"frames": [ SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ), SubResource( 61 ) ],
+"frames": [ SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="AtlasTexture" id=63]
-atlas = ExtResource( 20 )
-region = Rect2( 0, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=64]
-atlas = ExtResource( 20 )
-region = Rect2( 200, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=65]
-atlas = ExtResource( 20 )
-region = Rect2( 400, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=66]
-atlas = ExtResource( 20 )
-region = Rect2( 600, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=67]
-atlas = ExtResource( 20 )
-region = Rect2( 800, 0, 200, 400 )
-
 [sub_resource type="AtlasTexture" id=68]
-atlas = ExtResource( 20 )
-region = Rect2( 1000, 0, 200, 400 )
+atlas = ExtResource( 16 )
+region = Rect2( 0, 0, 18, 26 )
 
 [sub_resource type="AtlasTexture" id=69]
-atlas = ExtResource( 20 )
-region = Rect2( 1200, 0, 200, 400 )
+atlas = ExtResource( 16 )
+region = Rect2( 18, 0, 18, 26 )
 
 [sub_resource type="AtlasTexture" id=70]
-atlas = ExtResource( 20 )
-region = Rect2( 1400, 0, 200, 400 )
+atlas = ExtResource( 16 )
+region = Rect2( 36, 0, 18, 26 )
 
 [sub_resource type="AtlasTexture" id=71]
-atlas = ExtResource( 20 )
-region = Rect2( 1600, 0, 200, 400 )
+atlas = ExtResource( 16 )
+region = Rect2( 54, 0, 18, 26 )
 
 [sub_resource type="AtlasTexture" id=72]
-atlas = ExtResource( 20 )
-region = Rect2( 1800, 0, 200, 400 )
+atlas = ExtResource( 16 )
+region = Rect2( 72, 0, 18, 26 )
 
 [sub_resource type="AtlasTexture" id=73]
-atlas = ExtResource( 20 )
-region = Rect2( 2000, 0, 200, 400 )
+atlas = ExtResource( 16 )
+region = Rect2( 90, 0, 18, 26 )
 
 [sub_resource type="AtlasTexture" id=74]
-atlas = ExtResource( 20 )
-region = Rect2( 2200, 0, 200, 400 )
+atlas = ExtResource( 16 )
+region = Rect2( 108, 0, 18, 26 )
 
 [sub_resource type="AtlasTexture" id=75]
-atlas = ExtResource( 20 )
-region = Rect2( 2400, 0, 200, 400 )
+atlas = ExtResource( 16 )
+region = Rect2( 126, 0, 18, 26 )
 
 [sub_resource type="SpriteFrames" id=76]
 animations = [ {
-"frames": [ SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ), SubResource( 73 ), SubResource( 74 ), SubResource( 75 ) ],
+"frames": [ SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ), SubResource( 73 ), SubResource( 74 ), SubResource( 75 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
@@ -713,33 +713,37 @@ texture = ExtResource( 13 )
 
 [node name="TallGrass" type="YSort" parent="YSort"]
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="YSort"]
-position = Vector2( 647.836, -540.14 )
-frames = SubResource( 62 )
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="YSort"]
+position = Vector2( 453.035, 155.247 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 67 )
+frame = 4
+playing = true
+offset = Vector2( 0.0905762, -179.422 )
+
+[node name="Node2D" type="Node2D" parent="YSort"]
+position = Vector2( 648.208, -589.847 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="YSort/Node2D"]
+position = Vector2( -0.372009, 49.707 )
+frames = SubResource( 76 )
+frame = 1
 speed_scale = 1.5
 playing = true
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="YSort/AnimatedSprite"]
+[node name="Sprite" type="Sprite" parent="YSort/Node2D/AnimatedSprite"]
 show_behind_parent = true
 position = Vector2( -0.190247, 5.31649 )
 scale = Vector2( 0.623392, 0.900675 )
 texture = ExtResource( 15 )
 
-[node name="Light2D" type="Light2D" parent="YSort/AnimatedSprite"]
+[node name="Light2D" type="Light2D" parent="YSort/Node2D/AnimatedSprite"]
 texture = ExtResource( 21 )
 mode = 2
 shadow_enabled = true
-
-[node name="AnimatedSprite2" type="AnimatedSprite" parent="YSort"]
-position = Vector2( 453.035, 155.247 )
-scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 76 )
-frame = 2
-playing = true
-offset = Vector2( 0.0905762, -179.422 )
 
 [node name="Tent" type="Sprite" parent="YSort"]
 position = Vector2( 648.208, -589.847 )
@@ -756,11 +760,7 @@ texture = ExtResource( 15 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HealthUI" parent="CanvasLayer" instance=ExtResource( 8 )]
-margin_left = 2.70268
-margin_top = 2.70269
-margin_right = 42.7027
-margin_bottom = 42.7027
+[node name="VBoxContainer" parent="CanvasLayer" instance=ExtResource( 8 )]
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource( 12 )]
 
