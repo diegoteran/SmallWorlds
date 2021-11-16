@@ -29,9 +29,16 @@ func SpawnEnemy():
 		enemy_spawn_points = []
 		open_locations = []
 		
+		var time_out = 3
 		while enemy_spawn_points.size() < enemy_maximum:
 			enemy_spawn_points.append_array(generate_possible_spawn_points())
+			time_out -= 1
+			if time_out <= 0:
+				break
 		
+		if enemy_spawn_points.size() <= 0:
+				return
+
 		for i in range(enemy_spawn_points.size()):
 			open_locations.append(i)
 		

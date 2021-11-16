@@ -98,6 +98,7 @@ func kill_player():
 	state = DEAD
 	hurtBox.set_deferred('monitoring', false)
 	collisionShape.set_deferred('disabled', true)
+	global_position = Vector2(500, -500)
 	yield(get_tree().create_timer(1.0), "timeout")
 	revive_player()
 	pass
@@ -105,7 +106,6 @@ func kill_player():
 func revive_player():
 	state = MOVE
 	stats.health = stats.max_health
-	global_position = Vector2(500, -500)
 	hurtBox.set_deferred('monitoring', true)
 	collisionShape.set_deferred('disabled', false)
 	pass
