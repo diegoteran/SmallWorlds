@@ -1,4 +1,4 @@
-[gd_scene load_steps=100 format=2]
+[gd_scene load_steps=90 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PixelArt/TileSet/Background.tres" type="TileSet" id=2]
@@ -15,12 +15,11 @@
 [ext_resource path="res://icon.png" type="Texture" id=13]
 [ext_resource path="res://World/Background.gd" type="Script" id=14]
 [ext_resource path="res://PixelArt/OldShadows/LargeShadow.png" type="Texture" id=15]
-[ext_resource path="res://PixelArt/Structures/Campfire.png" type="Texture" id=16]
+[ext_resource path="res://World/Fire.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=17]
 [ext_resource path="res://World/WorldParticles.tscn" type="PackedScene" id=18]
 [ext_resource path="res://PixelArt/Structures/Tent.png" type="Texture" id=19]
 [ext_resource path="res://PixelArt/Structures/FlyingObelisk_no_lightnings_no_letter.png" type="Texture" id=20]
-[ext_resource path="res://PixelArt/Test/LightTest.png" type="Texture" id=21]
 [ext_resource path="res://Overlap/SoftCollision.tscn" type="PackedScene" id=23]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -583,47 +582,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="AtlasTexture" id=68]
-atlas = ExtResource( 16 )
-region = Rect2( 0, 0, 18, 26 )
-
-[sub_resource type="AtlasTexture" id=69]
-atlas = ExtResource( 16 )
-region = Rect2( 18, 0, 18, 26 )
-
-[sub_resource type="AtlasTexture" id=70]
-atlas = ExtResource( 16 )
-region = Rect2( 36, 0, 18, 26 )
-
-[sub_resource type="AtlasTexture" id=71]
-atlas = ExtResource( 16 )
-region = Rect2( 54, 0, 18, 26 )
-
-[sub_resource type="AtlasTexture" id=72]
-atlas = ExtResource( 16 )
-region = Rect2( 72, 0, 18, 26 )
-
-[sub_resource type="AtlasTexture" id=73]
-atlas = ExtResource( 16 )
-region = Rect2( 90, 0, 18, 26 )
-
-[sub_resource type="AtlasTexture" id=74]
-atlas = ExtResource( 16 )
-region = Rect2( 108, 0, 18, 26 )
-
-[sub_resource type="AtlasTexture" id=75]
-atlas = ExtResource( 16 )
-region = Rect2( 126, 0, 18, 26 )
-
-[sub_resource type="SpriteFrames" id=76]
-animations = [ {
-"frames": [ SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ), SubResource( 73 ), SubResource( 74 ), SubResource( 75 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
-
-[sub_resource type="Environment" id=77]
+[sub_resource type="Environment" id=68]
 background_mode = 4
 glow_enabled = true
 
@@ -709,6 +668,11 @@ texture = ExtResource( 13 )
 
 [node name="Trees" type="YSort" parent="YSort"]
 
+[node name="Fires" type="YSort" parent="YSort"]
+
+[node name="Fire" parent="YSort/Fires" instance=ExtResource( 16 )]
+position = Vector2( 240.496, 208.542 )
+
 [node name="Enemies" type="YSort" parent="YSort"]
 
 [node name="TallGrass" type="YSort" parent="YSort"]
@@ -717,33 +681,9 @@ texture = ExtResource( 13 )
 position = Vector2( 453.035, 155.247 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 67 )
-frame = 4
+frame = 5
 playing = true
 offset = Vector2( 0.0905762, -179.422 )
-
-[node name="Node2D" type="Node2D" parent="YSort"]
-position = Vector2( 648.208, -589.847 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="YSort/Node2D"]
-position = Vector2( -0.372009, 49.707 )
-frames = SubResource( 76 )
-frame = 1
-speed_scale = 1.5
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Sprite" type="Sprite" parent="YSort/Node2D/AnimatedSprite"]
-show_behind_parent = true
-position = Vector2( -0.190247, 5.31649 )
-scale = Vector2( 0.623392, 0.900675 )
-texture = ExtResource( 15 )
-
-[node name="Light2D" type="Light2D" parent="YSort/Node2D/AnimatedSprite"]
-texture = ExtResource( 21 )
-mode = 2
-shadow_enabled = true
 
 [node name="Tent" type="Sprite" parent="YSort"]
 position = Vector2( 648.208, -589.847 )
@@ -786,7 +726,7 @@ modulate = Color( 0.945098, 0.415686, 0.360784, 1 )
 visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 77 )
+environment = SubResource( 68 )
 
 [editable path="Background/SoftCollision"]
 [editable path="DayNightCycle"]

@@ -24,6 +24,9 @@ var knockback = Vector2.ZERO
 var stateServer = "Idle"
 var high_damage = 0
 var damage = 0
+var is_night = false
+var is_enraged = false
+var safe_areas = []
 
 puppet var puppet_velocity = Vector2.ZERO
 puppet var puppet_position = Vector2.ZERO
@@ -60,6 +63,13 @@ func _ready():
 	if cycle.is_night:
 		set_lights(true)
 
+func _physics_process(_delta):
+	if is_night and safe_areas.size() == 0:
+		if !is_enraged:
+			set_enraged_stats(true)
+	elif is_enraged:
+		set_enraged_stats(false)
+
 func set_hp(new_value):
 	if new_value != hp:
 		hp = new_value
@@ -68,11 +78,15 @@ func set_hp(new_value):
 
 func set_lights(value: bool):
 	if state != DEAD:
-		particles.emitting = value
-		if value:
-			hitBox.damage = high_damage
-		else:
-			hitBox.damage = damage
+		is_night = value
+
+func set_enraged_stats(value: bool):
+	is_enraged = value
+	particles.emitting = value
+	if value:
+		hitBox.damage = high_damage
+	else:
+		hitBox.damage = damage
 
 func update_wander_controller():
 	state = pick_random_state([IDLE, WANDER])
