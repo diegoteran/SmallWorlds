@@ -5,9 +5,11 @@ onready var light1 = $light1
 onready var light2 = $light2
 
 func _ready():
-		# Light Handler
-# warning-ignore:return_value_discarded
-	get_node("/root/World/DayNightCycle").connect("light_changed", self, "set_lights")
+	# Light Handler
+	var cycle = get_node("/root/World/DayNightCycle")
+	cycle.connect("light_changed", self, "set_lights")
+	if cycle.is_night:
+		set_lights(true)
 
 func set_lights(value: bool):
 	if value:

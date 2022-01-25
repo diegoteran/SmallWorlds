@@ -3,8 +3,8 @@ extends KinematicBody2D
 export var Wheel: PackedScene
 export var StepDustEffect: PackedScene
 export var ShockWaveEffect: PackedScene
-export var ACCELERATION = 500
-export var MAX_SPEED = 100
+export var ACCELERATION = 400
+export var MAX_SPEED = 85
 export var ROLL_SPEED = 150
 export var FRICTION = 1000
 export var ATTACK_SPEED = 15
@@ -116,8 +116,8 @@ func SetDamage(damage):
 func set_lights(value: bool):
 	print("player light")
 	if value:
-		tween.interpolate_property(light1, "energy", light1.energy, 0.8, 1.0)
-		tween.interpolate_property(light2, "energy", light2.energy, 0.8, 1.0)
+		tween.interpolate_property(light1, "energy", light1.energy, 0.5, 1.0)
+		tween.interpolate_property(light2, "energy", light2.energy, 0.5, 1.0)
 	else:
 		tween.interpolate_property(light1, "energy", light1.energy, 0.0, 1.0)
 		tween.interpolate_property(light2, "energy", light2.energy, 0.0, 1.0)

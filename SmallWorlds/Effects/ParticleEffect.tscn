@@ -43,4 +43,5 @@ randomness = 0.5
 process_material = SubResource( 3 )
 
 [node name="DeathTimer" type="Timer" parent="."]
+
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]

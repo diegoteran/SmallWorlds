@@ -14,9 +14,9 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Depth Tamers"
+config/name="Small Worlds"
 run/main_scene="res://Menus/TitleScreen.tscn"
-config/icon="res://icon.png"
+config/icon="res://PixelArt/SmallPlayer/Side Portrait Large.png"
 
 [autoload]
 

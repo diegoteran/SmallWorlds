@@ -16,6 +16,8 @@ enum {
 	DEAD
 }
 
+export var ParticleEffect: PackedScene
+
 var server = Network
 
 var state = IDLE
@@ -64,6 +66,9 @@ func _ready():
 		set_lights(true)
 
 func _physics_process(_delta):
+	if state == DEAD:
+		return
+
 	if is_night and safe_areas.size() == 0:
 		if !is_enraged:
 			set_enraged_stats(true)
@@ -113,6 +118,17 @@ func _on_HurtBox_area_entered(area) -> void:
 		var new_hp = hp - area.damage
 		Shake.shake(0.8, 0.3, 2)
 		rpc("hurt", new_knockback, new_hp)
+		rpc("hurt_effect", (global_position - area.get_parent().global_position).normalized())
+
+remotesync func hurt_effect(direction: Vector2):
+	var particleEffect = ParticleEffect.instance()
+#	var image = sprite.texture.get_data()
+#	image.lock()
+#	var grass_color = image.get_pixel((sprite.frame % 3) * 16 + 10, 10)
+	particleEffect.set_particles_color(Color.mediumpurple)
+	get_parent().add_child(particleEffect)
+	particleEffect.global_position = global_position + direction * 5
+	particleEffect.look_at(particleEffect.global_position + Vector2(-direction.y, direction.x))
 
 func _on_death():
 	pass
