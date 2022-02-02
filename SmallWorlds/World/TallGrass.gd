@@ -1,6 +1,9 @@
 extends Node2D
 
 var frames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+var in_water = false
+var frames_water = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+var water_sprite = preload("res://PixelArt/FloraAssetPack/Water Sprites/Water Flora Grass.png")
 
 onready var sprite = $Sprite
 onready var shadowSprite = $ShadowSprite
@@ -9,6 +12,12 @@ onready var animationPlayer = $AnimationPlayer
 export var ParticleEffect: PackedScene
 
 func _ready():
+	
+	if in_water:
+		sprite.vframes = 3
+		sprite.texture = water_sprite
+		frames = frames_water
+	
 	sprite.flip_h = true if randi() % 2 == 0 else false
 	sprite.get_material().set_shader_param("offset", randf() * 100)
 	sprite.frame = frames[randi() % frames.size()]

@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://PixelArt/Mining/rock 2.png" type="Texture" id=1]
+[ext_resource path="res://PixelArt/OldShadows/LargeShadow.png" type="Texture" id=2]
+[ext_resource path="res://Hitboxes and Hurtboxes/HurtBox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://World/Rock.gd" type="Script" id=4]
+[ext_resource path="res://Effects/ParticleEffect.tscn" type="PackedScene" id=5]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 6.26197
+height = 7.43958
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 7.00523
+height = 5.64873
+
+[node name="Rock" type="StaticBody2D"]
+script = ExtResource( 4 )
+ParticleEffect = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -4.90548 )
+texture = ExtResource( 1 )
+hframes = 4
+frame = 3
+
+[node name="ShadowSprite" type="Sprite" parent="."]
+show_behind_parent = true
+position = Vector2( -7.10543e-15, -1.48651 )
+scale = Vector2( 0.897803, 0.754726 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -2.08111 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="HurtBox" parent="." instance=ExtResource( 3 )]
+collision_layer = 8
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2( 0, -2.37841 )
+rotation = 1.5708
+shape = SubResource( 2 )
+
+[editable path="HurtBox"]

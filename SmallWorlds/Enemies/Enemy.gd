@@ -122,9 +122,6 @@ func _on_HurtBox_area_entered(area) -> void:
 
 remotesync func hurt_effect(direction: Vector2):
 	var particleEffect = ParticleEffect.instance()
-#	var image = sprite.texture.get_data()
-#	image.lock()
-#	var grass_color = image.get_pixel((sprite.frame % 3) * 16 + 10, 10)
 	particleEffect.set_particles_color(Color.mediumpurple)
 	get_parent().add_child(particleEffect)
 	particleEffect.global_position = global_position + direction * 5

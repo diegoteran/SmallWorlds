@@ -19,6 +19,7 @@ var sounds = {
 	"Menu Move" : load(sounds_path + "Menu Move.wav"),
 	"Menu Select" : load(sounds_path + "Menu Select.wav"),
 	"Pause" : load(sounds_path + "Pause.wav"),
+	"RockHit" : load(sounds_path + "RockHit.wav"),
 	"Step" : load(sounds_path + "Step.wav"),
 	"StepDirt" : load(sounds_path + "StepDirt.wav"),
 	"StepWater" : load(sounds_path + "StepWater.wav"),
