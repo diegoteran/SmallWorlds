@@ -31,7 +31,9 @@ onready var sprite = $Sprite
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hurtBox.connect("area_entered", self, "_on_HurtBox_area_entered")
+# warning-ignore:return_value_discarded
 	connect("mouse_entered", self, "_on_Rock_mouse_entered")
+# warning-ignore:return_value_discarded
 	connect("mouse_exited", self, "_on_Rock_mouse_exited")
 	
 	match type:

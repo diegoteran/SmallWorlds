@@ -163,7 +163,7 @@ func _physics_process(delta):
 		if server.players.size() > 1:  # Expensive?
 			rpc_unreliable("sync_puppet_variables", global_position, velocity, animation_vector)
 	else:
-		MovePuppetPlayer()
+		MovePuppetPlayer(delta)
 		# Extrapolate if needed
 		if not tween.is_active():
 			move()
@@ -210,6 +210,7 @@ remotesync func roll():
 	animationState.travel("Roll")
 
 remotesync func attack(attack_vector):
+	puppet_velocity = attack_vector * ATTACK_SPEED
 	puppetState = "Attack"
 	animationState.travel("Attack")
 	sword.attack()
@@ -305,7 +306,7 @@ func _on_HurtBox_area_entered(area):
 remotesync func hurt():
 	hurtBox.create_hit_effect()
 
-func MovePuppetPlayer():
+func MovePuppetPlayer(delta):
 	if puppetState != "Attack":
 		if puppet_animation_vector != Vector2.ZERO:
 			var input_vector = puppet_animation_vector
@@ -322,8 +323,13 @@ func MovePuppetPlayer():
 			if puppetState != "Roll":
 				puppetState = "Run"
 				animationState.travel("Run")
-			tween.interpolate_property(self, "global_position", global_position, puppet_position, 0.1)
+			if global_position == puppet_position:
+				puppet_position = puppet_position + puppet_velocity * delta
+			tween.interpolate_property(self, "global_position", global_position, puppet_position, delta/2)
 			tween.start()
+	else:
+		tween.interpolate_property(self, "global_position", global_position, global_position + puppet_velocity * delta, delta/2)
+		tween.start()
 
 # Wheel experiment
 func _on_SelectionWheel_colour_change(id):
