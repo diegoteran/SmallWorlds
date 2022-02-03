@@ -4,13 +4,17 @@ export(int) var max_health = 1 setget set_max_health
 var max_soul = 10 setget set_max_soul
 var health = max_health setget set_health
 var soul = 0 setget set_soul
+var max_rock = 10
+var rock = 0 setget set_rock
 
 signal no_health
 signal soul_charged
+signal research_completed
 signal health_changed(value)
 signal max_health_changed(value)
 signal soul_changed(value)
 signal max_soul_changed(value)
+signal rock_changed(value)
 
 func set_health(value):
 	health = min(value, max_health)
@@ -33,6 +37,12 @@ func set_max_soul(value):
 	max_soul = value
 	self.soul = min(soul, max_soul)
 	emit_signal("max_soul_changed", max_soul)
+
+func set_rock(value):
+	rock = min(value, max_rock)
+	emit_signal("rock_changed", rock)
+	if rock ==  max_rock:
+		emit_signal("research_completed")
 
 func _ready():
 	self.health = max_health

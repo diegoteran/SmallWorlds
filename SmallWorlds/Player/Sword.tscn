@@ -196,7 +196,6 @@ SmokeTrail = ExtResource( 4 )
 [node name="HitBox" parent="P" instance=ExtResource( 3 )]
 position = Vector2( 24, 0 )
 collision_mask = 9
-damage = 2
 
 [node name="CollisionShape2D" parent="P/HitBox" index="0"]
 position = Vector2( -0.882886, 0 )

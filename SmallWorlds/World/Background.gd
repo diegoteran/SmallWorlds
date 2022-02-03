@@ -4,6 +4,7 @@ export var TreeScene: PackedScene
 export var BushScene: PackedScene
 export var GrassScene: PackedScene
 export var TallGrassScene: PackedScene
+export var RockScene: PackedScene
 
 # Noise
 export(float) var octaves = 1
@@ -190,6 +191,8 @@ func make_flower_map(x, y, new_chunk_coords) -> void:
 #					Globals.instance_scene_on_node(TallGrassScene, get_parent().get_node("YSort/TallGrass"), g_position + Vector2(10, 0))
 #				elif chance < 26:
 #					enemy_positions.append(g_position)
+		elif chance < 21:
+			scenes_on_node[new_chunk_coords].append(Globals.instance_scene_on_node(RockScene, get_parent().get_node("YSort/Rocks"), g_position))
 
 func clean_map_1(x, y) -> void:
 	if grass_tile.get_cell(x, y) == -1 and dirt_tile.get_cell(x, y) == -1:

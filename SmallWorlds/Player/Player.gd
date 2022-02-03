@@ -96,6 +96,7 @@ remotesync func player_died():
 
 func kill_player():
 	state = DEAD
+	stats.soul = 0
 	hurtBox.set_deferred('monitoring', false)
 	collisionShape.set_deferred('disabled', true)
 	global_position = Vector2(500, -500)
@@ -126,6 +127,9 @@ func set_lights(value: bool):
 
 func add_soul(soul):
 	stats.soul += soul
+	
+func add_rock(rock):
+	stats.rock += rock
 
 func _physics_process(delta):
 	

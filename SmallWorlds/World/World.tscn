@@ -597,6 +597,7 @@ TreeScene = ExtResource( 9 )
 BushScene = ExtResource( 1 )
 GrassScene = ExtResource( 6 )
 TallGrassScene = ExtResource( 7 )
+RockScene = ExtResource( 21 )
 
 [node name="SoftCollision" parent="Background" instance=ExtResource( 23 )]
 position = Vector2( 159.025, -22.7171 )
@@ -680,9 +681,6 @@ position = Vector2( 240.496, 208.542 )
 
 [node name="Rocks" type="YSort" parent="YSort"]
 
-[node name="Rock" parent="YSort/Rocks" instance=ExtResource( 21 )]
-position = Vector2( 100, 100 )
-
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="YSort"]
 position = Vector2( 453.035, 155.247 )
 scale = Vector2( 0.5, 0.5 )
@@ -725,9 +723,9 @@ follow_viewport_scale = 1.5
 modulate = Color( 0.945098, 0.415686, 0.360784, 1 )
 
 [node name="DayNightCycle" parent="." instance=ExtResource( 3 )]
-visible = false
 
 [node name="Foreground" type="Node2D" parent="."]
+visible = false
 
 [node name="Weather" parent="Foreground" instance=ExtResource( 4 )]
 
