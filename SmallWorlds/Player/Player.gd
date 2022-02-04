@@ -3,6 +3,7 @@ extends KinematicBody2D
 export var Wheel: PackedScene
 export var StepDustEffect: PackedScene
 export var ShockWaveEffect: PackedScene
+export var Arrow: PackedScene
 export var ACCELERATION = 400
 export var MAX_SPEED = 85
 export var ROLL_SPEED = 150
@@ -13,6 +14,7 @@ enum {
 	MOVE,
 	ROLL,
 	ATTACK,
+	RANGED,
 	DEAD,
 	PAUSED
 }
@@ -157,6 +159,10 @@ func _physics_process(delta):
 					if controller_id_arr.size() > 0 and Input.is_joy_button_pressed(controller_id_arr[0], JOY_BUTTON_2):
 						attack_vector = Vector2(2, 2)
 					attack_state(attack_vector)
+			
+			RANGED:
+				var ranged_vector = global_position.direction_to(get_global_mouse_position())
+				ranged_state(ranged_vector)
 		
 		move()
 		
@@ -188,12 +194,18 @@ func move_state(delta):
 	else:
 		animationState.travel("Idle")
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-	
-	if Input.is_action_just_pressed("attack"):
-		state = ATTACK
 		
 	if Input.is_action_just_pressed("roll"):
 		state = ROLL
+	
+	if selecting:
+		return
+	
+	if Input.is_action_just_pressed("attack"):
+		state = ATTACK
+	
+	if Input.is_action_just_pressed("ranged"):
+		state = RANGED
 
 func roll_state():
 	velocity = animation_vector * ROLL_SPEED
@@ -217,6 +229,24 @@ remotesync func attack(attack_vector):
 	if attack_vector != Vector2(2, 2):
 		animationTree.set("parameters/Attack/blend_position", attack_vector)
 		animationTree.set("parameters/Idle/blend_position", attack_vector)
+
+func ranged_state(ranged_vector):
+	if stats.soul < 1:
+		state = MOVE
+		return
+	stats.soul -= 1
+	if puppetState != "Ranged":
+		rpc("ranged", ranged_vector)
+
+remotesync func ranged(ranged_vector):
+	sword.ranged()
+	var arrow = Globals.instance_scene_on_world(Arrow, sword.global_position)
+	arrow.velocity = ranged_vector
+	ranged_animation_finished()
+
+func ranged_animation_finished():
+	state = MOVE
+	puppetState = "Idle"
 
 remotesync func sync_puppet_variables(pos, vel, a_vector):
 	puppet_position = pos

@@ -113,7 +113,10 @@ func accelerate_towards_point(point, delta):
 func _on_HurtBox_area_entered(area) -> void:
 #	stats.health -= area.damage
 	if area.is_network_master() and state != DEAD:
-		area.get_parent().get_parent().get_parent().get_parent().add_soul(soul_given)
+		if "Arrow" in area.get_parent().name:
+			area.get_parent().delete()
+		else:
+			area.get_parent().get_parent().get_parent().get_parent().add_soul(soul_given)
 		var new_knockback = (global_position - area.get_parent().global_position).normalized() * KNOCKBACK_FRICTION
 		var new_hp = hp - area.damage
 		Shake.shake(0.8, 0.3, 2)

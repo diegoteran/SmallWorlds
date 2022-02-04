@@ -50,6 +50,13 @@ func attack():
 	yield(get_tree().create_timer(0.2), "timeout") 
 	hitboxCollision.disabled = true
 
+func ranged():
+	tween.interpolate_property(self, "offset", offset, 0, 0.05, Tween.TRANS_CIRC)
+	tween.start()
+	yield(get_tree().create_timer(0.1), "timeout") 
+	tween.interpolate_property(self, "offset", 0, 90, 0.1, Tween.TRANS_CIRC)
+	tween.start()
+
 func select_item(item_id):
 	rpc("changing_item", Globals.icon_dict[item_id])
 	hitbox.damage = damage_dict[item_id]
