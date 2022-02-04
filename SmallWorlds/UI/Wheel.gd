@@ -8,7 +8,7 @@ var outer_r = 0.45	# The outer radius of the wheel
 var inner_r = 0.2	# The inner radius of the wheel
 
 # The colours of each segment starting from the bottom right and going clockwise
-var colours = [Color(0.403, 0.215, 0.270), Color(0.403, 0.215, 0.270), Color(0.403, 0.215, 0.270), Color(0.403, 0.215, 0.270)]
+var colours = [Color(0.403, 0.215, 0.270), Color(0.403, 0.215, 0.270), Color(0.403, 0.215, 0.270)]
 
 var no_of_colours = len(colours)	# Number of colours in the colours array
 var selected_colour = -1	# The index of the selected colour within the colours array
@@ -95,6 +95,6 @@ func place_items():
 	for i in no_of_colours:
 		var wheelIcon = WheelIcon.instance()
 		add_child(wheelIcon)
-		wheelIcon.set_frame(i)
+		wheelIcon.set_frame(Globals.icon_dict[i])
 		wheelIcon.set_rot(rot/2 + rot*i)
 		icons.append(wheelIcon)

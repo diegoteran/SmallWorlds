@@ -7,6 +7,7 @@ var dead = true
 var world : Object = null
 var server_world : Object = null
 var ENEMY_DISTANCE_TO_PLAYERS = 400
+var icon_dict = {0:0, 1:3, 2:4}
 
 var Reflection = preload("res://Effects/Reflection.tscn")
 

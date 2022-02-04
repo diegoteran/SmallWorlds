@@ -85,9 +85,11 @@ remotesync func replenish():
 func _on_HurtBox_area_entered(area):
 	if area.is_network_master():
 		Shake.shake(1.5, 0.3, 2)
-		var new_hp = hp - area.damage
-		if hp > 0:
-			area.get_parent().get_parent().get_parent().get_parent().add_rock(rand_range(0.5, 1), type)
+		var new_hp = hp
+		var player = area.get_parent().get_parent().get_parent().get_parent()
+		if hp > 0 and player.wheel_id == 1:
+			player.add_rock(rand_range(0.5, 1), type)
+			new_hp -= area.damage
 		rpc('hit_effect', new_hp)
 
 remotesync func hit_effect(new_hp: float):

@@ -5,6 +5,7 @@ var smoketrail : Object = null
 var trail_name
 var smokeTrail
 #var sword_dict = {"Starting": {}}
+var damage_dict = {0:1, 1: 0.5, 2:0.3}
 
 export var SmokeTrail : PackedScene
 
@@ -13,6 +14,7 @@ onready var pos = $P
 onready var swordEnd = $P/P
 onready var sprite = $P/Sprite
 onready var hitboxCollision = $P/HitBox/CollisionShape2D
+onready var hitbox = $P/HitBox
 
 puppet var p_rotation = 0
 #puppet var p_flip = false
@@ -49,7 +51,8 @@ func attack():
 	hitboxCollision.disabled = true
 
 func select_item(item_id):
-	rpc("changing_item", item_id)
+	rpc("changing_item", Globals.icon_dict[item_id])
+	hitbox.damage = damage_dict[item_id]
 
 remotesync func changing_item(item_id):
 	sprite.frame = item_id
