@@ -170,7 +170,7 @@ func make_flower_map(x, y, new_chunk_coords) -> void:
 		var pos_a = abs(a)
 		var local_position = flower_tile.map_to_world(Vector2(x, y))
 		var g_position = flower_tile.to_global(local_position)
-		var chance = int(((pos_a * 10000) - int(pos_a * 10000)) * 100)
+		var chance = ((pos_a * 10000) - int(pos_a * 10000)) * 100
 		if chance < 10:
 			flower_tile.set_cell(x, y, 2, false, false, false, Vector2(randi() % 4, randi() % 4))
 		elif chance < 12:
@@ -191,7 +191,7 @@ func make_flower_map(x, y, new_chunk_coords) -> void:
 #					Globals.instance_scene_on_node(TallGrassScene, get_parent().get_node("YSort/TallGrass"), g_position + Vector2(10, 0))
 #				elif chance < 26:
 #					enemy_positions.append(g_position)
-		elif chance < 21:
+		elif chance < 20.5:
 			scenes_on_node[new_chunk_coords].append(Globals.instance_scene_on_node(RockScene, get_parent().get_node("YSort/Rocks"), g_position))
 
 func clean_map_1(x, y) -> void:

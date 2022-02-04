@@ -128,8 +128,8 @@ func set_lights(value: bool):
 func add_soul(soul):
 	stats.soul += soul
 	
-func add_rock(rock):
-	stats.rock += rock
+func add_rock(value, type):
+	stats.set_rock(stats.rocks[type] + value, type)
 
 func _physics_process(delta):
 	

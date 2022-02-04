@@ -5,7 +5,12 @@ var max_soul = 10 setget set_max_soul
 var health = max_health setget set_health
 var soul = 0 setget set_soul
 var max_rock = 10
-var rock = 0 setget set_rock
+var rocks = [0, 0]
+
+enum {
+	GREEN,
+	RED
+}
 
 signal no_health
 signal soul_charged
@@ -14,7 +19,7 @@ signal health_changed(value)
 signal max_health_changed(value)
 signal soul_changed(value)
 signal max_soul_changed(value)
-signal rock_changed(value)
+signal rock_changed(value, type)
 
 func set_health(value):
 	health = min(value, max_health)
@@ -38,11 +43,11 @@ func set_max_soul(value):
 	self.soul = min(soul, max_soul)
 	emit_signal("max_soul_changed", max_soul)
 
-func set_rock(value):
-	rock = min(value, max_rock)
-	emit_signal("rock_changed", rock)
-	if rock ==  max_rock:
-		emit_signal("research_completed")
+func set_rock(value, type):
+	rocks[type] = min(value, max_rock)
+	emit_signal("rock_changed", rocks[type], type)
+	if rocks[type] ==  max_rock:
+		emit_signal("research_completed", type)
 
 func _ready():
 	self.health = max_health

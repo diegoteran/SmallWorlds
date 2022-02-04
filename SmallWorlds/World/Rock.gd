@@ -12,6 +12,7 @@ var full_sprite_red = preload("res://PixelArt/Mining/rock 3.png")
 
 var state = WITH
 var days_timer = 0
+var GRID_SIZE = float(3200)
 
 enum {
 	GREEN,
@@ -35,6 +36,9 @@ func _ready():
 	connect("mouse_entered", self, "_on_Rock_mouse_entered")
 # warning-ignore:return_value_discarded
 	connect("mouse_exited", self, "_on_Rock_mouse_exited")
+	
+	var prob = (float(global_position.x) / GRID_SIZE) * (float(global_position.y) / GRID_SIZE)
+	type = RED if prob > randf() else GREEN
 	
 	match type:
 		GREEN:
@@ -83,7 +87,7 @@ func _on_HurtBox_area_entered(area):
 		Shake.shake(1.5, 0.3, 2)
 		var new_hp = hp - area.damage
 		if hp > 0:
-			area.get_parent().get_parent().get_parent().get_parent().add_rock(rand_range(0.5, 1))
+			area.get_parent().get_parent().get_parent().get_parent().add_rock(rand_range(0.5, 1), type)
 		rpc('hit_effect', new_hp)
 
 remotesync func hit_effect(new_hp: float):
