@@ -10,7 +10,7 @@ onready var timer = $Timer
 func _ready():
 	timer.start(3)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var _collision = move_and_slide(velocity * SPEED)
 #	if collision != null:
 #		_on_impact(collision)

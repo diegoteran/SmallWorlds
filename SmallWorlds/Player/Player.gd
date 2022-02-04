@@ -204,7 +204,7 @@ func move_state(delta):
 	if Input.is_action_just_pressed("attack"):
 		state = ATTACK
 	
-	if Input.is_action_just_pressed("ranged"):
+	if Input.is_action_just_pressed("ranged") and wheel_id == 2:
 		state = RANGED
 
 func roll_state():
@@ -290,8 +290,9 @@ func menu_wheel():
 		tween.interpolate_property(wheel, "scale", Vector2.ONE, Vector2.ZERO, 0.1, Tween.TRANS_ELASTIC, Tween.EASE_IN)
 		tween.start()
 		yield(get_tree().create_timer(0.1), "timeout") 
-		wheel.call_deferred("queue_free")
-		wheel = null
+		if wheel != null:
+			wheel.call_deferred("queue_free")
+			wheel = null
 
 func play_attack_sound():
 	SoundFx.play("Swipe", global_position, rand_range(0.5, 1.7), -30)
