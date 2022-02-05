@@ -144,7 +144,8 @@ func quit_game():
 		position_y = player_info["Position"].y,
 	}
 	Globals.quit_game()
-	SaverAndLoader.custom_data = custom_data
+	for key in custom_data.keys():
+		SaverAndLoader.custom_data[key] = custom_data[key]
 	SaverAndLoader.save_game()
 	if(get_tree().is_network_server()):
 		for node in get_children():

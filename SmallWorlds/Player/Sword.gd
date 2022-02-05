@@ -68,7 +68,8 @@ func select_item(item_id):
 	hitbox.damage = damage_dict[item_id]
 
 func _on_level_up(type):
-	sprite.material.set_shader_param("Shift_Hue", Globals.shader_dict[type+1])
+	var level = type + 1
+	sprite.material.set_shader_param("Shift_Hue", Globals.shader_dict[int(level)])
 
 remotesync func changing_item(item_id):
 	id = Globals.icon_dict[item_id]

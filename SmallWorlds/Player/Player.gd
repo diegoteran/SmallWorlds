@@ -59,6 +59,9 @@ puppet var puppet_animation_vector = Vector2(0,0)
 puppet var puppet_velocity = Vector2(0,0)
 
 func _ready():
+	SaverAndLoader.load_game()
+	PlayerStats.update()
+	
 	animationTree.active = true
 	label.text = server.players[int(name)]["Name"]
 	if is_network_master():

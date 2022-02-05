@@ -7,6 +7,9 @@ var custom_data = {
 	player_name = "",
 	position_x = 80,
 	position_y = 80,
+	player_level = 0,
+	soul = 0,
+	rocks = [0, 0]
 #	missiles_unlocked = false,
 #	boss_defeated = false
 }
@@ -36,7 +39,9 @@ func load_game():
 	save_game.open(SAVE_PATH, File.READ)
 	
 	if not save_game.eof_reached():
-		custom_data = parse_json(save_game.get_line())
+		var new_custom_data = parse_json(save_game.get_line())
+		for key in new_custom_data.keys():
+			custom_data[key] = new_custom_data[key]
 	
 #	while save_game.get_position() < save_game.get_len():
 #		var current_line = parse_json(save_game.get_line())
@@ -52,3 +57,4 @@ func load_game():
 #				newNode.set(property, current_line[property])
 	save_game.close()
 	print("Loaded: ", custom_data)
+	save_game()

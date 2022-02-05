@@ -12,6 +12,7 @@ func _ready():
 #	randomize()
 	address.text = Network.ip_address
 	SaverAndLoader.load_game()
+	PlayerStats.update()
 	
 	var savedPlayerName = SaverAndLoader.custom_data.player_name
 	if savedPlayerName != "":
