@@ -6,6 +6,7 @@
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
+render_mode unshaded;
 
 uniform vec2 centre = vec2(0.5);
 

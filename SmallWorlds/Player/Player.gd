@@ -135,6 +135,12 @@ func add_rock(value, type):
 
 func _physics_process(delta):
 	
+	if Input.is_action_just_pressed("regen"):
+		stats.set_rock(10, 0)
+		stats.set_rock(10, 1)
+		stats.set_soul(10)
+		stats.health = stats.max_health
+	
 	if paused or state == DEAD:
 		return
 	
@@ -161,7 +167,7 @@ func _physics_process(delta):
 					attack_state(attack_vector)
 			
 			RANGED:
-				var ranged_vector = global_position.direction_to(get_global_mouse_position())
+				var ranged_vector = sword.swordEnd.global_position.direction_to(get_global_mouse_position())
 				ranged_state(ranged_vector)
 		
 		move()
@@ -201,7 +207,7 @@ func move_state(delta):
 	if selecting:
 		return
 	
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_just_pressed("attack") and wheel_id != 2:
 		state = ATTACK
 	
 	if Input.is_action_just_pressed("ranged") and wheel_id == 2:
@@ -236,12 +242,14 @@ func ranged_state(ranged_vector):
 		return
 	stats.soul -= 1
 	if puppetState != "Ranged":
-		rpc("ranged", ranged_vector)
+		rpc("ranged", ranged_vector, PlayerStats.level)
 
-remotesync func ranged(ranged_vector):
+remotesync func ranged(ranged_vector, level):
 	sword.ranged()
-	var arrow = Globals.instance_scene_on_world(Arrow, sword.global_position)
+	var arrow = Globals.instance_scene_on_world(Arrow, sword.swordEnd.global_position)
 	arrow.velocity = ranged_vector
+	arrow.level = level
+	play_ranged_sound()
 	ranged_animation_finished()
 
 func ranged_animation_finished():
@@ -296,6 +304,9 @@ func menu_wheel():
 
 func play_attack_sound():
 	SoundFx.play("Swipe", global_position, rand_range(0.5, 1.7), -30)
+
+func play_ranged_sound():
+	SoundFx.play("Swipe", global_position, rand_range(3.0, 5.0), -30)
 
 func play_roll_sound():
 	SoundFx.play("Evade", global_position, rand_range(0.9, 1.1), -20)

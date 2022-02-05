@@ -6,6 +6,7 @@ var health = max_health setget set_health
 var soul = 0 setget set_soul
 var max_rock = 10
 var rocks = [0, 0]
+var level = 0
 
 enum {
 	GREEN,
@@ -14,7 +15,7 @@ enum {
 
 signal no_health
 signal soul_charged
-signal research_completed
+signal research_completed(type)
 signal health_changed(value)
 signal max_health_changed(value)
 signal soul_changed(value)
@@ -47,7 +48,9 @@ func set_rock(value, type):
 	rocks[type] = min(value, max_rock)
 	emit_signal("rock_changed", rocks[type], type)
 	if rocks[type] ==  max_rock:
-		emit_signal("research_completed", type)
+		if level < type + 1:
+			emit_signal("research_completed", type)
+			level = type + 1
 
 func _ready():
 	self.health = max_health

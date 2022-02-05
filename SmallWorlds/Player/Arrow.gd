@@ -3,12 +3,16 @@ extends KinematicBody2D
 export var SPEED = 400
 
 var velocity = Vector2.ZERO
+var level = 0
 
 onready var timer = $Timer
+onready var sprite = $Sprite
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	timer.start(3)
+	sprite.rotation += velocity.angle()
+	sprite.material.set_shader_param("Shift_Hue", Globals.shader_dict[level])
 
 func _physics_process(_delta):
 	var _collision = move_and_slide(velocity * SPEED)

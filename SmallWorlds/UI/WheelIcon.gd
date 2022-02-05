@@ -1,7 +1,12 @@
 extends Position2D
 
+var level = 0
+
 onready var sprite = $Sprite
 onready var animationPlayer = $AnimationPlayer
+
+func _ready():
+	sprite.material.set_shader_param("Shift_Hue", Globals.shader_dict[PlayerStats.level])
 
 func set_frame(item_id):
 	sprite.frame = item_id

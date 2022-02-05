@@ -24,6 +24,9 @@ remotesync var id
 func _ready():
 	trail_name = get_parent().get_parent().name + "_trail"
 	smokeTrail = Globals.instance_scene_on_world_with_name(SmokeTrail, Vector2.ZERO, trail_name)
+	
+# warning-ignore:return_value_discarded
+	PlayerStats.connect("research_completed", self, "_on_level_up")
 
 func _process(_delta):
 	smokeTrail.global_position = global_position
@@ -31,7 +34,10 @@ func _process(_delta):
 	
 	if is_network_master():
 		pos.look_at(get_global_mouse_position())
-		pos.rotation_degrees += offset
+		
+		if id != 2:
+			pos.rotation_degrees += offset
+			sprite.rotation_degrees = -pos.rotation_degrees
 		
 		if Network.players.size() > 1:
 			rpc_unreliable("sync_puppet_variables", pos.rotation_degrees)
@@ -40,6 +46,10 @@ func _process(_delta):
 	else:
 		tween.interpolate_property(pos, "rotation_degrees", pos.rotation_degrees, p_rotation, 0.1)
 		tween.start()
+		
+		if id != 2:
+			tween.interpolate_property(sprite, "rotation_degrees", sprite.rotation_degrees, -p_rotation, 0.1)
+			tween.start()
 #		sprite.flip_h = p_flip
 
 func attack():
@@ -51,18 +61,20 @@ func attack():
 	hitboxCollision.disabled = true
 
 func ranged():
-	tween.interpolate_property(self, "offset", offset, 0, 0.05, Tween.TRANS_CIRC)
-	tween.start()
-	yield(get_tree().create_timer(0.1), "timeout") 
-	tween.interpolate_property(self, "offset", 0, 90, 0.1, Tween.TRANS_CIRC)
-	tween.start()
+	Shake.shake(2.0, 0.1)
 
 func select_item(item_id):
-	rpc("changing_item", Globals.icon_dict[item_id])
+	rpc("changing_item", item_id)
 	hitbox.damage = damage_dict[item_id]
 
+func _on_level_up(type):
+	sprite.material.set_shader_param("Shift_Hue", Globals.shader_dict[type+1])
+
 remotesync func changing_item(item_id):
-	sprite.frame = item_id
+	id = Globals.icon_dict[item_id]
+	sprite.frame = id
+	if id == 2:
+		sprite.rotation_degrees = 0
 
 remotesync func sync_puppet_variables(rot_degrees):
 	p_rotation = rot_degrees
