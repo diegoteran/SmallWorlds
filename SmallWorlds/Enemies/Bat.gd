@@ -65,7 +65,7 @@ func seek_player():
 		state = CHASE
 
 func play_flap():
-	SoundFx.play("BatFlap", global_position, rand_range(1.5, 2), -30)
+	SoundFx.play("BatFlap", global_position, rand_range(1.5, 2), -35)
 
 func play_hurt():
 	var num = (randi() % 2) + 1
@@ -73,11 +73,6 @@ func play_hurt():
 
 func play_defeated():
 	SoundFx.play("BatDefeated", global_position, rand_range(0.8, 1.2), -30)
-
-func accelerate_towards_point(point, delta):
-	var direction = global_position.direction_to(point)
-	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
-	sprite.flip_h = velocity.x < 0
 
 remotesync func hurt(new_knockback: Vector2, new_hp: float) -> void:
 	self.hp = new_hp

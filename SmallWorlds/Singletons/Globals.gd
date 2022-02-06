@@ -6,9 +6,10 @@ var player : Object = null
 var dead = true
 var world : Object = null
 var server_world : Object = null
-var ENEMY_DISTANCE_TO_PLAYERS = 400
+var ENEMY_DISTANCE_TO_PLAYERS = [250, 1000]
 var icon_dict = {0:0, 1:1, 2:2}
 var shader_dict = {0:0, 1:0.35, 2:0.8}
+var world_size = 3200
 
 var Reflection = preload("res://Effects/Reflection.tscn")
 

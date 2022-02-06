@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 export var ACCELERATION = 300
 export var MAX_SPEED = 50
+export var NIGHT_SPEED = 100
 export var FRICTION = 200
 export var KNOCKBACK_FRICTION = 120
 export var hp = 5 setget set_hp
@@ -52,12 +53,12 @@ func _ready():
 		_on_death()
 	
 	damage = hitBox.damage
-	high_damage = damage * 2
+	high_damage = damage + 1
 	
 	hurtBox.connect("area_entered", self, "_on_HurtBox_area_entered")
 	
 	if is_network_master():
-		proximityTimer.start(10)
+		proximityTimer.start(3)
 	
 	# Light Handler
 	var cycle = get_node("/root/World/DayNightCycle")
@@ -87,8 +88,8 @@ func set_lights(value: bool):
 
 func set_enraged_stats(value: bool):
 	is_enraged = value
-	particles.emitting = value
-	if value:
+	particles.emitting = is_enraged
+	if is_enraged:
 		hitBox.damage = high_damage
 	else:
 		hitBox.damage = damage
@@ -107,7 +108,7 @@ func seek_player():
 
 func accelerate_towards_point(point, delta):
 	var direction = global_position.direction_to(point)
-	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+	velocity = velocity.move_toward(direction * (NIGHT_SPEED if is_enraged else MAX_SPEED), ACCELERATION * delta)
 	sprite.flip_h = velocity.x < 0
 
 func _on_HurtBox_area_entered(area) -> void:
@@ -146,8 +147,8 @@ func _on_ProximityTimer_timeout():
 	var player_positions = Globals.get_player_positions()
 	
 	for pos in player_positions:
-		if global_position.distance_to(pos) < Globals.ENEMY_DISTANCE_TO_PLAYERS * 3:
-			proximityTimer.start(10)
+		if global_position.distance_to(pos) < Globals.ENEMY_DISTANCE_TO_PLAYERS[0] * 2:
+			proximityTimer.start(3)
 			return
 	
 	Network.NPCKilled(int(name))

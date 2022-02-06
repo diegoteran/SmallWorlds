@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-export var SPEED = 400
+export var SPEED = 300
 
 var velocity = Vector2.ZERO
 var level = 0
@@ -15,7 +15,7 @@ func _ready():
 	sprite.rotation += velocity.angle()
 	sprite.material.set_shader_param("Shift_Hue", Globals.shader_dict[int(level)])
 	
-	tween.interpolate_property(sprite, "modulate", Color(1, 1, 1, 0.0), Color(1, 1, 1, 1), 0.4, Tween.TRANS_LINEAR)
+	tween.interpolate_property(sprite, "modulate", Color(1, 1, 1, 0.0), Color(1, 1, 1, 1), 0.1, Tween.TRANS_LINEAR)
 	tween.start()
 
 func _physics_process(_delta):

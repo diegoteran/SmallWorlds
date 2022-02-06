@@ -12,7 +12,7 @@ var full_sprite_red = preload("res://PixelArt/Mining/rock 3.png")
 
 var state = WITH
 var days_timer = 0
-var GRID_SIZE = float(3200)
+var GRID_SIZE = float(Globals.world_size)
 
 enum {
 	GREEN,
