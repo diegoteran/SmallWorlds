@@ -15,6 +15,7 @@ enum {
 	ROLL,
 	ATTACK,
 	RANGED,
+	HEAL,
 	DEAD,
 	PAUSED
 }
@@ -51,6 +52,7 @@ onready var sprite = $YSort/Sprite
 onready var light1 = $Light1
 onready var light2 = $Light2
 onready var collisionShape = $CollisionShape2D
+onready var timer = $Timer
 
 var puppetState = "Idle"
 
@@ -172,6 +174,9 @@ func _physics_process(delta):
 			RANGED:
 				var ranged_vector = sword.swordEnd.global_position.direction_to(get_global_mouse_position())
 				ranged_state(ranged_vector)
+			
+			HEAL:
+				heal_state(delta)
 		
 		move()
 		
@@ -207,6 +212,9 @@ func move_state(delta):
 	if Input.is_action_just_pressed("roll"):
 		state = ROLL
 	
+	if Input.is_action_just_pressed("heal"):
+		state = HEAL
+	
 	if selecting:
 		return
 	
@@ -221,14 +229,36 @@ func roll_state():
 	if puppetState != "Roll":
 		rpc("roll")
 
+remotesync func roll():
+	puppetState = "Roll"
+	animationState.travel("Roll")
+
+func heal_state(delta):
+	if Input.is_action_just_released("heal"):
+		timer.stop()
+		rpc("end_heal")
+		return
+	
+	if is_network_master():
+		Shake.shake(0.5, delta, 0)
+		
+	if puppetState != "Heal":
+		timer.start(1)
+		rpc("heal")
+
+remotesync func heal():
+	velocity = Vector2.ZERO
+	puppet_velocity = Vector2.ZERO
+	puppetState = "Heal"
+
+remotesync func end_heal():
+	puppetState = "Idle"
+	state = MOVE
+
 func attack_state(attack_vector):
 	velocity = attack_vector * ATTACK_SPEED
 	if puppetState != "Attack":
 		rpc("attack", attack_vector)
-
-remotesync func roll():
-	puppetState = "Roll"
-	animationState.travel("Roll")
 
 remotesync func attack(attack_vector):
 	puppet_velocity = attack_vector * ATTACK_SPEED
@@ -394,3 +424,7 @@ func queue_free():
 	sword.queue_free()
 	Globals.delete_reflection(name)
 	.queue_free()
+
+func _on_Timer_timeout():
+	stats.health += 1
+	rpc("end_heal")
