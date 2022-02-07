@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Hurt8Bit.wav-aa9a21aa60b3c695343b6d1962ebc907.sample"
+
+[deps]
+
+source_file="res://SoundFX/Sounds/Hurt8Bit.wav"
+dest_files=[ "res://.import/Hurt8Bit.wav-aa9a21aa60b3c695343b6d1962ebc907.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

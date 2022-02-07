@@ -22,6 +22,7 @@ var sounds = {
 	"Pause" : load(sounds_path + "Pause.wav"),
 	"RockBreak" : load(sounds_path + "RockBreak.wav"),
 	"RockHit" : load(sounds_path + "RockHit.wav"),
+	"Soul" : load(sounds_path + "Soul.wav"),
 	"Step" : load(sounds_path + "Step.wav"),
 	"StepDirt" : load(sounds_path + "StepDirt.wav"),
 	"StepWater" : load(sounds_path + "StepWater.wav"),

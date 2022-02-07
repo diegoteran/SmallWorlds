@@ -34,9 +34,10 @@ func set_max_health(value):
 	emit_signal("max_health_changed", max_health)
 
 func set_soul(value):
+	var prev_soul = soul
 	soul = min(value, max_soul)
 	emit_signal("soul_changed", soul)
-	if soul ==  max_soul:
+	if soul ==  max_soul and soul != prev_soul:
 		emit_signal("soul_charged")
 
 func set_max_soul(value):

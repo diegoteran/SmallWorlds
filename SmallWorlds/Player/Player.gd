@@ -77,6 +77,7 @@ func _ready():
 		add_child(remoteTransform)
 		
 		hurtBox.connect("area_entered", self, "_on_HurtBox_area_entered")
+		stats.connect("soul_charged", self, "_on_soul_charged")
 	
 	# Reflection
 	var remote_transform = Globals.create_reflection(sprite, name)
@@ -355,6 +356,12 @@ func play_roll_sound():
 func play_heal_sound():
 	SoundFx.play("Heal", global_position, rand_range(1.2, 1.8), -20)
 
+func play_hurt_sound():
+	SoundFx.play("Hurt", global_position, rand_range(1.2, 1.5), -10)
+
+func play_soul_sound():
+	SoundFx.play("Soul", global_position, rand_range(0.7, 1), -20)
+
 func run_step():
 	# Step sound
 	var grass_cell = grass_tilemap.world_to_map(global_position)
@@ -386,11 +393,29 @@ func run_step():
 func _on_HurtBox_area_entered(area):
 	if stats.health > 0:
 		stats.health -= area.damage
-	hurtBox.start_invincibility(0.5)
+	hurtBox.start_invincibility(3)
 	rpc("hurt")
 
 remotesync func hurt():
 	hurtBox.create_hit_effect()
+	play_hurt_sound()
+	var particleEffect = ParticleEffect.instance()
+	particleEffect.set_particles_color(Color.red)
+	self.add_child(particleEffect)
+	particleEffect.scale = Vector2(1.5, 1.5)
+	particleEffect.global_position = global_position
+
+func _on_soul_charged():
+	rpc("soul")
+
+remotesync func soul():
+	play_soul_sound()
+	var particleEffect = ParticleEffect.instance()
+	particleEffect.set_particles_color(Color.white)
+	self.add_child(particleEffect)
+	particleEffect.scale = Vector2(2, 2)
+	particleEffect.particles.process_material.hue_variation = 0
+	particleEffect.global_position = global_position
 
 func MovePuppetPlayer(delta):
 	if puppetState != "Attack":
