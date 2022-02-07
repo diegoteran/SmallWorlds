@@ -72,6 +72,8 @@ func _on_level_up(type):
 	level = type + 1
 	sprite.material.set_shader_param("Shift_Hue", Globals.shader_dict[int(level)])
 	hitbox.damage = damage_dict[level][id]
+	if is_network_master():
+		PlayerStats.max_health = 4 + level
 
 remotesync func changing_item(item_id):
 	id = item_id

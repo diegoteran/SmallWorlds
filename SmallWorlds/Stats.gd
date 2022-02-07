@@ -4,7 +4,7 @@ export(int) var max_health = 1 setget set_max_health
 var max_soul = 10 setget set_max_soul
 var health = max_health setget set_health
 var soul = 0 setget set_soul
-var max_rock = 10
+var max_rock = 30
 var rocks = [0, 0]
 var level = 0
 
