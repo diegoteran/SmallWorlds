@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://PixelArt/SmallPlayer/Idle.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Effects/ShockWaveEffect.tscn" type="PackedScene" id=13]
 [ext_resource path="res://PixelArt/SmallPlayer/Attack.png" type="Texture" id=14]
 [ext_resource path="res://Player/Arrow.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Effects/ParticleEffect.tscn" type="PackedScene" id=16]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.0
@@ -1319,6 +1320,7 @@ script = ExtResource( 2 )
 Wheel = ExtResource( 8 )
 StepDustEffect = ExtResource( 9 )
 ShockWaveEffect = ExtResource( 13 )
+ParticleEffect = ExtResource( 16 )
 Arrow = ExtResource( 15 )
 
 [node name="Light1" type="Light2D" parent="."]

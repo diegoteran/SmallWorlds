@@ -13,6 +13,7 @@ var sounds = {
 	"FlyAttack" : load(sounds_path + "FlyAttack.wav"),
 	"FlyFlap" : load(sounds_path + "FlyFlap.wav"),
 	"FlyHurt" : load(sounds_path + "FlyHurt.wav"),
+	"Heal" : load(sounds_path + "Heal.wav"),
 	"Hit" : load(sounds_path + "Hit.wav"),
 	"Hurt" : load(sounds_path + "Hurt.wav"),
 	"Jump" : load(sounds_path + "Jump.wav"),

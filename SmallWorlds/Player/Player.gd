@@ -3,6 +3,7 @@ extends KinematicBody2D
 export var Wheel: PackedScene
 export var StepDustEffect: PackedScene
 export var ShockWaveEffect: PackedScene
+export var ParticleEffect: PackedScene
 export var Arrow: PackedScene
 export var ACCELERATION = 400
 export var MAX_SPEED = 85
@@ -212,7 +213,7 @@ func move_state(delta):
 	if Input.is_action_just_pressed("roll"):
 		state = ROLL
 	
-	if Input.is_action_just_pressed("heal"):
+	if Input.is_action_pressed("heal") and stats.soul >= 1:
 		state = HEAL
 	
 	if selecting:
@@ -236,7 +237,7 @@ remotesync func roll():
 func heal_state(delta):
 	if Input.is_action_just_released("heal"):
 		timer.stop()
-		rpc("end_heal")
+		rpc("end_heal", false)
 		return
 	
 	if is_network_master():
@@ -251,9 +252,15 @@ remotesync func heal():
 	puppet_velocity = Vector2.ZERO
 	puppetState = "Heal"
 
-remotesync func end_heal():
+remotesync func end_heal(success: bool):
 	puppetState = "Idle"
 	state = MOVE
+	if success:
+		play_heal_sound()
+		var particleEffect = ParticleEffect.instance()
+		particleEffect.set_particles_color(Color.green)
+		self.add_child(particleEffect)
+		particleEffect.global_position = global_position
 
 func attack_state(attack_vector):
 	velocity = attack_vector * ATTACK_SPEED
@@ -343,6 +350,9 @@ func play_ranged_sound():
 
 func play_roll_sound():
 	SoundFx.play("Evade", global_position, rand_range(0.9, 1.1), -20)
+	
+func play_heal_sound():
+	SoundFx.play("Heal", global_position, rand_range(1.2, 1.8), -20)
 
 func run_step():
 	# Step sound
@@ -356,7 +366,7 @@ func run_step():
 			step += "Dirt"
 		else:
 			step += "Water"
-	SoundFx.play(step, global_position, rand_range(0.9, 1.3), -25)
+	SoundFx.play(step, global_position, rand_range(0.9, 1.3), -30)
 	
 	# Dust Particle
 	
@@ -426,6 +436,8 @@ func queue_free():
 	.queue_free()
 
 func _on_Timer_timeout():
-	stats.health += 1
-	state = MOVE
-	rpc("end_heal")
+	if state != MOVE:
+		stats.soul -= 1
+		stats.health += 1
+		state = MOVE
+		rpc("end_heal", true)
