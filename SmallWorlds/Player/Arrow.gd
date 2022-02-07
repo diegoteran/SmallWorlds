@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 export var SPEED = 300
+export var GhostArrow: PackedScene
 
 var velocity = Vector2.ZERO
 var level = 0
@@ -8,6 +9,7 @@ var level = 0
 onready var timer = $Timer
 onready var sprite = $Sprite
 onready var tween = $Tween
+onready var ghostTimer = $GhostTimer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,6 +19,9 @@ func _ready():
 	
 	tween.interpolate_property(sprite, "modulate", Color(1, 1, 1, 0.0), Color(1, 1, 1, 1), 0.1, Tween.TRANS_LINEAR)
 	tween.start()
+	
+	ghostTimer.wait_time = 0.05
+	ghostTimer.start()
 
 func _physics_process(_delta):
 	var _collision = move_and_slide(velocity * SPEED)
@@ -34,3 +39,8 @@ func delete():
 
 remotesync func delete_all():
 	queue_free()
+
+
+func _on_GhostTimer_timeout():
+	var ghostArrow = Globals.instance_scene_on_world(GhostArrow, global_position)
+	ghostArrow.rotation = sprite.rotation
