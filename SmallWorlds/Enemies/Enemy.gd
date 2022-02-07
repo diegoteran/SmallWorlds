@@ -2,9 +2,9 @@ extends KinematicBody2D
 
 export var ACCELERATION = 300
 export var MAX_SPEED = 50
-export var NIGHT_SPEED = 100
+export var NIGHT_SPEED = 80
 export var FRICTION = 200
-export var KNOCKBACK_FRICTION = 120
+export var KNOCKBACK_FRICTION = 150
 export var hp = 5 setget set_hp
 var soul_given = 1
 

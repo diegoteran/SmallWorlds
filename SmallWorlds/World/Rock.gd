@@ -15,8 +15,8 @@ var days_timer = 0
 var GRID_SIZE = float(Globals.world_size)
 
 enum {
-	GREEN,
-	RED
+	GREEN = 0,
+	RED = 1
 }
 
 enum {
@@ -90,9 +90,9 @@ func _on_HurtBox_area_entered(area):
 			area.get_parent().delete()
 		else:
 			var player = area.get_parent().get_parent().get_parent().get_parent()
-			if hp > 0 and player.wheel_id == 1:
+			if hp > 0 and player.wheel_id == 1 and area.get_parent().get_parent().level >= type:
 				player.add_rock(rand_range(0.5, 1), type)
-				new_hp -= area.damage
+				new_hp -= 1
 		rpc('hit_effect', new_hp)
 
 remotesync func hit_effect(new_hp: float):
