@@ -6,8 +6,8 @@ export var ShockWaveEffect: PackedScene
 export var ParticleEffect: PackedScene
 export var Arrow: PackedScene
 export var ACCELERATION = 400
-export var MAX_SPEED = 85
-export var ROLL_SPEED = 150
+export var MAX_SPEED = 75
+export var ROLL_SPEED = 130
 export var FRICTION = 1000
 export var ATTACK_SPEED = 15
 
@@ -260,6 +260,7 @@ remotesync func end_heal(success: bool):
 		var particleEffect = ParticleEffect.instance()
 		particleEffect.set_particles_color(Color.green)
 		self.add_child(particleEffect)
+		particleEffect.scale = Vector2(2, 2)
 		particleEffect.global_position = global_position
 
 func attack_state(attack_vector):

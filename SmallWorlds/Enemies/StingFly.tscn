@@ -225,7 +225,7 @@ radius = 7.5
 [sub_resource type="CircleShape2D" id=5]
 
 [sub_resource type="CircleShape2D" id=6]
-radius = 128.25
+radius = 130.0
 
 [sub_resource type="CircleShape2D" id=7]
 radius = 8.0

@@ -87,6 +87,10 @@ func generate_possible_spawn_points() -> Vector2:
 			if new_spawn.distance_to(pos2) < Globals.ENEMY_DISTANCE_TO_PLAYERS[0] - 0.1 or new_spawn.x < 10 or new_spawn.y < 10 or new_spawn.x > Globals.world_size - 10 or new_spawn.y > Globals.world_size - 10:
 				possible = false
 				break
+		for pos2 in Network.fires:
+			if new_spawn.distance_to(pos2) < 100:
+				possible = false
+				break
 		if possible:
 			possible_spawn_points.append(new_spawn)
 	
