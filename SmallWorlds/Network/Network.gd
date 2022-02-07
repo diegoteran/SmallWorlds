@@ -9,6 +9,7 @@ var client = null
 var ip_address = ""
 var current_player_username = ""
 var players = {}
+var fires = []
 
 # CLient
 var decimal_collector : float = 0
@@ -77,6 +78,10 @@ func create_server(mp) -> void:
 	players[1] = {"Name" : player_data.player_name, "Position" : Vector2(player_data.position_x, player_data.position_y)}
 	get_node("../World").SpawnNewPlayer(get_tree().get_network_unique_id(), players[1]["Position"])
 	
+	# Fire logic
+	for i in SaverAndLoader.custom_data.fires_x.size():
+		fires.append(Vector2(SaverAndLoader.custom_data.fires_x[i], SaverAndLoader.custom_data.fires_y[i]))
+	
 	# Add Enemy spawns created by background
 	Globals.add_all_spawns()
 
@@ -114,14 +119,17 @@ func _connected_ok():
 
 remote func user_ready(player_id):
 	if get_tree().is_network_server():
+		rpc_id(player_id, "GetFires", fires)
 		rpc_id(player_id, "register_in_game")
 
 remote func register_in_game():  # Only the client sends this once.
 	var player_data = SaverAndLoader.custom_data
 	var new_player_info = {"Name" : player_data.player_name, "Position" :  Vector2(player_data.position_x, player_data.position_y)}
-	print("what")
 	rpc("register_new_player", get_tree().get_network_unique_id(), new_player_info)
 	register_new_player(get_tree().get_network_unique_id(), new_player_info)
+	
+	# fires
+	Globals.add_fires()
 
 remote func register_new_player(player_id, player_info):
 	if get_tree().is_network_server(): # Only the server sends this once per client.
@@ -169,6 +177,9 @@ func NPCKilled(enemy_id):
 
 remote func ReceiveWorldState(world_state):
 	get_node("../World").UpdateWorldState(world_state)
+
+remote func Getfires(all_fires):
+	fires = all_fires
 
 
 # Client Side Latency

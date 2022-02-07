@@ -598,6 +598,7 @@ BushScene = ExtResource( 1 )
 GrassScene = ExtResource( 6 )
 TallGrassScene = ExtResource( 7 )
 RockScene = ExtResource( 21 )
+FireScene = ExtResource( 16 )
 
 [node name="SoftCollision" parent="Background" instance=ExtResource( 23 )]
 position = Vector2( 159.025, -22.7171 )
@@ -672,9 +673,6 @@ texture = ExtResource( 13 )
 
 [node name="Fires" type="YSort" parent="YSort"]
 
-[node name="Fire" parent="YSort/Fires" instance=ExtResource( 16 )]
-position = Vector2( 240.496, 208.542 )
-
 [node name="Enemies" type="YSort" parent="YSort"]
 
 [node name="TallGrass" type="YSort" parent="YSort"]
@@ -687,7 +685,7 @@ position = Vector2( 240.496, 208.542 )
 position = Vector2( 453.035, 155.247 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 67 )
-frame = 2
+frame = 4
 playing = true
 offset = Vector2( 0.0905762, -179.422 )
 

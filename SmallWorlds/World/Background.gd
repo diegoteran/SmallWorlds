@@ -5,6 +5,7 @@ export var BushScene: PackedScene
 export var GrassScene: PackedScene
 export var TallGrassScene: PackedScene
 export var RockScene: PackedScene
+export var FireScene: PackedScene
 
 # Noise
 export(float) var octaves = 1
@@ -50,6 +51,7 @@ func _ready():
 #	make_flower_map()
 #	clean_map()
 	update_tilemaps(true)
+	spawn_fires()
 
 #func _process(delta):
 #	if Globals.player == null:
@@ -59,6 +61,17 @@ func _ready():
 #		last_player_position = Globals.player.global_position
 #
 #	update_tilemaps(false)
+
+func spawn_fires():
+	for i in SaverAndLoader.custom_data.fires_x.size():
+		var fires = get_node("/root/World/YSort/Fires")
+		Globals.instance_scene_on_node(FireScene, fires, Vector2(SaverAndLoader.custom_data.fires_x[i], SaverAndLoader.custom_data.fires_y[i]))
+
+func spawn_fires_client():
+	for fire_pos in Network.fires:
+		var fires = get_node("/root/World/YSort/Fires")
+		Globals.instance_scene_on_node(FireScene, fires, fire_pos)
+		
 
 func update_tilemaps(all_tiles: bool):
 	var new_chunks = []

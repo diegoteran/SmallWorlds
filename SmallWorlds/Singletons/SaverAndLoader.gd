@@ -9,7 +9,9 @@ var custom_data = {
 	position_y = 80,
 	player_level = 0,
 	soul = 0,
-	rocks = [0, 0]
+	rocks = [0, 0],
+	fires_x = [80],
+	fires_y = [80]
 #	missiles_unlocked = false,
 #	boss_defeated = false
 }

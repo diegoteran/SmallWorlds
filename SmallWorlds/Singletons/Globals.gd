@@ -58,6 +58,10 @@ func add_all_spawns() -> void:
 	for pos in world_generator.enemy_positions:
 		add_enemy_spawn(pos)
 
+func add_fires() -> void:
+	var world_generator = get_node("/root/World/Background")
+	world_generator.spawn_fires_client()
+
 func create_reflection_ignore_pos(current_sprite: Sprite, new_name: String) -> RemoteTransform2D:
 	var remote_transform = RemoteTransform2D.new()
 	var water_tilemap = get_node("/root/World/Background/WaterTileMap")

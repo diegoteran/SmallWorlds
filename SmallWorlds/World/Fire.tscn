@@ -79,7 +79,7 @@ mode = 2
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -5.98871 )
 frames = SubResource( 10 )
-frame = 2
+frame = 1
 speed_scale = 1.5
 playing = true
 __meta__ = {

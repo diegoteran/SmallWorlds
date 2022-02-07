@@ -5,7 +5,6 @@
 
 [node name="GhostArrow" type="Sprite"]
 modulate = Color( 0, 0, 0, 1 )
-rotation = 0.785398
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 

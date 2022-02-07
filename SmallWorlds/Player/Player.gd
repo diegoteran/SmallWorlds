@@ -427,4 +427,5 @@ func queue_free():
 
 func _on_Timer_timeout():
 	stats.health += 1
+	state = MOVE
 	rpc("end_heal")
