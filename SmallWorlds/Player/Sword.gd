@@ -5,7 +5,8 @@ var smoketrail : Object = null
 var trail_name
 var smokeTrail
 #var sword_dict = {"Starting": {}}
-var damage_dict = {0:1, 1: 0.5, 2:0.3}
+var damage_dict = [{0:1, 1: 0.5, 2:0.3}, {0:1.5, 1: 1, 2:0.5}, {0:3, 1: 2, 2:1}]
+var level = 0
 
 export var SmokeTrail : PackedScene
 
@@ -19,7 +20,7 @@ onready var hitbox = $P/HitBox
 puppet var p_rotation = 0
 #puppet var p_flip = false
 
-remotesync var id
+remotesync var id = 0
 
 func _ready():
 	trail_name = get_parent().get_parent().name + "_trail"
@@ -65,16 +66,17 @@ func ranged():
 
 func select_item(item_id):
 	rpc("changing_item", item_id)
-	hitbox.damage = damage_dict[item_id]
+	hitbox.damage = damage_dict[level][item_id]
 
 func _on_level_up(type):
-	var level = type + 1
+	level = type + 1
 	sprite.material.set_shader_param("Shift_Hue", Globals.shader_dict[int(level)])
+	hitbox.damage = damage_dict[level][id]
 
 remotesync func changing_item(item_id):
-	id = Globals.icon_dict[item_id]
-	sprite.frame = id
-	if id == 2:
+	id = item_id
+	sprite.frame = Globals.icon_dict[item_id]
+	if sprite.frame == 2:
 		sprite.rotation_degrees = 0
 
 remotesync func sync_puppet_variables(rot_degrees):

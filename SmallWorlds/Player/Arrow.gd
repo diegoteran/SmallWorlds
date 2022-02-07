@@ -10,12 +10,14 @@ onready var timer = $Timer
 onready var sprite = $Sprite
 onready var tween = $Tween
 onready var ghostTimer = $GhostTimer
+onready var hitbox = $HitBox
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	timer.start(3)
 	sprite.rotation += velocity.angle()
 	sprite.material.set_shader_param("Shift_Hue", Globals.shader_dict[int(level)])
+	hitbox.damage += level
 	
 	tween.interpolate_property(sprite, "modulate", Color(1, 1, 1, 0.0), Color(1, 1, 1, 1), 0.1, Tween.TRANS_LINEAR)
 	tween.start()

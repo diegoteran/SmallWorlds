@@ -59,7 +59,7 @@ GhostArrow = ExtResource( 4 )
 
 [node name="HitBox" parent="." instance=ExtResource( 3 )]
 collision_mask = 8
-damage = 5
+damage = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 shape = SubResource( 1 )

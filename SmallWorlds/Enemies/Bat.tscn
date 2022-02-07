@@ -54,6 +54,7 @@ radius = 4.0
 
 [node name="Bat" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+hp = 3
 EnemyDeathEffect = ExtResource( 5 )
 
 [node name="Sprite" parent="." index="0"]

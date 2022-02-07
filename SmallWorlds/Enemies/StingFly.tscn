@@ -234,6 +234,7 @@ radius = 8.0
 
 [node name="StingFly" instance=ExtResource( 4 )]
 script = ExtResource( 3 )
+hp = 4
 
 [node name="Sprite" parent="." index="0"]
 position = Vector2( 0, -16 )
