@@ -61,6 +61,9 @@ func _ready():
 #		last_player_position = Globals.player.global_position
 #
 #	update_tilemaps(false)
+func spawn_fire(location):
+	var fires = get_node("/root/World/YSort/Fires")
+	Globals.instance_scene_on_node(FireScene, fires, location)
 
 func spawn_fires():
 	for i in SaverAndLoader.custom_data.fires_x.size():

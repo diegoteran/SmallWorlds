@@ -217,6 +217,9 @@ func move_state(delta):
 	if Input.is_action_pressed("heal") and stats.soul >= 1:
 		state = HEAL
 	
+	if Input.is_action_just_pressed("fire") and stats.soul == stats.max_soul:
+		spawning_fire()
+	
 	if selecting:
 		return
 	
@@ -225,6 +228,18 @@ func move_state(delta):
 	
 	if Input.is_action_just_pressed("ranged") and wheel_id == 2:
 		state = RANGED
+
+func spawning_fire():
+	stats.soul = 0
+	rpc("spawn_fire", global_position)
+
+remotesync func spawn_fire(new_position):
+	Network.fires.append(new_position)
+	SaverAndLoader.custom_data.fires_x.append(new_position.x)
+	SaverAndLoader.custom_data.fires_y.append(new_position.y)
+	SaverAndLoader.save_game()
+	var bg = get_node("/root/World/Background")
+	bg.spawn_fire(new_position)
 
 func roll_state():
 	velocity = animation_vector * ROLL_SPEED
