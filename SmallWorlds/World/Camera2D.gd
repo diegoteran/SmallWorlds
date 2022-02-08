@@ -35,7 +35,7 @@ func _set_zoom_level(value: float) -> void:
 	tween.start()
 
 func _unhandled_input(event):
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and get_tree().is_network_server():
 		if event.is_pressed():
 			# zoom in
 			if event.button_index == BUTTON_WHEEL_UP:

@@ -60,16 +60,23 @@ func set_hp(new_value):
 			_on_empty()
 
 func set_lights(value):
-	rpc_id(0, "sync_types", type)
 	if days_timer > 0 and !value:
 		days_timer = days_timer - 1
 		if days_timer == 1:
 			rpc('one_day')
 		if days_timer == 0:
 			rpc('replenish')
+	
+	if days_timer == 0 and !value:
+		rpc_id(0, "sync_types", type)
 
 remotesync func sync_types(new_type):
 	type = new_type
+	match type:
+		GREEN:
+			sprite.texture = full_sprite_green
+		RED:
+			sprite.texture = full_sprite_red
 
 remotesync func one_day():
 	sprite.frame = 0

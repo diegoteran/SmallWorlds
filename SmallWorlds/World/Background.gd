@@ -29,6 +29,7 @@ var enemy_positions = []
 var displayed_chunks = []
 var scenes_on_node = {}
 var last_player_position = Vector2.ZERO
+var num_rock = 0
 
 # Multi threads
 var thread
@@ -207,8 +208,9 @@ func make_flower_map(x, y, new_chunk_coords) -> void:
 #					Globals.instance_scene_on_node(TallGrassScene, get_parent().get_node("YSort/TallGrass"), g_position + Vector2(10, 0))
 #				elif chance < 26:
 #					enemy_positions.append(g_position)
-		elif chance < 20.5:
-			scenes_on_node[new_chunk_coords].append(Globals.instance_scene_on_node(RockScene, get_parent().get_node("YSort/Rocks"), g_position))
+		elif chance < 20.2:
+			scenes_on_node[new_chunk_coords].append(Globals.instance_scene_on_node_with_name(RockScene, get_parent().get_node("YSort/Rocks"), g_position, "rock" + str(num_rock)))
+			num_rock += 1
 
 func clean_map_1(x, y) -> void:
 	if grass_tile.get_cell(x, y) == -1 and dirt_tile.get_cell(x, y) == -1:

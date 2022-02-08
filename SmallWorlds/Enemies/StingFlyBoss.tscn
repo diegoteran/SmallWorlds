@@ -237,8 +237,8 @@ radius = 8.0
 modulate = Color( 0.447059, 0.980392, 0.529412, 1 )
 scale = Vector2( 2.5, 2.5 )
 script = ExtResource( 6 )
-hp = 80
-ATTACK_RANGE = 60
+hp = 50
+ATTACK_RANGE = 50
 
 [node name="Sprite" parent="." index="0"]
 position = Vector2( 0, -16 )

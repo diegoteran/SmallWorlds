@@ -18,6 +18,7 @@ onready var world = $YSort
 func _ready():
 #	Music.list_play()
 	Globals.world = world
+	set_network_master(1)
 
 func _process(_delta):
 	if get_tree().is_network_server():

@@ -1,7 +1,7 @@
 extends Node
 
 var enemy_id_counter = 1
-var enemy_maximum = 20
+var enemy_maximum = 25
 var enemy_types = ["Bat", "Bat", "Bat", "StingFly"]
 var enemy_spawn_points = []
 var open_locations = []
@@ -10,7 +10,7 @@ var enemy_list = {}
 
 func _ready():
 	var timer = Timer.new()
-	timer.wait_time = 0.01
+	timer.wait_time = 0.1
 	timer.autostart = true
 	timer.connect("timeout", self, "SpawnEnemy")
 	self.add_child(timer)

@@ -110,8 +110,8 @@ func kill_player():
 	stats.soul = 0
 	hurtBox.set_deferred('monitoring', false)
 	collisionShape.set_deferred('disabled', true)
-	global_position = Vector2(500, -500)
-	yield(get_tree().create_timer(1.0), "timeout")
+	global_position = Vector2(173, -71)
+	yield(get_tree().create_timer(2.0), "timeout")
 	revive_player()
 	pass
 
@@ -144,16 +144,18 @@ func add_rock(value, type):
 
 func _physics_process(delta):
 	
-	if Input.is_action_just_pressed("regen"):
-		stats.set_rock(30, 0)
-		stats.set_rock(30, 1)
-		stats.set_soul(10)
-		stats.health = stats.max_health
-	
 	if paused or state == DEAD:
 		return
 	
 	if is_network_master():
+		
+		if Input.is_action_just_pressed("regen"):
+			stats.set_rock(stats.rocks[0] + 10, 0)
+			stats.set_rock(stats.rocks[1] + 9, 1)
+			stats.set_soul(10)
+			stats.health = stats.max_health
+		
+		
 		# Wheel Experiment
 		menu_wheel()
 		

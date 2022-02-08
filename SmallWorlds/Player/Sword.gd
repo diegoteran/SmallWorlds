@@ -27,7 +27,8 @@ func _ready():
 	smokeTrail = Globals.instance_scene_on_world_with_name(SmokeTrail, Vector2.ZERO, trail_name)
 	
 # warning-ignore:return_value_discarded
-	PlayerStats.connect("research_completed", self, "_on_level_up")
+	if is_network_master():
+		PlayerStats.connect("research_completed", self, "_on_level_up")
 
 func _process(_delta):
 	smokeTrail.global_position = global_position
@@ -51,6 +52,8 @@ func _process(_delta):
 		if id != 2:
 			tween.interpolate_property(sprite, "rotation_degrees", sprite.rotation_degrees, -p_rotation, 0.1)
 			tween.start()
+		else:
+			sprite.rotation_degrees = 0
 #		sprite.flip_h = p_flip
 
 func attack():
@@ -70,10 +73,13 @@ func select_item(item_id):
 
 func _on_level_up(type):
 	level = type + 1
-	sprite.material.set_shader_param("Shift_Hue", Globals.shader_dict[int(level)])
 	hitbox.damage = damage_dict[level][id]
-	if is_network_master():
-		PlayerStats.max_health = 4 + level
+	PlayerStats.max_health = 4 + level
+	rpc("sync_level", level)
+
+remotesync func sync_level(new_level):
+	level = new_level
+	sprite.material.set_shader_param("Shift_Hue", Globals.shader_dict[int(level)])
 
 remotesync func changing_item(item_id):
 	id = item_id

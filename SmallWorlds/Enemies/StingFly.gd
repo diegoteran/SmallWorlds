@@ -82,7 +82,9 @@ func _physics_process(delta):
 		
 		velocity = move_and_slide(velocity)
 		
-		rpc_unreliable("sync_puppet_variables", global_position, velocity, sprite.rotation, sprite.flip_v, sprite.flip_h)
+		for new_id in subscribed:
+			if new_id in Network.players.keys():
+				rpc_unreliable_id(new_id, "sync_puppet_variables", global_position, velocity, sprite.rotation, sprite.flip_v, sprite.flip_h)
 
 	else:
 		move_puppet_fly()

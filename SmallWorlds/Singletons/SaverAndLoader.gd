@@ -4,14 +4,14 @@ const SAVE_PATH = "res://savegame.save"
 
 var is_loading = false
 var custom_data = {
-	player_name = "",
-	position_x = 80,
-	position_y = 80,
+	player_name = "NoName",
+	position_x = 176,
+	position_y = -40,
 	player_level = 0,
 	soul = 0,
 	rocks = [0, 0],
-	fires_x = [80],
-	fires_y = [80]
+	fires_x = [],
+	fires_y = []
 #	missiles_unlocked = false,
 #	boss_defeated = false
 }

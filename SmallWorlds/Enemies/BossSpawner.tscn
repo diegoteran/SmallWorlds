@@ -4,71 +4,71 @@
 [ext_resource path="res://Enemies/BossSpawner.gd" type="Script" id=2]
 [ext_resource path="res://Enemies/StingFlyBoss.tscn" type="PackedScene" id=3]
 
-[sub_resource type="AtlasTexture" id=54]
+[sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=55]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
 region = Rect2( 200, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=56]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 1 )
 region = Rect2( 400, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=57]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 1 )
 region = Rect2( 600, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=58]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 1 )
 region = Rect2( 800, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=59]
+[sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 1 )
 region = Rect2( 1000, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=60]
+[sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 1 )
 region = Rect2( 1200, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=61]
+[sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 1 )
 region = Rect2( 1400, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=62]
+[sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 1 )
 region = Rect2( 1600, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=63]
+[sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 1 )
 region = Rect2( 1800, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=64]
+[sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 1 )
 region = Rect2( 2000, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=65]
+[sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 1 )
 region = Rect2( 2200, 0, 200, 400 )
 
-[sub_resource type="AtlasTexture" id=66]
+[sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 1 )
 region = Rect2( 2400, 0, 200, 400 )
 
-[sub_resource type="SpriteFrames" id=67]
+[sub_resource type="SpriteFrames" id=14]
 animations = [ {
-"frames": [ SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ) ],
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=68]
+[sub_resource type="CapsuleShape2D" id=15]
 radius = 7.84445
 height = 0.0
 
-[sub_resource type="CircleShape2D" id=69]
+[sub_resource type="CircleShape2D" id=16]
 radius = 17.7512
 
 [node name="BossSpawner" type="StaticBody2D"]
@@ -76,21 +76,21 @@ script = ExtResource( 2 )
 BossScene = ExtResource( 3 )
 
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
-scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 67 )
+frames = SubResource( 14 )
+frame = 7
 playing = true
 offset = Vector2( 0.0905762, -179.422 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -8.02293 )
-shape = SubResource( 68 )
+shape = SubResource( 15 )
 
 [node name="InteractionArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
-shape = SubResource( 69 )
+shape = SubResource( 16 )
 
 [connection signal="body_entered" from="InteractionArea" to="." method="_on_InteractionArea_body_entered"]
 [connection signal="body_exited" from="InteractionArea" to="." method="_on_InteractionArea_body_exited"]

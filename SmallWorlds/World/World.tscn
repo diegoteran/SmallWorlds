@@ -523,7 +523,7 @@ void fragment() {
 shader = SubResource( 52 )
 shader_param/lod = null
 
-[sub_resource type="Environment" id=68]
+[sub_resource type="Environment" id=54]
 background_mode = 4
 glow_enabled = true
 
@@ -635,7 +635,7 @@ scale = Vector2( 2.29571, 1.39122 )
 texture = ExtResource( 15 )
 
 [node name="BossSpawner" parent="YSort" instance=ExtResource( 20 )]
-position = Vector2( 2900, 2900 )
+position = Vector2( 1334, 1492 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -665,7 +665,7 @@ visible = false
 [node name="Weather" parent="Foreground" instance=ExtResource( 4 )]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 68 )
+environment = SubResource( 54 )
 
 [editable path="Background/SoftCollision"]
 [editable path="DayNightCycle"]

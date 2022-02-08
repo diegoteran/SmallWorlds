@@ -30,6 +30,7 @@ var damage = 0
 var is_night = false
 var is_enraged = false
 var safe_areas = []
+var subscribed = []
 
 puppet var puppet_velocity = Vector2.ZERO
 puppet var puppet_position = Vector2.ZERO
@@ -45,6 +46,7 @@ onready var playerDetectionZone = $PlayerDetectionZone
 onready var timer = $Timer
 onready var proximityTimer = $ProximityTimer
 onready var particles = $Particles2D
+onready var rpcTimer = $RPCTimer
 
 func _ready():
 	if stateServer == "Idle":
@@ -59,12 +61,17 @@ func _ready():
 	
 	if is_network_master():
 		proximityTimer.start(3)
+	else:
+		rpcTimer.start(1)
 	
 	# Light Handler
 	var cycle = get_node("/root/World/DayNightCycle")
 	cycle.connect("light_changed", self, "set_lights")
 	if cycle.is_night:
 		set_lights(true)
+
+remote func subscribe(new_id):
+	subscribed.append(new_id)
 
 func _physics_process(_delta):
 	if state == DEAD:
@@ -160,3 +167,7 @@ remotesync func despawn():
 
 func delete_reflection():
 	pass
+
+
+func _on_RPCTimer_timeout():
+	rpc_id(1, "subscribe", get_tree().get_network_unique_id())
