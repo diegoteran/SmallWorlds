@@ -168,6 +168,7 @@ func _on_death():
 	shadowSprite.queue_free()
 	hitBox.set_deferred("monitorable", false)
 	animationPlayer.play("Death")
+	PlayerStats.max_health += 1
 
 func delete_reflection():
 	Globals.delete_reflection("flyBoss"+name)

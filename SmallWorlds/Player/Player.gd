@@ -61,6 +61,8 @@ puppet var puppet_position = Vector2(0,0)
 puppet var puppet_animation_vector = Vector2(0,0)
 puppet var puppet_velocity = Vector2(0,0)
 
+signal healed
+
 func _ready():
 	SaverAndLoader.load_game()
 	PlayerStats.update()
@@ -143,8 +145,8 @@ func add_rock(value, type):
 func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("regen"):
-		stats.set_rock(10, 0)
-		stats.set_rock(10, 1)
+		stats.set_rock(30, 0)
+		stats.set_rock(30, 1)
 		stats.set_soul(10)
 		stats.health = stats.max_health
 	
@@ -481,4 +483,6 @@ func _on_Timer_timeout():
 		stats.soul -= 1
 		stats.health += 1
 		state = MOVE
+		if sword.level >= 2:
+			emit_signal("healed")
 		rpc("end_heal", true)

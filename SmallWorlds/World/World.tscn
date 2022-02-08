@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=2]
+[gd_scene load_steps=77 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PixelArt/TileSet/Background.tres" type="TileSet" id=2]
@@ -19,9 +19,8 @@
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=17]
 [ext_resource path="res://World/WorldParticles.tscn" type="PackedScene" id=18]
 [ext_resource path="res://PixelArt/Structures/Tent.png" type="Texture" id=19]
-[ext_resource path="res://PixelArt/Structures/FlyingObelisk_no_lightnings_no_letter.png" type="Texture" id=20]
+[ext_resource path="res://Enemies/BossSpawner.tscn" type="PackedScene" id=20]
 [ext_resource path="res://World/Rock.tscn" type="PackedScene" id=21]
-[ext_resource path="res://Enemies/StingFlyBoss.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Overlap/SoftCollision.tscn" type="PackedScene" id=23]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -524,66 +523,6 @@ void fragment() {
 shader = SubResource( 52 )
 shader_param/lod = null
 
-[sub_resource type="AtlasTexture" id=54]
-atlas = ExtResource( 20 )
-region = Rect2( 0, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=55]
-atlas = ExtResource( 20 )
-region = Rect2( 200, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=56]
-atlas = ExtResource( 20 )
-region = Rect2( 400, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=57]
-atlas = ExtResource( 20 )
-region = Rect2( 600, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=58]
-atlas = ExtResource( 20 )
-region = Rect2( 800, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=59]
-atlas = ExtResource( 20 )
-region = Rect2( 1000, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=60]
-atlas = ExtResource( 20 )
-region = Rect2( 1200, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=61]
-atlas = ExtResource( 20 )
-region = Rect2( 1400, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=62]
-atlas = ExtResource( 20 )
-region = Rect2( 1600, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=63]
-atlas = ExtResource( 20 )
-region = Rect2( 1800, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=64]
-atlas = ExtResource( 20 )
-region = Rect2( 2000, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=65]
-atlas = ExtResource( 20 )
-region = Rect2( 2200, 0, 200, 400 )
-
-[sub_resource type="AtlasTexture" id=66]
-atlas = ExtResource( 20 )
-region = Rect2( 2400, 0, 200, 400 )
-
-[sub_resource type="SpriteFrames" id=67]
-animations = [ {
-"frames": [ SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
-
 [sub_resource type="Environment" id=68]
 background_mode = 4
 glow_enabled = true
@@ -676,21 +615,11 @@ texture = ExtResource( 13 )
 
 [node name="Enemies" type="YSort" parent="YSort"]
 
-[node name="StingFlyBoss" parent="YSort/Enemies" instance=ExtResource( 22 )]
-
 [node name="TallGrass" type="YSort" parent="YSort"]
 
 [node name="Projectiles" type="YSort" parent="YSort"]
 
 [node name="Rocks" type="YSort" parent="YSort"]
-
-[node name="AnimatedSprite2" type="AnimatedSprite" parent="YSort"]
-position = Vector2( 453.035, 155.247 )
-scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 67 )
-frame = 5
-playing = true
-offset = Vector2( 0.0905762, -179.422 )
 
 [node name="Tent" type="Sprite" parent="YSort"]
 position = Vector2( 648.208, -589.847 )
@@ -704,6 +633,9 @@ show_behind_parent = true
 position = Vector2( -0.487523, 14.6815 )
 scale = Vector2( 2.29571, 1.39122 )
 texture = ExtResource( 15 )
+
+[node name="BossSpawner" parent="YSort" instance=ExtResource( 20 )]
+position = Vector2( 2900, 2900 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
