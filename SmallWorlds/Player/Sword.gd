@@ -16,6 +16,7 @@ onready var swordEnd = $P/P
 onready var sprite = $P/Sprite
 onready var hitboxCollision = $P/HitBox/CollisionShape2D
 onready var hitbox = $P/HitBox
+onready var shadowSprite = $ShadowSprite
 
 puppet var p_rotation = 0
 #puppet var p_flip = false
@@ -31,6 +32,9 @@ func _ready():
 		PlayerStats.connect("research_completed", self, "_on_level_up")
 
 func _process(_delta):
+	
+	shadowSprite.global_position = hitbox.global_position + Vector2(0, 13)
+	
 	smokeTrail.global_position = global_position
 	smokeTrail.add_point(swordEnd.global_position)
 	

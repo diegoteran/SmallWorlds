@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://PixelArt/Player/16x16.png" type="Texture" id=1]
 [ext_resource path="res://Player/Sword.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Effects/SmokeTrail.tscn" type="PackedScene" id=4]
 [ext_resource path="res://PixelArt/Swords/1.png" type="Texture" id=5]
 [ext_resource path="res://PixelArt/Player/ball.png" type="Texture" id=6]
+[ext_resource path="res://PixelArt/Test/LightTest.png" type="Texture" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 10.9364
@@ -73,6 +74,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, -1 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../ShadowSprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.0321404, 0.0102023 ), Vector2( 0.0376212, 0.0123947 ), Vector2( 0.0321404, 0.0102023 ) ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -255,6 +268,7 @@ script = ExtResource( 2 )
 SmokeTrail = ExtResource( 4 )
 
 [node name="P" type="Position2D" parent="."]
+position = Vector2( 0, -1 )
 
 [node name="HitBox" parent="P" instance=ExtResource( 3 )]
 position = Vector2( 24, 0 )
@@ -281,6 +295,12 @@ anims/Upgrade1 = SubResource( 6 )
 
 [node name="P" type="Position2D" parent="P"]
 position = Vector2( 18.75, 0.625 )
+
+[node name="ShadowSprite" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0.6 )
+position = Vector2( 1.40308, 0.561232 )
+scale = Vector2( 0.0376212, 0.0123947 )
+texture = ExtResource( 7 )
 
 [node name="Tween" type="Tween" parent="."]
 
