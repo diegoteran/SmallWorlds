@@ -12,11 +12,11 @@ shader_param/speed = 0.5
 shader_param/starting = -5.0
 shader_param/spread = 0.03
 
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="CapsuleShape2D" id=2]
 radius = 7.00002
 height = 12.0
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 4.39343, 40.3286 )
 
 [node name="Bush" type="StaticBody2D"]
@@ -32,14 +32,14 @@ offset = Vector2( -39, -83 )
 modulate = Color( 0, 0, 0, 0.6 )
 show_behind_parent = true
 position = Vector2( -2.38419e-07, 0 )
-scale = Vector2( 0.468889, 0.1843 )
+scale = Vector2( 0.403731, 0.135951 )
 texture = ExtResource( 2 )
 offset = Vector2( -1.76327, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 rotation = -1.5708
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="VisibilityArea" type="Area2D" parent="."]
 collision_layer = 0
@@ -47,6 +47,6 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VisibilityArea"]
 position = Vector2( -0.210205, -37.8403 )
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 
 [node name="Tween" type="Tween" parent="."]
