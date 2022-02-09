@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://PixelArt/FloraAssetPack/Ground Sprites/Flora/Flora Weeping Willow.png" type="Texture" id=1]
-[ext_resource path="res://Action RPG Resources/Shadows/LargeShadow.png" type="Texture" id=2]
+[ext_resource path="res://PixelArt/Test/LightTest.png" type="Texture" id=2]
 [ext_resource path="res://World/RandomizeWorldElement.gd" type="Script" id=3]
 [ext_resource path="res://World/WorldElementSwing.shader" type="Shader" id=4]
 
@@ -12,14 +12,14 @@ shader_param/speed = 0.7
 shader_param/starting = -5.0
 shader_param/spread = 0.02
 
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=3]
 radius = 4.00001
 height = 6.0
 
-[sub_resource type="OccluderPolygon2D" id=3]
+[sub_resource type="OccluderPolygon2D" id=4]
 polygon = PoolVector2Array( 0.29628, -4.372, -4.54251, -3.78801, -5.79393, -1.70232, -6.79506, 0.216511, -5.7105, 3.30333, -0.204285, 4.1376, 3.38309, 3.63704, 5.13507, 2.71934, 6.63676, 0.299938, 6.21963, -1.36861, 5.2185, -3.03716, 3.13281, -4.03829, 1.04713, -4.03829 )
 
-[sub_resource type="CapsuleShape2D" id=4]
+[sub_resource type="CapsuleShape2D" id=5]
 radius = 6.89685
 height = 88.2346
 
@@ -33,17 +33,19 @@ texture = ExtResource( 1 )
 offset = Vector2( 0, -50 )
 
 [node name="ShadowSprite" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0.6 )
 show_behind_parent = true
-scale = Vector2( 2.21875, 2 )
+position = Vector2( 1.1225, 0 )
+scale = Vector2( 0.588228, 0.264524 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = -1.5708
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 one_way_collision_margin = 0.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-occluder = SubResource( 3 )
+occluder = SubResource( 4 )
 
 [node name="VisibilityArea" type="Area2D" parent="."]
 collision_layer = 0
@@ -51,6 +53,6 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VisibilityArea"]
 position = Vector2( -0.396851, -51.5905 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="Tween" type="Tween" parent="."]

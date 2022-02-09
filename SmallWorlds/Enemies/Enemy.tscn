@@ -57,6 +57,7 @@ collision_mask = 4
 [node name="ProximityTimer" type="Timer" parent="."]
 
 [node name="RPCTimer" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="timeout" from="ProximityTimer" to="." method="_on_ProximityTimer_timeout"]
 [connection signal="timeout" from="RPCTimer" to="." method="_on_RPCTimer_timeout"]

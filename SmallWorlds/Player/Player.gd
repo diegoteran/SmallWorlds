@@ -218,7 +218,7 @@ func move_state(delta):
 	if Input.is_action_just_pressed("roll"):
 		state = ROLL
 	
-	if Input.is_action_pressed("heal") and stats.soul >= 1:
+	if Input.is_action_just_pressed("heal") and stats.soul >= 1:
 		state = HEAL
 	
 	if Input.is_action_just_pressed("fire") and stats.soul == stats.max_soul:

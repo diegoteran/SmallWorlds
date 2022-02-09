@@ -8,8 +8,8 @@
 [ext_resource path="res://PixelArt/Player/ball.png" type="Texture" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 9.056
-height = 10.6667
+radius = 10.9364
+height = 11.0569
 
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
@@ -261,7 +261,8 @@ position = Vector2( 24, 0 )
 collision_mask = 9
 
 [node name="CollisionShape2D" parent="P/HitBox" index="0"]
-position = Vector2( -0.882886, 0 )
+position = Vector2( -7.33705, 0 )
+rotation = -1.57079
 shape = SubResource( 1 )
 disabled = true
 

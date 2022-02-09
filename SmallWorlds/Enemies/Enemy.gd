@@ -31,6 +31,7 @@ var is_night = false
 var is_enraged = false
 var safe_areas = []
 var subscribed = []
+var tick = false
 
 puppet var puppet_velocity = Vector2.ZERO
 puppet var puppet_position = Vector2.ZERO
@@ -60,7 +61,7 @@ func _ready():
 	hurtBox.connect("area_entered", self, "_on_HurtBox_area_entered")
 	
 	if is_network_master():
-		proximityTimer.start(3)
+		proximityTimer.start(5)
 	else:
 		rpcTimer.start(1)
 	
@@ -155,9 +156,10 @@ func _on_ProximityTimer_timeout():
 	
 	for pos in player_positions:
 		if global_position.distance_to(pos) < Globals.ENEMY_DISTANCE_TO_PLAYERS[0] * 2:
-			proximityTimer.start(3)
+			proximityTimer.start(5)
 			return
 	
+	state = DEAD
 	Network.NPCKilled(int(name))
 	rpc("despawn")
 

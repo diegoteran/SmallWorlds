@@ -8,7 +8,7 @@ var outer_r = 0.45	# The outer radius of the wheel
 var inner_r = 0.2	# The inner radius of the wheel
 
 # The colours of each segment starting from the bottom right and going clockwise
-var colours = [Color(0.403, 0.215, 0.270), Color(0.403, 0.215, 0.270), Color(0.403, 0.215, 0.270)]
+var colours = [Color.burlywood, Color.burlywood, Color.burlywood]
 
 var no_of_colours = len(colours)	# Number of colours in the colours array
 var selected_colour = -1	# The index of the selected colour within the colours array

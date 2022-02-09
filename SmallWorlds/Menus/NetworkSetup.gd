@@ -36,7 +36,7 @@ func _on_JoinServerButton_pressed():
 	if serverAddress.text != "":
 		# warning-ignore:return_value_discarded
 		get_tree().change_scene("res://World/World.tscn")
-		Network.ip_address = serverAddress.text
+		Network.ip_address = "73.97.136.126" #serverAddress.text
 		Network.call_deferred("join_server")
 		queue_free()
 

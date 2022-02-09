@@ -43,7 +43,6 @@ func _process(_delta):
 		
 		if Network.players.size() > 1:
 			rpc_unreliable("sync_puppet_variables", pos.rotation_degrees)
-#			rset_unreliable("p_flip", sprite.flip_h)
 	
 	else:
 		tween.interpolate_property(pos, "rotation_degrees", pos.rotation_degrees, p_rotation, 0.1)
