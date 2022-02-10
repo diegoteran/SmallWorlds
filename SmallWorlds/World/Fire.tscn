@@ -135,7 +135,7 @@ shadow_enabled = true
 
 [node name="light2" type="Light2D" parent="."]
 position = Vector2( 0.125, -16.8637 )
-scale = Vector2( 0.967569, 0.967569 )
+scale = Vector2( 0.997853, 0.997853 )
 texture = ExtResource( 3 )
 color = Color( 0.403922, 1, 0.984314, 1 )
 energy = 0.0
@@ -146,7 +146,7 @@ material = SubResource( 16 )
 position = Vector2( -0.280937, -5.33772 )
 texture = ExtResource( 1 )
 hframes = 8
-frame = 4
+frame = 7
 
 [node name="Sprite" type="Sprite" parent="Sprite"]
 show_behind_parent = true
