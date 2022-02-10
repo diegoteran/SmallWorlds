@@ -22,7 +22,7 @@ func _physics_process(delta):
 		return
 	
 	if state == DEAD:
-			return
+		return
 	
 	if is_network_master():
 		

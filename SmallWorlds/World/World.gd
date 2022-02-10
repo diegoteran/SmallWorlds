@@ -86,6 +86,6 @@ func SpawnEnemies():
 		if not world_state_buffer[1]["Enemies"].has(enemy):
 			continue
 		if world_state_buffer[2]["Enemies"][enemy]["EnemyState"] != "Dead" and enemy > max_enemy_spawned:  # Only respawn them if they are not dead
-			print("spawning enemy")
+			print("spawning enemy " + str(enemy))
 			max_enemy_spawned = enemy
 			SpawnNewEnemy(enemy, world_state_buffer[2]["Enemies"][enemy])

@@ -29,9 +29,9 @@ func _ready():
 	shadowSprite.flip_h = switch_facing
 
 func _on_VisibilityArea_body_entered(_body):
-	tween.interpolate_property(sprite, "modulate", sprite.modulate, Color(1, 1, 1, 0.4), 0.4, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.interpolate_property(sprite, "modulate:a", sprite.modulate.a, 0.4, 0.4, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	tween.start()
 
 func _on_VisibilityArea_body_exited(_body):
-	tween.interpolate_property(sprite, "modulate", sprite.modulate, Color(1, 1, 1, 1), 0.4, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.interpolate_property(sprite, "modulate:a", sprite.modulate.a, 1, 0.4, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	tween.start()

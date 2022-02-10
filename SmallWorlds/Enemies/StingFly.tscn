@@ -238,7 +238,7 @@ hp = 4
 
 [node name="Sprite" parent="." index="0"]
 position = Vector2( 0, -16 )
-texture = ExtResource( 1 )
+texture = ExtResource( 7 )
 flip_h = true
 hframes = 3
 

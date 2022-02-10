@@ -8,6 +8,9 @@ func _ready():
 	add_child(remote_transform)
 
 func _physics_process(delta):
+	if state == DEAD:
+		return
+	
 	if get_tree().network_peer == null or get_tree().network_peer.get_connection_status() != get_tree().network_peer.CONNECTION_CONNECTED:
 		return
 	
@@ -95,11 +98,10 @@ func _on_Stats_no_health():
 	enemyDeathEffect.global_position = global_position
 
 func _on_death():
+	state = DEAD
 	if (get_tree().is_network_server()):
 		server.NPCKilled(int(name))
-	
-	delete_reflection()
-	queue_free()
+		rpc("despawn")
 #	SoundFx.play("EnemyDie", global_position, rand_range(0.9, 1.1), -30)
 	play_defeated()
 	var enemyDeathEffect = EnemyDeathEffect.instance()
