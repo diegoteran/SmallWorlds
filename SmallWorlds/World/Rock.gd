@@ -97,6 +97,7 @@ func _on_HurtBox_area_entered(area):
 	if area.is_network_master():
 		Shake.shake(1.5, 0.3, 2)
 		var new_hp = hp
+		var player_node_path = ""
 		if "Arrow" in area.get_parent().name:
 			area.get_parent().delete()
 		else:
@@ -104,18 +105,30 @@ func _on_HurtBox_area_entered(area):
 			if hp > 0 and player.wheel_id == 1 and area.get_parent().get_parent().level >= type:
 				player.add_rock(rand_range(0.5, 1), type)
 				new_hp -= 1
-		rpc('hit_effect', new_hp)
+			player_node_path = player.get_path()
+		rpc('hit_effect', new_hp, player_node_path)
 
-remotesync func hit_effect(new_hp: float):
+remotesync func hit_effect(new_hp: float, player_node_path: String):
 	self.hp = max(0, new_hp)
 	SoundFx.play('RockHit', global_position, rand_range(0.5, 0.8), -20)
 	tween.interpolate_property(sprite, 'scale', Vector2(rand_range(0.8, 1.2), rand_range(0.8, 1.2)), Vector2.ONE, 0.2, Tween.TRANS_ELASTIC)
 	tween.start()
+	
+	if is_network_master():
+		aggro_enemies(player_node_path)
+	
 	if state == WITH:
 		var particleEffect = ParticleEffect.instance()
 		particleEffect.set_particles_color(Color.gray)
 		get_parent().add_child(particleEffect)
 		particleEffect.global_position = global_position
+
+func aggro_enemies(player_node_path: String):
+	var enemies = get_node("/root/World/YSort/Enemies")
+	var player = get_node(player_node_path)
+	for enemy in enemies.get_children():
+		if enemy.is_in_group("Enemy") and enemy.global_position.distance_to(player.global_position) < Globals.ENEMY_DISTANCE_TO_PLAYERS[0] * 1.3:
+			enemy.aggroed(player)
 
 func _on_empty():
 	if state == WITH:

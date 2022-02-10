@@ -41,6 +41,9 @@ func _physics_process(delta):
 					accelerate_towards_point(player.global_position, delta)
 				else:
 					state = IDLE
+			
+			AGGRO:
+				aggro_state(delta)
 		
 		if softCollision.is_colliding():
 			velocity += softCollision.get_push_vector() * delta * 400

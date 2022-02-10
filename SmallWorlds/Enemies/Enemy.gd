@@ -14,6 +14,7 @@ enum {
 	CHASE,
 	TELEGRAPH,
 	ATTACK,
+	AGGRO,
 	DEAD
 }
 
@@ -32,6 +33,7 @@ var is_enraged = false
 var safe_areas = []
 var subscribed = []
 var tick = false
+var aggroed_player = null
 
 puppet var puppet_velocity = Vector2.ZERO
 puppet var puppet_position = Vector2.ZERO
@@ -48,6 +50,7 @@ onready var timer = $Timer
 onready var proximityTimer = $ProximityTimer
 onready var particles = $Particles2D
 onready var rpcTimer = $RPCTimer
+onready var label = $Sprite/Label
 
 func _ready():
 	if stateServer == "Idle":
@@ -75,6 +78,8 @@ remote func subscribe(new_id):
 	subscribed.append(new_id)
 
 func _physics_process(_delta):
+	label.text = str(state)
+	
 	if state == DEAD:
 		return
 
@@ -114,6 +119,10 @@ func seek_player():
 	if playerDetectionZone.can_see_player():
 		state = CHASE
 
+func aggro_state(delta):
+	seek_player()
+	accelerate_towards_point(aggroed_player.global_position, delta)
+
 func accelerate_towards_point(point, delta):
 	var direction = global_position.direction_to(point)
 	velocity = velocity.move_toward(direction * (NIGHT_SPEED if is_enraged else MAX_SPEED), ACCELERATION * delta)
@@ -139,7 +148,24 @@ remotesync func hurt_effect(direction: Vector2):
 	particleEffect.global_position = global_position + direction * 5
 	particleEffect.look_at(particleEffect.global_position + Vector2(-direction.y, direction.x))
 
+func aggroed(by_player):
+	if state != DEAD:
+		aggroed_player = by_player
+		if state != AGGRO:
+			rpc("aggro_effects")
+		state = AGGRO
+
+remotesync func aggro_effects():
+	play_hurt()
+	var particleEffect = ParticleEffect.instance()
+	particleEffect.set_particles_color(Color.black)
+	add_child(particleEffect)
+	particleEffect.global_position = global_position
+
 func _on_death():
+	pass
+
+func play_hurt():
 	pass
 
 func play_hit_sound():

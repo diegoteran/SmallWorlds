@@ -37,6 +37,7 @@ func set_soul(value):
 	var prev_soul = soul
 	soul = min(value, max_soul)
 	emit_signal("soul_changed", soul)
+	SaverAndLoader.custom_data.soul = soul
 	if soul ==  max_soul and soul != prev_soul:
 		emit_signal("soul_charged")
 

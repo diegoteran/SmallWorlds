@@ -21,12 +21,21 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 color = Color( 9.83, 0, 0, 1 )
 
-[node name="Enemy" type="KinematicBody2D"]
+[node name="Enemy" type="KinematicBody2D" groups=[
+"Enemy",
+]]
 collision_layer = 17
 script = ExtResource( 7 )
 ParticleEffect = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
+
+[node name="Label" type="Label" parent="Sprite"]
+margin_right = 40.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ShadowSprite" type="Sprite" parent="."]
 

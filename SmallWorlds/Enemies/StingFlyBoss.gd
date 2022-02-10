@@ -37,9 +37,11 @@ func _physics_process(delta):
 			can_attack = true
 
 		# Player detection
-		var player = playerDetectionZone.player
-		if player == null:
-			attack_finished()
+		var player = null
+		if playerDetectionZone != null and state == ATTACK:
+			player = playerDetectionZone.player
+			if player == null:
+				attack_finished()
 		
 		match state:
 			IDLE:
@@ -60,7 +62,10 @@ func _physics_process(delta):
 					update_wander_controller()
 				
 			CHASE:
+				player = playerDetectionZone.player
 				seek_player()
+				if state != CHASE:
+					return
 				accelerate_towards_point(player.global_position, delta)
 				if global_position.distance_to(player.global_position) < ATTACK_RANGE:
 					state = TELEGRAPH
@@ -68,6 +73,11 @@ func _physics_process(delta):
 			
 			TELEGRAPH:
 				if can_attack:
+					if playerDetectionZone == null:
+						return
+					player = playerDetectionZone.player
+					if player == null:
+						return
 					telegraph_attack_state(player.global_position, delta)
 					if !TELEGRAPHING:
 						state = ATTACK
@@ -76,6 +86,9 @@ func _physics_process(delta):
 			
 			ATTACK:
 				attack(delta)
+			
+			AGGRO:
+				aggro_state(delta)
 		
 		if softCollision.is_colliding():
 			velocity += softCollision.get_push_vector() * delta * 400
@@ -114,7 +127,7 @@ remotesync func hurt(new_knockback: Vector2, new_hp: float) -> void:
 func seek_player():
 	if playerDetectionZone.can_see_player():
 		state = CHASE
-	else:
+	elif state != AGGRO:
 		state = IDLE
 
 func accelerate_towards_point(point: Vector2, delta: float):
