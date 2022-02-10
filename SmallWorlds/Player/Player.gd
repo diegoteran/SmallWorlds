@@ -97,30 +97,34 @@ func _ready():
 	Globals.dead = false
 
 func _on_no_health():
-	rpc("player_died")
+	var new_spawn = Vector2(173, -71)
+	if SaverAndLoader.custom_data.spawn_enabled:
+		new_spawn = Vector2(SaverAndLoader.custom_data.spawn_x, SaverAndLoader.custom_data.spawn_y)
+	rpc("player_died", new_spawn)
+	stats.soul = 0
+	for i in range(2):
+		if stats.level <= i:
+			stats.set_rock(stats.rocks[i] - 10, i)
+	stats.health = stats.max_health
 
-remotesync func player_died():
+remotesync func player_died(new_spawn):
 	if is_network_master():
 		Globals.dead = true
-	kill_player()
+	kill_player(new_spawn)
 #	get_node("/root/World").KillPlayer(player_id)
 
-func kill_player():
+func kill_player(new_spawn):
 	state = DEAD
-	stats.soul = 0
 	hurtBox.set_deferred('monitoring', false)
 	collisionShape.set_deferred('disabled', true)
-	global_position = Vector2(173, -71)
+	global_position = new_spawn
 	yield(get_tree().create_timer(2.0), "timeout")
 	revive_player()
-	pass
 
 func revive_player():
 	state = MOVE
-	stats.health = stats.max_health
 	hurtBox.set_deferred('monitoring', true)
 	collisionShape.set_deferred('disabled', false)
-	pass
 
 func SetDamage(damage):
 	swordHitBox.damage = damage
@@ -227,11 +231,11 @@ func move_state(delta):
 	if selecting:
 		return
 	
-	if Input.is_action_just_pressed("attack") and wheel_id != 2:
-		state = ATTACK
-	
-	if Input.is_action_just_pressed("ranged") and wheel_id == 2:
-		state = RANGED
+	if Input.is_action_just_pressed("attack"):
+		if wheel_id != 2:
+			state = ATTACK
+		else:
+			state = RANGED
 
 func spawning_fire():
 	stats.soul = 0

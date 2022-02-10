@@ -11,7 +11,10 @@ var custom_data = {
 	soul = 0,
 	rocks = [0, 0],
 	fires_x = [],
-	fires_y = []
+	fires_y = [],
+	spawn_enabled = false,
+	spawn_x = 0,
+	spawn_y = 0,
 #	missiles_unlocked = false,
 #	boss_defeated = false
 }
