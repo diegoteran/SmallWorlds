@@ -165,6 +165,7 @@ func _on_ProximityTimer_timeout():
 
 remotesync func despawn():
 	delete_reflection()
+	print("despawning enemy " + str(name))
 	queue_free()
 
 func delete_reflection():
