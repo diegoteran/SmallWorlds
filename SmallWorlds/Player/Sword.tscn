@@ -267,6 +267,11 @@ position = Vector2( 0, -8 )
 script = ExtResource( 2 )
 SmokeTrail = ExtResource( 4 )
 
+[node name="Pointer" type="Polygon2D" parent="."]
+position = Vector2( 0, 6.63937 )
+color = Color( 1, 1, 1, 0.396078 )
+polygon = PoolVector2Array( 3.07243, -1.04686, 3.07243, 1.53267, 12.9937, 0.441334 )
+
 [node name="P" type="Position2D" parent="."]
 position = Vector2( 0, -1 )
 

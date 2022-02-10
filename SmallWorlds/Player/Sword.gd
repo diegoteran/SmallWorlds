@@ -17,6 +17,7 @@ onready var sprite = $P/Sprite
 onready var hitboxCollision = $P/HitBox/CollisionShape2D
 onready var hitbox = $P/HitBox
 onready var shadowSprite = $ShadowSprite
+onready var pointer = $Pointer
 
 puppet var p_rotation = 0
 #puppet var p_flip = false
@@ -30,6 +31,8 @@ func _ready():
 # warning-ignore:return_value_discarded
 	if is_network_master():
 		PlayerStats.connect("research_completed", self, "_on_level_up")
+	else:
+		pointer.visible = false
 
 func _process(_delta):
 	
@@ -40,6 +43,7 @@ func _process(_delta):
 	
 	if is_network_master():
 		pos.look_at(get_global_mouse_position())
+		pointer.look_at(get_global_mouse_position())
 		
 		if id != 2:
 			pos.rotation_degrees += offset
