@@ -14,6 +14,7 @@ var puppetState = "Idle"
 
 func _ready():
 	# Reflection
+	Music.play_boss()
 	var remote_transform = Globals.create_reflection_ignore_pos(sprite, "flyBoss"+name)
 	add_child(remote_transform)
 
@@ -174,8 +175,8 @@ func play_attack():
 ### Death
 
 func _on_death():
-	if (get_tree().is_network_server()):
-		server.NPCKilled(int(name))
+#	if (get_tree().is_network_server()):
+#		server.NPCKilled(int(name))
 	
 	play_hurt()
 	delete_reflection()
@@ -185,6 +186,11 @@ func _on_death():
 	hitBox.set_deferred("monitorable", false)
 	animationPlayer.play("Death")
 	PlayerStats.max_health += 1
+	Music.end_boss()
+
+func despawn():
+	Music.end_boss()
+	.despawn()
 
 func delete_reflection():
 	Globals.delete_reflection("flyBoss"+name)

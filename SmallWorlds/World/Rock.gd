@@ -127,7 +127,7 @@ func aggro_enemies(player_node_path: String):
 	var enemies = get_node("/root/World/YSort/Enemies")
 	var player = get_node(player_node_path)
 	for enemy in enemies.get_children():
-		if enemy.is_in_group("Enemy") and enemy.global_position.distance_to(player.global_position) < Globals.ENEMY_DISTANCE_TO_PLAYERS[0] * 1.3:
+		if player != null and enemy.is_in_group("Enemy") and enemy.global_position.distance_to(player.global_position) < Globals.ENEMY_DISTANCE_TO_PLAYERS[0] * 1.3:
 			enemy.aggroed(player)
 
 func _on_empty():

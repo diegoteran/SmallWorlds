@@ -1,14 +1,20 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://SoundFX/Music.gd" type="Script" id=1]
 [ext_resource path="res://SoundFX/Music/Menu.wav" type="AudioStream" id=2]
+[ext_resource path="res://SoundFX/Music/Boss.wav" type="AudioStream" id=3]
 
 [node name="Music" type="Node"]
 script = ExtResource( 1 )
 music_list = [ ExtResource( 2 ) ]
+boss_music = ExtResource( 3 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="AudioStreamPlayerBoss" type="AudioStreamPlayer" parent="."]
 
 [node name="Environment" type="Node" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
+
+[connection signal="finished" from="AudioStreamPlayerBoss" to="." method="_on_AudioStreamPlayerBoss_finished"]
