@@ -17,7 +17,7 @@
 [ext_resource path="res://Effects/ParticleEffect.tscn" type="PackedScene" id=16]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 4.0
+radius = 3.62868
 height = 1.04457
 
 [sub_resource type="Animation" id=2]
@@ -1355,6 +1355,7 @@ __meta__ = {
 }
 
 [node name="Debug" type="Label" parent="."]
+visible = false
 margin_right = 40.0
 margin_bottom = 14.0
 __meta__ = {

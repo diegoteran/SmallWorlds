@@ -17,9 +17,12 @@ onready var dirt = $Background/DirtTileMap
 onready var world = $YSort
 
 func _ready():
-#	Music.list_play()
 	Globals.world = world
 	set_network_master(1)
+	Music.play_ambiance()
+
+func queue_free():
+	Music.stop_ambiance()
 
 func _process(_delta):
 	if get_tree().is_network_server():
@@ -34,7 +37,6 @@ func _process(_delta):
 
 func ServerDied():
 	# warning-ignore:return_value_discarded
-#	Music.list_stop()
 	get_tree().call_deferred("change_scene", "res://Menus/TitleScreen.tscn")
 	queue_free()
 

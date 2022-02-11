@@ -4,7 +4,7 @@ const SAVE_PATH = "res://savegame.save"
 
 var is_loading = false
 var custom_data = {
-	player_name = "NoName",
+	player_name = "",
 	position_x = 176,
 	position_y = -40,
 	player_level = 0,

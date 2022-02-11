@@ -2,37 +2,68 @@ extends Node
 
 export (Array, AudioStream) var music_list = []
 export var boss_music : AudioStream
+export var day_music : AudioStream
+export var night_music : AudioStream
+export var menu_music : AudioStream
 
 var music_list_index = 0
 
 onready var musicPlayer = $AudioStreamPlayer
 onready var musicBoss = $AudioStreamPlayerBoss
-onready var environment = $Environment
+onready var musicAmbiance = $AudioStreamPlayerAmbiance
+onready var musicMenu = $AudioStreamPlayerMenu
+onready var tween = $Tween
 
-var boss_stopped = false
+var boss_stopped = true
+var ambiance_stopped = true
+
+func _on_ready():
+	set_music_volume()
+
+func fade_out(stream_player, duration):
+	tween.interpolate_property(stream_player, "volume_db", stream_player.volume_db, -80, duration, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.start()
 
 func list_play():
+	musicPlayer.volume_db = -15 +  linear2db(Globals.get_music_volume())
 	assert(music_list.size() > 0)
 	musicPlayer.stream = music_list[music_list_index]
 	musicPlayer.play()
-	set_music_volume()
 	music_list_index += 1
 	if music_list_index == music_list.size():
 		music_list_index = 0
+	
+func list_stop():
+	musicPlayer.stop()
+
+func play_menu():
+	musicMenu.volume_db = -15 +  linear2db(Globals.get_music_volume())
+	musicMenu.stream = menu_music
+	musicMenu.play()
+
+func stop_menu():
+	fade_out(musicMenu, 3)
 
 func play_boss():
+	musicBoss.volume_db = -15 +  linear2db(Globals.get_music_volume())
 	boss_stopped = false
-	list_stop()
-	set_music_volume()
 	musicBoss.stream = boss_music
 	musicBoss.play()
 
 func end_boss():
 	boss_stopped = true
-	musicBoss.stop()
+	fade_out(musicBoss, 5.0)
+	
 
-func list_stop():
-	musicPlayer.stop()
+func play_ambiance():
+	musicAmbiance.volume_db = -15 +  linear2db(Globals.get_music_volume())
+	ambiance_stopped = false
+	musicAmbiance.stream = day_music
+	musicAmbiance.play()
+
+func stop_ambiance():
+	ambiance_stopped = true
+	fade_out(musicAmbiance, 5)
 
 func _on_AudioStreamPlayer_finished():
 	music_list.shuffle()
@@ -41,9 +72,23 @@ func _on_AudioStreamPlayer_finished():
 func set_music_volume():
 	musicPlayer.volume_db = -15 +  linear2db(Globals.get_music_volume())
 	musicBoss.volume_db = -15 +  linear2db(Globals.get_music_volume())
-#	environment.volume_db = -15 +  linear2db(Globals.get_music_volume())
+	musicAmbiance.volume_db = -15 +  linear2db(Globals.get_music_volume())
+	musicMenu.volume_db = -15 +  linear2db(Globals.get_music_volume())
 
 
 func _on_AudioStreamPlayerBoss_finished():
 	if !boss_stopped:
 		play_boss()
+
+
+func _on_AudioStreamPlayerAmbiance_finished():
+	if !ambiance_stopped:
+		play_ambiance()
+
+
+func _on_AudioStreamPlayerMenu_finished():
+	pass # Replace with function body.
+
+
+func _on_Tween_tween_completed(object, _key):
+	object.stop()

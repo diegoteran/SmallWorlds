@@ -1,20 +1,30 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://SoundFX/Music.gd" type="Script" id=1]
 [ext_resource path="res://SoundFX/Music/Menu.wav" type="AudioStream" id=2]
 [ext_resource path="res://SoundFX/Music/Boss.wav" type="AudioStream" id=3]
+[ext_resource path="res://SoundFX/Music/Night.wav" type="AudioStream" id=4]
+[ext_resource path="res://SoundFX/Music/Day.wav" type="AudioStream" id=5]
 
 [node name="Music" type="Node"]
 script = ExtResource( 1 )
 music_list = [ ExtResource( 2 ) ]
 boss_music = ExtResource( 3 )
+day_music = ExtResource( 5 )
+night_music = ExtResource( 4 )
+menu_music = ExtResource( 2 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="AudioStreamPlayerBoss" type="AudioStreamPlayer" parent="."]
 
-[node name="Environment" type="Node" parent="."]
+[node name="AudioStreamPlayerAmbiance" type="AudioStreamPlayer" parent="."]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment"]
+[node name="AudioStreamPlayerMenu" type="AudioStreamPlayer" parent="."]
+
+[node name="Tween" type="Tween" parent="."]
 
 [connection signal="finished" from="AudioStreamPlayerBoss" to="." method="_on_AudioStreamPlayerBoss_finished"]
+[connection signal="finished" from="AudioStreamPlayerAmbiance" to="." method="_on_AudioStreamPlayerAmbiance_finished"]
+[connection signal="finished" from="AudioStreamPlayerMenu" to="." method="_on_AudioStreamPlayerMenu_finished"]
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

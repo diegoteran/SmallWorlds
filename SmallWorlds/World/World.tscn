@@ -658,6 +658,7 @@ follow_viewport_scale = 1.5
 modulate = Color( 0.945098, 0.415686, 0.360784, 1 )
 
 [node name="DayNightCycle" parent="." instance=ExtResource( 3 )]
+color = Color( 1, 1, 1, 1 )
 
 [node name="Foreground" type="Node2D" parent="."]
 visible = false

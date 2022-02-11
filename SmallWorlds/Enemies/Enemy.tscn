@@ -31,6 +31,7 @@ ParticleEffect = ExtResource( 4 )
 [node name="Sprite" type="Sprite" parent="."]
 
 [node name="Label" type="Label" parent="Sprite"]
+visible = false
 margin_right = 40.0
 margin_bottom = 14.0
 __meta__ = {

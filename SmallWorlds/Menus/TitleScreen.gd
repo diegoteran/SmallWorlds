@@ -20,10 +20,10 @@ func _ready():
 	main_menu.connect("settings_pressed", self, "_on_settings_pressed")
 	main_menu.connect("exit_pressed", self, "_on_exit_pressed")
 	
-	Music.list_play()
+	Music.play_menu()
 
 func _on_start_pressed():
-	Music.list_stop()
+	Music.stop_menu()
 
 func _on_multiplayer_pressed():
 	multiplayer_menu = MultiplayerMenu.instance()
