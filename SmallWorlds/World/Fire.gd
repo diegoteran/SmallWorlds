@@ -24,11 +24,11 @@ func _input(_event):
 
 func set_lights(value: bool):
 	if value:
-		tween.interpolate_property(light1, "energy", light1.energy, 0.8, 1.0)
-		tween.interpolate_property(light2, "energy", light2.energy, 0.8, 1.0)
+		tween.interpolate_property(light1, "energy", light1.energy, 0.8, 5.0)
+		tween.interpolate_property(light2, "energy", light2.energy, 0.8, 5.0)
 	else:
-		tween.interpolate_property(light1, "energy", light1.energy, 0.0, 1.0)
-		tween.interpolate_property(light2, "energy", light2.energy, 0.0, 1.0)
+		tween.interpolate_property(light1, "energy", light1.energy, 0.0, 5.0)
+		tween.interpolate_property(light2, "energy", light2.energy, 0.0, 5.0)
 	
 	tween.start()
 

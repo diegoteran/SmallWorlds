@@ -20,11 +20,14 @@ menu_music = ExtResource( 2 )
 
 [node name="AudioStreamPlayerAmbiance" type="AudioStreamPlayer" parent="."]
 
+[node name="AudioStreamPlayerAmbiance2" type="AudioStreamPlayer" parent="."]
+
 [node name="AudioStreamPlayerMenu" type="AudioStreamPlayer" parent="."]
 
 [node name="Tween" type="Tween" parent="."]
 
 [connection signal="finished" from="AudioStreamPlayerBoss" to="." method="_on_AudioStreamPlayerBoss_finished"]
 [connection signal="finished" from="AudioStreamPlayerAmbiance" to="." method="_on_AudioStreamPlayerAmbiance_finished"]
+[connection signal="finished" from="AudioStreamPlayerAmbiance2" to="." method="_on_AudioStreamPlayerAmbiance2_finished"]
 [connection signal="finished" from="AudioStreamPlayerMenu" to="." method="_on_AudioStreamPlayerMenu_finished"]
 [connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

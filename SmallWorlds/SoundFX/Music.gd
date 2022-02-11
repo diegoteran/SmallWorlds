@@ -11,11 +11,13 @@ var music_list_index = 0
 onready var musicPlayer = $AudioStreamPlayer
 onready var musicBoss = $AudioStreamPlayerBoss
 onready var musicAmbiance = $AudioStreamPlayerAmbiance
+onready var musicAmbiance2 = $AudioStreamPlayerAmbiance2
 onready var musicMenu = $AudioStreamPlayerMenu
 onready var tween = $Tween
 
 var boss_stopped = true
 var ambiance_stopped = true
+var ambiance_2_stopped = true
 
 func _on_ready():
 	set_music_volume()
@@ -65,6 +67,16 @@ func stop_ambiance():
 	ambiance_stopped = true
 	fade_out(musicAmbiance, 5)
 
+func play_ambiance_2():
+	musicAmbiance2.volume_db = -15 +  linear2db(Globals.get_music_volume())
+	ambiance_2_stopped = false
+	musicAmbiance2.stream = night_music
+	musicAmbiance2.play()
+
+func stop_ambiance_2():
+	ambiance_2_stopped = true
+	fade_out(musicAmbiance2, 5)
+
 func _on_AudioStreamPlayer_finished():
 	music_list.shuffle()
 	list_play()
@@ -92,3 +104,9 @@ func _on_AudioStreamPlayerMenu_finished():
 
 func _on_Tween_tween_completed(object, _key):
 	object.stop()
+	object.volume_db = -15 +  linear2db(Globals.get_music_volume())
+
+
+func _on_AudioStreamPlayerAmbiance2_finished():
+	if !ambiance_2_stopped:
+		play_ambiance_2()

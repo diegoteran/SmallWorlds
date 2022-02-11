@@ -36,3 +36,10 @@ remotesync func sync_time(seconds_check_rpc):
 remotesync func change_light(value: bool):
 	is_night = value
 	emit_signal("light_changed", value)
+	
+	if !is_night:
+		Music.stop_ambiance_2()
+		Music.play_ambiance()
+	else:
+		Music.stop_ambiance()
+		Music.play_ambiance_2()

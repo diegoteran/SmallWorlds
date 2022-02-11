@@ -134,11 +134,11 @@ func SetDamage(damage):
 func set_lights(value: bool):
 	print("player light")
 	if value:
-		tween.interpolate_property(light1, "energy", light1.energy, 0.5, 1.0)
-		tween.interpolate_property(light2, "energy", light2.energy, 0.5, 1.0)
+		tween.interpolate_property(light1, "energy", light1.energy, 0.6, 10.0)
+		tween.interpolate_property(light2, "energy", light2.energy, 0.6, 10.0)
 	else:
-		tween.interpolate_property(light1, "energy", light1.energy, 0.0, 1.0)
-		tween.interpolate_property(light2, "energy", light2.energy, 0.0, 1.0)
+		tween.interpolate_property(light1, "energy", light1.energy, 0.0, 5.0)
+		tween.interpolate_property(light2, "energy", light2.energy, 0.0, 5.0)
 	
 	tween.start()
 
