@@ -116,6 +116,7 @@ remotesync func player_died(new_spawn):
 func kill_player(new_spawn):
 	state = DEAD
 	puppetState = "Idle"
+	animationState.travel("Idle")
 	hurtBox.set_deferred('monitoring', false)
 	collisionShape.set_deferred('disabled', true)
 	global_position = new_spawn
@@ -417,11 +418,11 @@ func run_step():
 	effect.global_position = global_position - velocity.normalized()*2
 
 func _on_HurtBox_area_entered(area):
-	if hurtBox.monitorable == false:
+	if hurtBox.in_timer == true:
 		return
+	hurtBox.start_invincibility(3)
 	if stats.health > 0:
 		stats.health -= area.damage
-	hurtBox.start_invincibility(3)
 	rpc("hurt")
 
 remotesync func hurt():

@@ -9,6 +9,8 @@ onready var timer = $Timer
 signal invincibility_started
 signal invincibility_ended
 
+var in_timer = false
+
 func set_invincible(value):
 	invincible = value
 	if invincible == true:
@@ -17,6 +19,7 @@ func set_invincible(value):
 		emit_signal("invincibility_ended")
 
 func start_invincibility(duration):
+	in_timer = true
 	self.invincible = true
 	timer.start(duration)
 
@@ -29,6 +32,7 @@ func create_hit_effect():
 
 func _on_Timer_timeout():
 	self.invincible = false
+	in_timer = false
 
 
 func _on_HurtBox_invincibility_ended():

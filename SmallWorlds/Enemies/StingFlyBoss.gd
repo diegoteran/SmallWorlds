@@ -120,6 +120,8 @@ puppet func move_puppet_fly():
 
 remotesync func hurt(new_knockback: Vector2, new_hp: float) -> void:
 	self.hp = new_hp
+	if hurtBox == null:
+		return
 	hurtBox.create_hit_effect()
 	.play_hit_sound()
 	if puppetState != "Attack":

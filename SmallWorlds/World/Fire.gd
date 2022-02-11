@@ -5,7 +5,7 @@ onready var light1 = $light1
 onready var light2 = $light2
 onready var sprite = $Sprite
 
-var mouse_in_fire = false
+export var mouse_in_fire = false
 
 func _ready():
 	# Light Handler
@@ -16,6 +16,7 @@ func _ready():
 
 func _input(_event):
 	if Input.is_action_just_pressed("ranged") and mouse_in_fire:
+		print("clicked " + str(name))
 		SaverAndLoader.custom_data.spawn_enabled = true
 		SaverAndLoader.custom_data.spawn_x = global_position.x
 		SaverAndLoader.custom_data.spawn_y = global_position.y
@@ -39,4 +40,4 @@ func _on_Fire_mouse_entered():
 
 func _on_Fire_mouse_exited():
 	sprite.material.set_shader_param('color', Color.transparent)
-	mouse_in_fire = true
+	mouse_in_fire = false
