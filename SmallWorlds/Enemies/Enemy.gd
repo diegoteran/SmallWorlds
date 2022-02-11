@@ -187,7 +187,9 @@ func _on_ProximityTimer_timeout():
 	
 	state = DEAD
 	Network.NPCKilled(int(name))
-	rpc("despawn")
+	despawn()
+	for new_id in subscribed:
+		rpc_id(new_id, "despawn")
 
 remotesync func despawn():
 	delete_reflection()

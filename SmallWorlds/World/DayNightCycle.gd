@@ -7,6 +7,13 @@ var is_night = false
 
 signal light_changed(value)
 
+#func _ready():
+#	if !get_tree().is_network_server():
+#		rpc_id(1, "ask_if_night", get_tree().get_network_unique_id())
+#
+#remote func ask_if_night():
+	
+
 func _physics_process(delta):
 	time += 1
 	seconds += delta
@@ -15,7 +22,7 @@ func _physics_process(delta):
 	if time >= 60 and get_tree().is_network_server():
 		time = 0
 		seconds_check += 1
-		rpc("sync_time", seconds_check)
+		rpc("sync_time", seconds_check, is_night)
 		return
 	
 	set_time(seconds)
@@ -29,9 +36,13 @@ func set_light(value: bool):
 	if get_tree().is_network_server() and value != is_night:
 		rpc("change_light", value)
 
-remotesync func sync_time(seconds_check_rpc):
+remotesync func sync_time(seconds_check_rpc, new_is_night):
 	seconds = seconds_check_rpc
 	set_time(seconds)
+	
+	if is_night != new_is_night:
+		is_night = new_is_night
+		change_light(is_night)
 
 remotesync func change_light(value: bool):
 	is_night = value
