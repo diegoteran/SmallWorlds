@@ -44,7 +44,7 @@ func _on_JoinServerButton_pressed():
 func to_join_world():
 	SaverAndLoader.custom_data.player_name = playerName.text
 	SaverAndLoader.save_game()
-	Music.list_stop()
+	Music.stop_menu()
 
 
 func _on_CreateServerButton_focus_entered():
