@@ -48,6 +48,8 @@ func _process(_delta):
 		if id != 2:
 			pos.rotation_degrees += offset
 			sprite.rotation_degrees = -pos.rotation_degrees
+		else:
+			sprite.rotation_degrees = 0
 		
 		if Network.players.size() > 1:
 			rpc_unreliable("sync_puppet_variables", pos.rotation_degrees)
@@ -91,8 +93,6 @@ remotesync func sync_level(new_level):
 remotesync func changing_item(item_id):
 	id = item_id
 	sprite.frame = Globals.icon_dict[item_id]
-	if sprite.frame == 2:
-		sprite.rotation_degrees = 0
 
 remotesync func sync_puppet_variables(rot_degrees):
 	p_rotation = rot_degrees

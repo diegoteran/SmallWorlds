@@ -134,8 +134,8 @@ func SetDamage(damage):
 func set_lights(value: bool):
 	print("player light")
 	if value:
-		tween.interpolate_property(light1, "energy", light1.energy, 0.6, 10.0)
-		tween.interpolate_property(light2, "energy", light2.energy, 0.6, 10.0)
+		tween.interpolate_property(light1, "energy", light1.energy, 0.6, 5.0)
+		tween.interpolate_property(light2, "energy", light2.energy, 0.6, 5.0)
 	else:
 		tween.interpolate_property(light1, "energy", light1.energy, 0.0, 5.0)
 		tween.interpolate_property(light2, "energy", light2.energy, 0.0, 5.0)
@@ -226,7 +226,7 @@ func move_state(delta):
 	if Input.is_action_just_pressed("roll"):
 		state = ROLL
 	
-	if Input.is_action_pressed("heal") and stats.soul >= 1:
+	if Input.is_action_pressed("heal") and stats.soul >= 1 and stats.health < stats.max_health:
 		state = HEAL
 	
 	if Input.is_action_just_pressed("fire") and stats.soul == stats.max_soul:

@@ -68,7 +68,7 @@ func stop_ambiance():
 	fade_out(musicAmbiance, 5)
 
 func play_ambiance_2():
-	musicAmbiance2.volume_db = -15 +  linear2db(Globals.get_music_volume())
+	musicAmbiance2.volume_db = -20 +  linear2db(Globals.get_music_volume())
 	ambiance_2_stopped = false
 	musicAmbiance2.stream = night_music
 	musicAmbiance2.play()

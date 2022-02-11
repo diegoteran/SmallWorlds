@@ -9,7 +9,7 @@
 [ext_resource path="res://PixelArt/Test/LightTest.png" type="Texture" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 10.9364
+radius = 11.9603
 height = 11.0569
 
 [sub_resource type="Shader" id=2]
