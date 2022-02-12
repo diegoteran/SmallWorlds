@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+export var FloatingText : PackedScene
+
 onready var tween = $Tween
 onready var light1 = $light1
 onready var light2 = $light2
@@ -22,6 +24,10 @@ func _input(_event):
 		SaverAndLoader.custom_data.spawn_x = global_position.x
 		SaverAndLoader.custom_data.spawn_y = global_position.y
 		SaverAndLoader.save_game()
+		
+		var text = Globals.instance_scene_on_node(FloatingText, get_parent(), global_position + Vector2(0, -20))
+		text.type = text.INFO
+		text.message = "New spawn point set."
 
 func set_lights(value: bool):
 	if value:

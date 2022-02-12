@@ -19,6 +19,7 @@ enum {
 }
 
 export var ParticleEffect: PackedScene
+export var FloatingText: PackedScene
 
 var server = Network
 
@@ -139,14 +140,19 @@ func _on_HurtBox_area_entered(area) -> void:
 		var new_hp = hp - area.damage
 		Shake.shake(0.8, 0.3, 2)
 		rpc("hurt", new_knockback, new_hp)
-		rpc("hurt_effect", (global_position - area.get_parent().global_position).normalized())
+		rpc("hurt_effect", (global_position - area.get_parent().global_position).normalized(), area.damage)
 
-remotesync func hurt_effect(direction: Vector2):
+remotesync func hurt_effect(direction: Vector2, shown_damage: float):
 	var particleEffect = ParticleEffect.instance()
 	particleEffect.set_particles_color(Color.mediumpurple)
 	get_parent().add_child(particleEffect)
 	particleEffect.global_position = global_position + direction * 5
 	particleEffect.look_at(particleEffect.global_position + Vector2(-direction.y, direction.x))
+
+	var text = Globals.instance_scene_on_node(FloatingText, get_parent(), hurtBox.global_position)
+	text.type = text.DAMAGE
+	text.amount = shown_damage
+	
 
 func aggroed(by_player):
 	if state != DEAD:

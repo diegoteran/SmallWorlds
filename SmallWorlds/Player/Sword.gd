@@ -7,6 +7,7 @@ var smokeTrail
 #var sword_dict = {"Starting": {}}
 var damage_dict = [{0:1, 1: 0.5, 2:0.3}, {0:1.5, 1: 1, 2:0.5}, {0:3, 1: 2, 2:1}]
 var level = 0
+var this_player = null
 
 export var SmokeTrail : PackedScene
 
@@ -25,15 +26,19 @@ puppet var p_rotation = 0
 remotesync var id = 0
 
 func _ready():
-	trail_name = get_parent().get_parent().name + "_trail"
+	this_player = get_parent().get_parent()
+	trail_name = this_player.name + "_trail"
 	smokeTrail = Globals.instance_scene_on_world_with_name(SmokeTrail, Vector2.ZERO, trail_name)
 	
 # warning-ignore:return_value_discarded
 	if is_network_master():
 		PlayerStats.connect("research_completed", self, "_on_level_up")
 	else:
-		sync_level(int(Network.players[int(get_parent().get_parent().name)]["Level"]))
+		sync_level(int(Network.players[int(this_player.name)]["Level"]))
 		pointer.visible = false
+	
+#	var remote_transform = Globals.create_reflection(sprite, "sword" + this_player.name)
+#	add_child(remote_transform)
 
 func _process(_delta):
 	
@@ -100,4 +105,5 @@ remotesync func sync_puppet_variables(rot_degrees):
 
 func queue_free():
 	smokeTrail.queue_free()
+#	Globals.delete_reflection("sword" + this_player.name)
 	.queue_free()

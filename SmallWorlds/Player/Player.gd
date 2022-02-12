@@ -5,6 +5,7 @@ export var StepDustEffect: PackedScene
 export var ShockWaveEffect: PackedScene
 export var ParticleEffect: PackedScene
 export var Arrow: PackedScene
+export var FloatingText: PackedScene
 export var ACCELERATION = 400
 export var MAX_SPEED = 75
 export var ROLL_SPEED = 130
@@ -290,6 +291,10 @@ remotesync func end_heal(success: bool):
 		self.add_child(particleEffect)
 		particleEffect.scale = Vector2(2, 2)
 		particleEffect.global_position = global_position
+		
+		var text = Globals.instance_scene_on_node(FloatingText, get_parent(), global_position)
+		text.type = text.HEAL
+		text.amount = 1
 
 func attack_state(attack_vector):
 	velocity = Vector2.ZERO # attack_vector * ATTACK_SPEED
@@ -423,9 +428,9 @@ func _on_HurtBox_area_entered(area):
 	hurtBox.start_invincibility(3)
 	if stats.health > 0:
 		stats.health -= area.damage
-	rpc("hurt")
+	rpc("hurt", area.damage)
 
-remotesync func hurt():
+remotesync func hurt(damage_received):
 	hurtBox.create_hit_effect()
 	play_hurt_sound()
 	var particleEffect = ParticleEffect.instance()
@@ -433,6 +438,11 @@ remotesync func hurt():
 	self.add_child(particleEffect)
 	particleEffect.scale = Vector2(1.5, 1.5)
 	particleEffect.global_position = global_position
+	
+	var text = Globals.instance_scene_on_node(FloatingText, get_parent(), global_position)
+	text.type = text.DAMAGE
+	text.amount = damage_received
+	
 
 func _on_soul_charged():
 	rpc("soul")

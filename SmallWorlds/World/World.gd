@@ -23,6 +23,7 @@ func _ready():
 
 func queue_free():
 	Music.stop_ambiance()
+	Music.stop_ambiance_2()
 
 func _process(_delta):
 	if get_tree().is_network_server():
