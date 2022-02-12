@@ -76,7 +76,7 @@ func create_server(mp) -> void:
 	add_child(preload("res://Network/StateProcessing.tscn").instance())
 	
 	var player_data = SaverAndLoader.custom_data
-	players[1] = {"Name" : player_data.player_name, "Position" : Vector2(player_data.position_x, player_data.position_y)}
+	players[1] = {"Name" : player_data.player_name, "Position" : Vector2(player_data.position_x, player_data.position_y), "Level" : player_data.player_level}
 	
 	# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://World/World.tscn")
@@ -136,7 +136,7 @@ remote func register_in_game(new_world_seed):  # Only the client sends this once
 	world_seed = new_world_seed
 	seed(world_seed)
 	var player_data = SaverAndLoader.custom_data
-	var new_player_info = {"Name" : player_data.player_name, "Position" :  Vector2(player_data.position_x, player_data.position_y)}
+	var new_player_info = {"Name" : player_data.player_name, "Position" :  Vector2(player_data.position_x, player_data.position_y), "Level" : player_data.player_level}
 	# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://World/World.tscn")
 	rpc("register_new_player", get_tree().get_network_unique_id(), new_player_info)

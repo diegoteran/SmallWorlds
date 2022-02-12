@@ -32,6 +32,7 @@ func _ready():
 	if is_network_master():
 		PlayerStats.connect("research_completed", self, "_on_level_up")
 	else:
+		sync_level(int(Network.players[int(get_parent().get_parent().name)]["Level"]))
 		pointer.visible = false
 
 func _process(_delta):
