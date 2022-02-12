@@ -36,7 +36,7 @@ var tick = false
 var aggroed_player = null
 
 puppet var puppet_velocity = Vector2.ZERO
-puppet var puppet_position = Vector2.ZERO
+puppet var puppet_position = Vector2(-1000, -1000)
 
 onready var animationPlayer = $AnimationPlayer
 onready var shadowSprite = $ShadowSprite

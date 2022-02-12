@@ -292,12 +292,12 @@ remotesync func end_heal(success: bool):
 		particleEffect.global_position = global_position
 
 func attack_state(attack_vector):
-	velocity = attack_vector * ATTACK_SPEED
+	velocity = Vector2.ZERO # attack_vector * ATTACK_SPEED
 	if puppetState != "Attack":
 		rpc("attack", attack_vector)
 
 remotesync func attack(attack_vector):
-	puppet_velocity = attack_vector * ATTACK_SPEED
+	puppet_velocity = Vector2.ZERO #attack_vector * ATTACK_SPEED
 	puppetState = "Attack"
 	animationState.travel("Attack")
 	sword.attack()
