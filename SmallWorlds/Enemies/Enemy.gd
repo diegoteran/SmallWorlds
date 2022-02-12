@@ -189,7 +189,8 @@ func _on_ProximityTimer_timeout():
 	Network.NPCKilled(int(name))
 	despawn()
 	for new_id in subscribed:
-		rpc_id(new_id, "despawn")
+		if new_id in Network.players.keys():
+			rpc_id(new_id, "despawn")
 
 remotesync func despawn():
 	delete_reflection()

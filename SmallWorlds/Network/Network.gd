@@ -5,20 +5,21 @@ const MAX_CLIENTS = 6
 
 var server = null
 var client = null
+var world_seed = 42069
 
 var ip_address = ""
 var current_player_username = ""
 var players = {}
 var fires = []
 
-# CLient
+# Client
 var decimal_collector : float = 0
 var latency = 0
 var client_clock = OS.get_system_time_msecs()
 var latency_array = []
 var delta_latency = 0
 
-#SERVER
+# Server
 var world
 var player_state_collection = {}
 
@@ -76,14 +77,23 @@ func create_server(mp) -> void:
 	
 	var player_data = SaverAndLoader.custom_data
 	players[1] = {"Name" : player_data.player_name, "Position" : Vector2(player_data.position_x, player_data.position_y)}
-	get_node("../World").SpawnNewPlayer(get_tree().get_network_unique_id(), players[1]["Position"])
+	
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://World/World.tscn")
 	
 	# Fire logic
 	for i in SaverAndLoader.custom_data.fires_x.size():
 		fires.append(Vector2(SaverAndLoader.custom_data.fires_x[i], SaverAndLoader.custom_data.fires_y[i]))
 	
-	# Add Enemy spawns created by background
-	Globals.add_all_spawns()
+	# Set world seed
+	print(world_seed)
+	seed(world_seed)
+	call_deferred("spawn_player")
+	# Add Enemy spawns created by background - not implemented
+	# Globals.add_all_spawns()
+
+func spawn_player():
+	get_node("../World").SpawnNewPlayer(get_tree().get_network_unique_id(), players[1]["Position"])
 
 func join_server() -> void:
 	client = NetworkedMultiplayerENet.new()
@@ -120,16 +130,19 @@ func _connected_ok():
 remote func user_ready(player_id):
 	if get_tree().is_network_server():
 		rpc_id(player_id, "GetFires", fires)
-		rpc_id(player_id, "register_in_game")
+		rpc_id(player_id, "register_in_game", world_seed)
 
-remote func register_in_game():  # Only the client sends this once.
+remote func register_in_game(new_world_seed):  # Only the client sends this once.
+	world_seed = new_world_seed
+	seed(world_seed)
 	var player_data = SaverAndLoader.custom_data
 	var new_player_info = {"Name" : player_data.player_name, "Position" :  Vector2(player_data.position_x, player_data.position_y)}
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://World/World.tscn")
 	rpc("register_new_player", get_tree().get_network_unique_id(), new_player_info)
 	register_new_player(get_tree().get_network_unique_id(), new_player_info)
-	
-	# fires
-	Globals.add_fires()
+#	# fires
+#	Globals.add_fires()
 
 remote func register_new_player(player_id, player_info):
 	if get_tree().is_network_server(): # Only the server sends this once per client.
@@ -137,8 +150,11 @@ remote func register_new_player(player_id, player_info):
 			rpc_id(player_id, "register_new_player", peer_id, players[peer_id])
 	
 	players[player_id] = player_info
-	get_node("../World").SpawnNewPlayer(player_id, player_info["Position"])
+	call_deferred("spawn_new_player", player_id, player_info["Position"])
 	print(str(get_tree().get_network_unique_id()) + " registers " + str(player_id))
+
+func spawn_new_player(player_id, position):
+	get_node("../World").SpawnNewPlayer(player_id, position)
 
 remote func unregister_player(player_id):
 	players.erase(player_id)
@@ -160,6 +176,8 @@ func quit_game():
 			node.queue_free()
 	get_tree().set_network_peer(null)
 	players.clear()
+	server = null
+	client = null
 	get_node("../World").ServerDied()
 
 remotesync func set_player_position(player_id: int, pos : Vector2):

@@ -10,8 +10,6 @@ signal return_pressed
 
 
 func _ready():
-	seed(42069)
-#	randomize()
 	address.text = Network.ip_address
 	SaverAndLoader.load_game()
 	PlayerStats.update()
@@ -21,13 +19,17 @@ func _ready():
 		playerName.text = savedPlayerName
 	
 	createServer.grab_focus()
+	
+	# warning-ignore:return_value_discarded
+	get_tree().connect("connected_to_server", self, "_connected_ok")
+	# warning-ignore:return_value_discarded
+	get_tree().connect("connection_failed", self, "_connection_failed")
 
 func _on_CreateServerButton_pressed():
 	SoundFx.play_menu("Menu Select", rand_range(0.8, 1.2), -30)
 	to_join_world()
-	# warning-ignore:return_value_discarded
-	get_tree().change_scene("res://World/World.tscn")
 	Network.call_deferred("create_server", true)
+	Music.stop_menu()
 	queue_free()
 
 
@@ -36,17 +38,16 @@ func _on_JoinServerButton_pressed():
 	to_join_world()
 	
 	if serverAddress.text != "":
-		# warning-ignore:return_value_discarded
-		get_tree().change_scene("res://World/World.tscn")
 		Network.ip_address = "73.97.136.126" #serverAddress.text
 		Network.call_deferred("join_server")
-		queue_free()
+
+func _connected_ok():
+	Music.stop_menu()
 
 
 func to_join_world():
 	SaverAndLoader.custom_data.player_name = playerName.text
 	SaverAndLoader.save_game()
-	Music.stop_menu()
 
 
 func _on_CreateServerButton_focus_entered():

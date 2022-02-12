@@ -43,7 +43,7 @@ onready var cliff_tile = $DirtCliffTileMap
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	noise = OpenSimplexNoise.new()
-	# noise.seed = randi()
+	noise.seed = Network.world_seed
 	noise.octaves = octaves
 	noise.period = period
 	noise.persistence = persistance
