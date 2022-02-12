@@ -1,10 +1,12 @@
 extends Control
 
 onready var multiplayerConfigure = $MultiplayerConfigure
-onready var serverAddress = $MultiplayerConfigure/CenterContainer/VBoxContainer/ServerAddress
-onready var address = $MultiplayerConfigure/CenterContainer/VBoxContainer/Address
-onready var playerName = $MultiplayerConfigure/CenterContainer/VBoxContainer/PlayerName
-onready var createServer = $MultiplayerConfigure/CenterContainer/VBoxContainer/CreateServerButton
+onready var serverAddress = $MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/ServerAddress
+onready var address = $MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/Address
+onready var playerName = $MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/PlayerName
+onready var createServer = $MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/CreateServerButton
+
+signal return_pressed
 
 
 func _ready():
@@ -57,8 +59,24 @@ func _on_JoinServerButton_focus_entered():
 func play_menu_move():
 	SoundFx.play_menu("Menu Move", rand_range(0.8, 1.2), -30)
 
+func play_menu_select():
+	SoundFx.play_menu("Menu Select", rand_range(0.8, 1.2), -30)
+
 func _on_CreateServerButton_mouse_entered():
 	play_menu_move()
 
 func _on_JoinServerButton_mouse_entered():
+	play_menu_move()
+
+
+func _on_ReturnButton_pressed():
+	emit_signal("return_pressed")
+	play_menu_select()
+
+
+func _on_ReturnButton_focus_entered():
+	play_menu_move()
+
+
+func _on_ReturnButton_mouse_entered():
 	play_menu_move()

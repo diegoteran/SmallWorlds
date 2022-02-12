@@ -24,16 +24,29 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MultiplayerConfigure/CenterContainer"]
 margin_left = 175.0
-margin_top = 78.0
+margin_top = 67.0
 margin_right = 304.0
-margin_bottom = 191.0
+margin_bottom = 203.0
 
-[node name="Address" type="Label" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
+[node name="ReturnButton" type="Button" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
+margin_right = 129.0
+margin_bottom = 19.0
+custom_fonts/font = ExtResource( 2 )
+text = " Return"
+flat = true
+align = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
+margin_top = 23.0
+margin_right = 129.0
+margin_bottom = 136.0
+
+[node name="Address" type="Label" parent="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer"]
 margin_right = 129.0
 margin_bottom = 13.0
 custom_fonts/font = ExtResource( 2 )
 
-[node name="PlayerName" type="LineEdit" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
+[node name="PlayerName" type="LineEdit" parent="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer"]
 margin_top = 17.0
 margin_right = 129.0
 margin_bottom = 40.0
@@ -41,7 +54,7 @@ custom_fonts/font = ExtResource( 2 )
 align = 1
 placeholder_text = "Name"
 
-[node name="CreateServerButton" type="Button" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
+[node name="CreateServerButton" type="Button" parent="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer"]
 margin_top = 44.0
 margin_right = 129.0
 margin_bottom = 63.0
@@ -51,14 +64,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="JoinServerButton" type="Button" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
+[node name="JoinServerButton" type="Button" parent="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer"]
 margin_top = 67.0
 margin_right = 129.0
 margin_bottom = 86.0
 custom_fonts/font = ExtResource( 2 )
 text = "Join Server"
 
-[node name="ServerAddress" type="LineEdit" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
+[node name="ServerAddress" type="LineEdit" parent="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer"]
 margin_top = 90.0
 margin_right = 129.0
 margin_bottom = 113.0
@@ -66,9 +79,12 @@ custom_fonts/font = ExtResource( 2 )
 align = 1
 placeholder_text = "IP"
 
-[connection signal="focus_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/CreateServerButton" to="." method="_on_CreateServerButton_focus_entered"]
-[connection signal="mouse_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/CreateServerButton" to="." method="_on_CreateServerButton_mouse_entered"]
-[connection signal="pressed" from="MultiplayerConfigure/CenterContainer/VBoxContainer/CreateServerButton" to="." method="_on_CreateServerButton_pressed"]
-[connection signal="focus_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/JoinServerButton" to="." method="_on_JoinServerButton_focus_entered"]
-[connection signal="mouse_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/JoinServerButton" to="." method="_on_JoinServerButton_mouse_entered"]
-[connection signal="pressed" from="MultiplayerConfigure/CenterContainer/VBoxContainer/JoinServerButton" to="." method="_on_JoinServerButton_pressed"]
+[connection signal="focus_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_focus_entered"]
+[connection signal="mouse_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_mouse_entered"]
+[connection signal="pressed" from="MultiplayerConfigure/CenterContainer/VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_pressed"]
+[connection signal="focus_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/CreateServerButton" to="." method="_on_CreateServerButton_focus_entered"]
+[connection signal="mouse_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/CreateServerButton" to="." method="_on_CreateServerButton_mouse_entered"]
+[connection signal="pressed" from="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/CreateServerButton" to="." method="_on_CreateServerButton_pressed"]
+[connection signal="focus_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/JoinServerButton" to="." method="_on_JoinServerButton_focus_entered"]
+[connection signal="mouse_entered" from="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/JoinServerButton" to="." method="_on_JoinServerButton_mouse_entered"]
+[connection signal="pressed" from="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/JoinServerButton" to="." method="_on_JoinServerButton_pressed"]
