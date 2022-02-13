@@ -90,6 +90,7 @@ func _on_level_up(type):
 	level = type + 1
 	hitbox.damage = damage_dict[level][id]
 	PlayerStats.max_health = 4 + level
+	PlayerStats.health = 4 + level
 	rpc("sync_level", level)
 
 remotesync func sync_level(new_level):

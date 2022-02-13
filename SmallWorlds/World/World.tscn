@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=2]
+[gd_scene load_steps=81 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PixelArt/TileSet/Background.tres" type="TileSet" id=2]
@@ -58,14 +58,173 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
 shader = SubResource( 2 )
 shader_param/bg_color = Color( 0.145098, 0.0392157, 0.176471, 1 )
 
-[sub_resource type="ConvexPolygonShape2D" id=4]
-points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+[sub_resource type="Shader" id=57]
+code = "shader_type canvas_item;
 
-[sub_resource type="ConvexPolygonShape2D" id=5]
-points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+uniform vec4 bg_color: hint_color;
+
+float rand(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+}
+
+void fragment() {
+	float size = 80.0;
+	float prob = 0.90;
+	vec2 pos = floor(1.0 / size * FRAGCOORD.xy);
+	float color = 0.0;
+	float starValue = rand(pos);
+
+	if (starValue > prob)
+	{
+		vec2 center = size * pos + vec2(size, size) * 0.5;
+		float t = 0.9 + 0.2 * sin(TIME * 8.0 + (starValue - prob) / (1.0 - prob) * 45.0);
+		color = 1.0 - distance(FRAGCOORD.xy, center) / (0.5 * size);
+		color = color * t / (abs(FRAGCOORD.y - center.y)) * t / (abs(FRAGCOORD.x - center.x));
+	}
+	else if (rand(SCREEN_UV.xy / 20.0) > 0.996)
+	{
+		float r = rand(SCREEN_UV.xy);
+		color = r * (0.85 * sin(TIME * (r * 5.0) + 720.0 * r) + 0.95);
+	}
+	COLOR = vec4(vec3(color),1.0) + bg_color;
+}"
+
+[sub_resource type="ShaderMaterial" id=58]
+shader = SubResource( 57 )
+shader_param/bg_color = Color( 0, 0, 0, 0 )
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+
+uniform float cloudscale = 1.1;
+uniform float speed = 0.01;
+uniform float clouddark = 0.5;
+uniform float cloudlight = 0.3;
+uniform float cloudcover = 0.2;
+uniform float cloudalpha = 8.0;
+uniform float skytint = 0.5;
+uniform vec3 skycolour1 = vec3(0.2, 0.4, 0.6);
+uniform vec3 skycolour2 = vec3(0.4, 0.7, 1.0);
+uniform mat2 m = mat2(vec2(1.6,1.2),vec2(-1.2,1.6)); // changement
+
+// functions
+
+vec2 hash( vec2 p ) {
+                p = vec2(dot(p,vec2(127.1,311.7)), dot(p,vec2(269.5,183.3)));
+                return -1.0 + 2.0*fract(sin(p)*43758.5453123);
+}
+
+float noise( in vec2 p ) {
+    float K1 = 0.366025404; // (sqrt(3)-1)/2;
+    float K2 = 0.211324865; // (3-sqrt(3))/6;
+                vec2 i = floor(p + (p.x+p.y)*K1); 
+    vec2 a = p - i + (i.x+i.y)*K2;
+    vec2 o = (a.x>a.y) ? vec2(1.0,0.0) : vec2(0.0,1.0); //vec2 of = 0.5 + 0.5*vec2(sign(a.x-a.y), sign(a.y-a.x));
+    vec2 b = a - o + K2;
+                vec2 c = a - 1.0 + 2.0*K2;
+    vec3 h = max(0.5-vec3(dot(a,a), dot(b,b), dot(c,c) ), 0.0 );
+                vec3 n = h*h*h*h*vec3( dot(a,hash(i+0.0)), dot(b,hash(i+o)), dot(c,hash(i+1.0)));
+    return dot(n, vec3(70.0));       
+}
+
+float fbm(vec2 n) {
+                float total = 0.0, amplitude = 0.1;
+                for (int i = 0; i < 7; i++) {
+                               total += noise(n) * amplitude;
+                               n = m * n;
+                               amplitude *= 0.4;
+                }
+                return total;
+}
+
+// fragment shader
+
+void fragment() {
+vec2 res = 1.0 / SCREEN_PIXEL_SIZE;
+vec2 p = FRAGCOORD.xy / res.xy; // changement
+                vec2 uv = p*vec2(res.x/res.y,1.0);    // changement
+    float time = TIME * speed ;
+    float q = fbm(uv * cloudscale * 0.5);
+    
+    //ridged noise shape
+                float r = 0.0;
+                uv *= cloudscale;
+    uv += q - time;
+    float weight = 0.8;
+    for (int i=0; i<8; i++){
+                               r += abs(weight*noise( uv ));
+        uv = m*uv + time;
+                               weight *= 0.7;
+    }
+    
+    //noise shape
+                float f = 0.0;
+    uv = p*vec2(res.x/res.y,1.0); // changement
+                uv *= cloudscale;
+    uv += q - time;
+    weight = 0.7;
+    for (int i=0; i<8; i++){
+                               f += weight*noise( uv );
+        uv = m*uv + time;
+                               weight *= 0.6;
+    }
+    
+    f *= r + f;
+    
+    //noise colour
+    float c = 0.0;
+    time = TIME * speed * 2.0;
+    uv = p*vec2(res.x/res.y,1.0); // changement
+                uv *= cloudscale*2.0;
+    uv += q - time;
+    weight = 0.4;
+    for (int i=0; i<7; i++){
+                               c += weight*noise( uv );
+        uv = m*uv + time;
+                               weight *= 0.6;
+    }
+    
+    //noise ridge colour
+    float c1 = 0.0;
+    time = TIME * speed * 3.0;
+    uv = p*vec2(res.x/res.y,1.0);
+                uv *= cloudscale*3.0;
+    uv += q - time;
+    weight = 0.4;
+    for (int i=0; i<7; i++){
+                               c1 += abs(weight*noise( uv ));
+        uv = m*uv + time;
+                               weight *= 0.6;
+    }
+                
+    c += c1;
+    
+    vec3 skycolour = mix(skycolour2, skycolour1, p.y);
+    vec3 cloudcolour = vec3(1.1, 1.1, 0.9) * clamp((clouddark + cloudlight*c), 0.0, 1.0);
+   
+    f = cloudcover + cloudalpha*f*r;
+    
+    vec3 result = mix(skycolour, clamp(skytint * skycolour + cloudcolour, 0.0, 1.0), clamp(f + c, 0.0, 1.0));
+    
+    COLOR.rgb = vec3(result); 
+}"
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
+shader_param/cloudscale = 0.5
+shader_param/speed = 0.01
+shader_param/clouddark = 0.5
+shader_param/cloudlight = 0.3
+shader_param/cloudcover = 0.2
+shader_param/cloudalpha = 8.0
+shader_param/skytint = 0.5
+shader_param/skycolour1 = Vector3( 0, 0, 0 )
+shader_param/skycolour2 = Vector3( 0.4, 0.7, 1 )
+shader_param/m = Transform2D( 1.6, -1.2, 1.2, 1.6, 0, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=6]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -202,7 +361,13 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 [sub_resource type="ConvexPolygonShape2D" id=50]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
-[sub_resource type="TileSet" id=51]
+[sub_resource type="ConvexPolygonShape2D" id=51]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=52]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="TileSet" id=53]
 0/name = "CliffTileset.png 0"
 0/texture = ExtResource( 5 )
 0/tex_offset = Vector2( 0, 0 )
@@ -222,295 +387,295 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 0/navigation_offset = Vector2( 0, 0 )
 0/shape_offset = Vector2( 0, 0 )
 0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape = SubResource( 4 )
+0/shape = SubResource( 6 )
 0/shape_one_way = false
 0/shape_one_way_margin = 1.0
 0/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 4 ),
+"shape": SubResource( 6 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 1, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 5 ),
+"shape": SubResource( 7 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 2, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 6 ),
+"shape": SubResource( 8 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 0, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 7 ),
+"shape": SubResource( 9 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 1, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 8 ),
+"shape": SubResource( 10 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 2, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 9 ),
+"shape": SubResource( 11 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 2, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 10 ),
+"shape": SubResource( 12 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 1, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 11 ),
+"shape": SubResource( 13 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 0, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 12 ),
+"shape": SubResource( 14 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 0, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 13 ),
+"shape": SubResource( 15 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 1, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 14 ),
+"shape": SubResource( 16 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 2, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 15 ),
+"shape": SubResource( 17 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 3, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 16 ),
+"shape": SubResource( 18 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 3, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 17 ),
+"shape": SubResource( 19 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 3, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 18 ),
+"shape": SubResource( 20 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 3, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 19 ),
+"shape": SubResource( 21 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 4, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 20 ),
+"shape": SubResource( 22 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 4, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 21 ),
+"shape": SubResource( 23 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 4, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 22 ),
+"shape": SubResource( 24 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 4, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 23 ),
+"shape": SubResource( 25 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 4, 4 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 24 ),
+"shape": SubResource( 26 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 5, 4 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 25 ),
+"shape": SubResource( 27 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 5, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 26 ),
+"shape": SubResource( 28 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 5, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 27 ),
+"shape": SubResource( 29 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 5, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 28 ),
+"shape": SubResource( 30 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 5, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 29 ),
+"shape": SubResource( 31 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 6, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 30 ),
+"shape": SubResource( 32 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 6, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 31 ),
+"shape": SubResource( 33 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 6, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 32 ),
+"shape": SubResource( 34 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 6, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 33 ),
+"shape": SubResource( 35 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 6, 4 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 34 ),
+"shape": SubResource( 36 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 7, 4 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 35 ),
+"shape": SubResource( 37 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 7, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 36 ),
+"shape": SubResource( 38 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 7, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 37 ),
+"shape": SubResource( 39 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 7, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 38 ),
+"shape": SubResource( 40 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 7, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 39 ),
+"shape": SubResource( 41 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 8, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 40 ),
+"shape": SubResource( 42 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 9, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 41 ),
+"shape": SubResource( 43 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 9, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 42 ),
+"shape": SubResource( 44 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 10, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 43 ),
+"shape": SubResource( 45 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 10, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 44 ),
+"shape": SubResource( 46 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 9, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 45 ),
+"shape": SubResource( 47 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 8, 4 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 46 ),
+"shape": SubResource( 48 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 8, 3 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 47 ),
+"shape": SubResource( 49 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 8, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 48 ),
+"shape": SubResource( 50 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 8, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 49 ),
+"shape": SubResource( 51 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 9, 2 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 50 ),
+"shape": SubResource( 52 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 0/z_index = 0
 
-[sub_resource type="Shader" id=52]
+[sub_resource type="Shader" id=54]
 code = "shader_type canvas_item;
 
 uniform float lod: hint_range(0, 5);
@@ -519,11 +684,11 @@ void fragment() {
 	COLOR.rgb = texture(SCREEN_TEXTURE, SCREEN_UV, 2).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=53]
-shader = SubResource( 52 )
+[sub_resource type="ShaderMaterial" id=55]
+shader = SubResource( 54 )
 shader_param/lod = null
 
-[sub_resource type="Environment" id=54]
+[sub_resource type="Environment" id=56]
 background_mode = 4
 glow_enabled = true
 
@@ -549,7 +714,7 @@ shape = SubResource( 1 )
 
 [node name="StarSea" type="Sprite" parent="Background"]
 material = SubResource( 3 )
-position = Vector2( 1721.45, 1014.69 )
+position = Vector2( 1721.45, 954.282 )
 scale = Vector2( 98.4047, 81.5995 )
 texture = ExtResource( 13 )
 
@@ -560,6 +725,22 @@ collision_layer = 0
 collision_mask = 2
 format = 1
 tile_data = PoolIntArray( -1507321, 4, 0, -1507320, 4, 1, -1507319, 4, 1, -1507318, 4, 1, -1507317, 4, 1, -1507316, 4, 1, -1507315, 4, 1, -1507314, 4, 2, -1441785, 4, 65536, -1441784, 4, 65537, -1441783, 4, 65537, -1441782, 4, 65537, -1441781, 4, 65537, -1441780, 4, 65537, -1441779, 4, 65537, -1441778, 4, 65538, -1376249, 4, 65536, -1376248, 4, 65537, -1376247, 4, 65537, -1376246, 4, 65537, -1376245, 4, 65537, -1376244, 4, 65537, -1376243, 4, 65537, -1376242, 4, 65538, -1310713, 4, 65536, -1310712, 4, 65537, -1310711, 4, 65537, -1310710, 4, 65537, -1310709, 4, 65537, -1310708, 4, 65537, -1310707, 4, 65537, -1310706, 4, 65538, -1245177, 4, 65536, -1245176, 4, 65537, -1245175, 4, 65537, -1245174, 4, 65537, -1245173, 4, 65537, -1245172, 4, 65537, -1245171, 4, 65537, -1245170, 4, 65538, -1179641, 4, 65536, -1179640, 4, 65537, -1179639, 4, 65537, -1179638, 4, 65537, -1179637, 4, 65537, -1179636, 4, 65537, -1179635, 4, 65537, -1179634, 4, 65538, -1114105, 4, 65536, -1114104, 4, 65537, -1114103, 4, 65537, -1114102, 4, 65537, -1114101, 4, 65537, -1114100, 4, 65537, -1114099, 4, 65537, -1114098, 4, 65538, -1048569, 4, 65536, -1048568, 4, 65537, -1048567, 4, 65537, -1048566, 4, 65537, -1048565, 4, 65537, -1048564, 4, 65537, -1048563, 4, 65537, -1048562, 4, 65538, -983033, 4, 65536, -983032, 4, 65537, -983031, 4, 65537, -983030, 4, 65537, -983029, 4, 65537, -983028, 4, 65537, -983027, 4, 65537, -983026, 4, 65538, -917497, 4, 65536, -917496, 4, 65537, -917495, 4, 65537, -917494, 4, 65537, -917493, 4, 65537, -917492, 4, 65537, -917491, 4, 65537, -917490, 4, 65538, -851961, 4, 65536, -851960, 4, 65537, -851959, 4, 65537, -851958, 4, 65537, -851957, 4, 65537, -851956, 4, 65537, -851955, 4, 65537, -851954, 4, 65538, -786425, 4, 65536, -786424, 4, 65537, -786423, 4, 65537, -786422, 4, 65537, -786421, 4, 65537, -786420, 4, 65537, -786419, 4, 65537, -786418, 4, 65538, -720889, 4, 65536, -720888, 4, 65537, -720887, 4, 65537, -720886, 4, 65537, -720885, 4, 65537, -720884, 4, 65537, -720883, 4, 65537, -720882, 4, 65538, -655353, 4, 65536, -655352, 4, 65537, -655351, 4, 65537, -655350, 4, 65537, -655349, 4, 65537, -655348, 4, 65537, -655347, 4, 65537, -655346, 4, 65538, -589817, 4, 65536, -589816, 4, 65537, -589815, 4, 65537, -589814, 4, 65537, -589813, 4, 65537, -589812, 4, 65537, -589811, 4, 65537, -589810, 4, 65538, -524281, 4, 65536, -524280, 4, 65537, -524279, 4, 65537, -524278, 4, 65537, -524277, 4, 65537, -524276, 4, 65537, -524275, 4, 65537, -524274, 4, 65538, -458745, 4, 65536, -458744, 4, 65537, -458743, 4, 65537, -458742, 4, 65537, -458741, 4, 65537, -458740, 4, 65537, -458739, 4, 65537, -458738, 4, 65538, -393209, 4, 65536, -393208, 4, 65537, -393207, 4, 65537, -393206, 4, 65537, -393205, 4, 65537, -393204, 4, 65537, -393203, 4, 65537, -393202, 4, 65538, -327673, 4, 65536, -327672, 4, 65537, -327671, 4, 65537, -327670, 4, 65537, -327669, 4, 65537, -327668, 4, 65537, -327667, 4, 65537, -327666, 4, 65538, -262137, 4, 65536, -262136, 4, 65537, -262135, 4, 65537, -262134, 4, 65537, -262133, 4, 65537, -262132, 4, 65537, -262131, 4, 65537, -262130, 4, 65538, -196601, 4, 65536, -196600, 4, 65537, -196599, 4, 65537, -196598, 4, 65537, -196597, 4, 65537, -196596, 4, 65537, -196595, 4, 65537, -196594, 4, 65538, -131065, 4, 65536, -131064, 4, 65537, -131063, 4, 65537, -131062, 4, 65537, -131061, 4, 65537, -131060, 4, 65537, -131059, 4, 65537, -131058, 4, 65538, -65529, 4, 65536, -65528, 4, 65537, -65527, 4, 65537, -65526, 4, 65537, -65525, 4, 65537, -65524, 4, 65537, -65523, 4, 65537, -65522, 4, 65538, 7, 4, 131072, 8, 4, 131073, 9, 4, 131073, 10, 4, 131073, 11, 4, 131073, 12, 4, 131073, 13, 4, 131073, 14, 4, 131074 )
+
+[node name="StarSeaReflection" type="Sprite" parent="Background"]
+modulate = Color( 1, 1, 1, 0.266667 )
+material = SubResource( 58 )
+position = Vector2( -3.77551, -381.325 )
+scale = Vector2( 50.059, 55.9582 )
+texture = ExtResource( 13 )
+centered = false
+
+[node name="CloudReflection" type="Sprite" parent="Background"]
+visible = false
+modulate = Color( 1, 1, 1, 0.47 )
+material = SubResource( 5 )
+scale = Vector2( 50, 50 )
+texture = ExtResource( 13 )
+centered = false
 
 [node name="DirtTileMap" type="TileMap" parent="Background"]
 tile_set = ExtResource( 2 )
@@ -581,7 +762,7 @@ cell_y_sort = true
 format = 1
 
 [node name="DirtCliffTileMap" type="TileMap" parent="Background"]
-tile_set = SubResource( 51 )
+tile_set = SubResource( 53 )
 cell_size = Vector2( 32, 32 )
 collision_mask = 0
 format = 1
@@ -596,7 +777,7 @@ script = ExtResource( 11 )
 
 [node name="BlurShader" type="Sprite" parent="Camera2D"]
 visible = false
-material = SubResource( 53 )
+material = SubResource( 55 )
 position = Vector2( -2.99999, 3 )
 scale = Vector2( 7.45312, 4.10938 )
 texture = ExtResource( 13 )
@@ -666,7 +847,7 @@ visible = false
 [node name="Weather" parent="Foreground" instance=ExtResource( 4 )]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 54 )
+environment = SubResource( 56 )
 
 [editable path="Background/SoftCollision"]
 [editable path="DayNightCycle"]

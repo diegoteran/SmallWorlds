@@ -103,7 +103,7 @@ func _on_HurtBox_area_entered(area):
 		else:
 			var player = area.get_parent().get_parent().get_parent().get_parent()
 			if hp > 0 and player.wheel_id == 1 and area.get_parent().get_parent().level >= type:
-				player.add_rock(rand_range(0.5, 1), type)
+				player.add_rock(rand_range(0.8, 1.3), type)
 				new_hp -= 1
 			player_node_path = player.get_path()
 		rpc('hit_effect', new_hp, player_node_path)
