@@ -38,7 +38,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 4.0
+radius = 1.77436
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 6.0
@@ -48,7 +48,7 @@ height = 6.0
 radius = 120.0
 
 [sub_resource type="CircleShape2D" id=5]
-radius = 4.0
+radius = 5.03077
 
 [sub_resource type="CircleShape2D" id=6]
 

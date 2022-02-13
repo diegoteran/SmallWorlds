@@ -18,7 +18,7 @@
 [ext_resource path="res://Effects/ParticleEffect.tscn" type="PackedScene" id=16]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 3.62868
+radius = 3.03341
 height = 1.04457
 
 [sub_resource type="Animation" id=2]
@@ -1315,7 +1315,7 @@ radius = 5.97832
 height = 6.9116
 
 [node name="Player" type="KinematicBody2D"]
-collision_layer = 2
+collision_layer = 3
 script = ExtResource( 2 )
 Wheel = ExtResource( 8 )
 StepDustEffect = ExtResource( 9 )
