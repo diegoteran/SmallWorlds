@@ -63,7 +63,7 @@ func create_server(mp) -> void:
 	var port = DEFAULT_PORT
 	var num_clients = MAX_CLIENTS
 	if mp == false: 
-		num_clients = 1
+		server.set_bind_ip("127.0.0.1")
 	var err = server.create_server(port, num_clients)
 	
 	if (err != OK):
