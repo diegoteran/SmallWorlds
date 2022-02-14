@@ -1,29 +1,42 @@
 extends Node
 
-const SAVE_PATH = "res://savegame.save"
+const SAVE_DIR = "user://saves/"
+const SAVE_PATH = SAVE_DIR + "save.dat"
+const WORLD_DIR = SAVE_DIR + "worlds/"
+const PLAYER_DIR = SAVE_DIR + "players/"
 
 var is_loading = false
 var custom_data = {
+}
+var custom_data_player = {
 	player_name = "",
-	position_x = 176,
-	position_y = -40,
+	player_position = Vector2(176, -40),
 	player_level = 0,
-	soul = 0,
-	rocks = [0, 0],
-	fires_x = [],
-	fires_y = [],
+	player_max_health = 4,
+	player_soul = 0,
+	player_research = [0,0],
 	spawn_enabled = false,
-	spawn_x = 0,
-	spawn_y = 0,
-#	missiles_unlocked = false,
-#	boss_defeated = false
+	spawn = Vector2.ZERO
+}
+var custom_data_world = {
+	world_seed = 0,
+	world_name = "",
+	world_fires = []
 }
 
 func save_game():
-	var save_game = File.new()
-	save_game.open(SAVE_PATH, File.WRITE)
+	# Check for directories
+	var dir = Directory.new()
+	if !dir.dir_exists(SAVE_DIR):
+		dir.make_dir_recursive(SAVE_DIR)
 	
-	save_game.store_line(to_json(custom_data))
+	var save_game = File.new()
+	var error = save_game.open(SAVE_PATH, File.WRITE)
+	if error != OK:
+		print("Error saving")
+		return
+	
+	save_game.store_var(custom_data)
 	
 #	var persistingNodes = get_tree().get_nodes_in_group("Persists")
 #	for node in persistingNodes:
@@ -31,7 +44,37 @@ func save_game():
 #		save_game.store_line(to_json(node_data))
 	save_game.close()
 	print("Saved: ", custom_data)
+
+func save_player():
+	var dir = Directory.new()
+	if !dir.dir_exists(PLAYER_DIR):
+		dir.make_dir_recursive(PLAYER_DIR)
 	
+	var save_player = File.new()
+	var error = save_player.open(PLAYER_DIR + "onlyplayer", File.WRITE)
+	if error != OK:
+		print("Error saving player")
+		return
+	
+	save_player.store_var(custom_data_player)
+	save_player.close()
+	print("Saved player: ", custom_data_player)
+
+func save_world():
+	var dir = Directory.new()
+	if !dir.dir_exists(WORLD_DIR):
+		dir.make_dir_recursive(WORLD_DIR)
+	
+	var save_world = File.new()
+	var error = save_world.open(WORLD_DIR + "onlyworld", File.WRITE)
+	if error != OK:
+		print("Error saving world")
+		return
+	
+	save_world.store_var(custom_data_world)
+	save_world.close()
+	print("Saved world: ", custom_data_world)
+
 func load_game():
 	var save_game = File.new()
 	if not save_game.file_exists(SAVE_PATH):
@@ -41,12 +84,14 @@ func load_game():
 #	for node in persistingNodes:
 #		node.queue_free()
 	
-	save_game.open(SAVE_PATH, File.READ)
+	var error = save_game.open(SAVE_PATH, File.READ)
+	if error != OK:
+		print("Error loading")
+		return
 	
-	if not save_game.eof_reached():
-		var new_custom_data = parse_json(save_game.get_line())
-		for key in new_custom_data.keys():
-			custom_data[key] = new_custom_data[key]
+	var new_custom_data = save_game.get_var()
+	for key in new_custom_data.keys():
+		custom_data[key] = new_custom_data[key]
 	
 #	while save_game.get_position() < save_game.get_len():
 #		var current_line = parse_json(save_game.get_line())
@@ -62,4 +107,39 @@ func load_game():
 #				newNode.set(property, current_line[property])
 	save_game.close()
 	print("Loaded: ", custom_data)
-	save_game()
+
+func load_player():
+	var save_player = File.new()
+	var PLAYER_PATH = PLAYER_DIR + "onlyplayer"
+	if not save_player.file_exists(PLAYER_PATH):
+		return
+	
+	var error = save_player.open(PLAYER_PATH, File.READ)
+	if error != OK:
+		print("Error loading player")
+		return
+	
+	var new_custom_data_player = save_player.get_var()
+	for key in new_custom_data_player.keys():
+		custom_data_player[key] = new_custom_data_player[key]
+	
+	save_player.close()
+	print("Loaded player: ", custom_data_player)
+
+func load_world():
+	var save_world = File.new()
+	var WORLD_PATH = WORLD_DIR + "onlyworld"
+	if not save_world.file_exists(WORLD_PATH):
+		return
+	
+	var error = save_world.open(WORLD_PATH, File.READ)
+	if error != OK:
+		print("Error loading world")
+		return
+	
+	var new_custom_data_world = save_world.get_var()
+	for key in new_custom_data_world.keys():
+		custom_data_world[key] = new_custom_data_world[key]
+	
+	save_world.close()
+	print("Loaded world: ", custom_data_world)

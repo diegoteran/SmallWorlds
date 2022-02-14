@@ -67,15 +67,9 @@ func spawn_fire(location):
 	Globals.instance_scene_on_node(FireScene, fires, location)
 
 func spawn_fires():
-	for i in SaverAndLoader.custom_data.fires_x.size():
+	for fire_position in Network.fires:
 		var fires = get_node("/root/World/YSort/Fires")
-		Globals.instance_scene_on_node(FireScene, fires, Vector2(SaverAndLoader.custom_data.fires_x[i], SaverAndLoader.custom_data.fires_y[i]))
-
-func spawn_fires_client():
-	for fire_pos in Network.fires:
-		var fires = get_node("/root/World/YSort/Fires")
-		Globals.instance_scene_on_node(FireScene, fires, fire_pos)
-		
+		Globals.instance_scene_on_node(FireScene, fires, fire_position)
 
 func update_tilemaps(all_tiles: bool):
 	var new_chunks = []

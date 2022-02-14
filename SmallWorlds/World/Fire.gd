@@ -20,10 +20,9 @@ func _input(_event):
 	if Input.is_action_just_pressed("ranged") and mouse_in_fire:
 		SoundFx.play_menu("Menu Move", rand_range(0.8, 1.2), - 20)
 		Shake.shake(1, 0.5, 0)
-		SaverAndLoader.custom_data.spawn_enabled = true
-		SaverAndLoader.custom_data.spawn_x = global_position.x
-		SaverAndLoader.custom_data.spawn_y = global_position.y
-		SaverAndLoader.save_game()
+		SaverAndLoader.custom_data_player.spawn_enabled = true
+		SaverAndLoader.custom_data_player.spawn = global_position
+		SaverAndLoader.save_player()
 		
 		var text = Globals.instance_scene_on_node(FloatingText, get_parent(), global_position + Vector2(0, -20))
 		text.type = text.INFO

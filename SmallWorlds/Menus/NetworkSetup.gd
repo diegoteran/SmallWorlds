@@ -11,10 +11,11 @@ signal return_pressed
 
 func _ready():
 	address.text = Network.ip_address
-	SaverAndLoader.load_game()
+	SaverAndLoader.load_world()
+	SaverAndLoader.load_player()
 	PlayerStats.update()
 	
-	var savedPlayerName = SaverAndLoader.custom_data.player_name
+	var savedPlayerName = SaverAndLoader.custom_data_player.player_name
 	if savedPlayerName != "":
 		playerName.text = savedPlayerName
 	
@@ -46,8 +47,8 @@ func _connected_ok():
 
 
 func to_join_world():
-	SaverAndLoader.custom_data.player_name = playerName.text
-	SaverAndLoader.save_game()
+	SaverAndLoader.custom_data_player.player_name = playerName.text
+	SaverAndLoader.save_player()
 
 
 func _on_CreateServerButton_focus_entered():

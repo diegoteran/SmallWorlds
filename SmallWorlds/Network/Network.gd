@@ -75,15 +75,14 @@ func create_server(mp) -> void:
 	add_child(preload("res://Network/ServerWorld.tscn").instance())
 	add_child(preload("res://Network/StateProcessing.tscn").instance())
 	
-	var player_data = SaverAndLoader.custom_data
-	players[1] = {"Name" : player_data.player_name, "Position" : Vector2(player_data.position_x, player_data.position_y), "Level" : player_data.player_level}
+	var player_data = SaverAndLoader.custom_data_player
+	players[1] = {"Name" : player_data.player_name, "Position" : player_data.player_position, "Level" : player_data.player_level}
+	
+	# Fire logic
+	fires =  SaverAndLoader.custom_data_world.world_fires
 	
 	# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://World/World.tscn")
-	
-	# Fire logic
-	for i in SaverAndLoader.custom_data.fires_x.size():
-		fires.append(Vector2(SaverAndLoader.custom_data.fires_x[i], SaverAndLoader.custom_data.fires_y[i]))
 	
 	# Set world seed
 	print(world_seed)
@@ -129,14 +128,14 @@ func _connected_ok():
 
 remote func user_ready(player_id):
 	if get_tree().is_network_server():
-		rpc_id(player_id, "GetFires", fires)
-		rpc_id(player_id, "register_in_game", world_seed)
+		rpc_id(player_id, "register_in_game", world_seed, fires)
 
-remote func register_in_game(new_world_seed):  # Only the client sends this once.
+remote func register_in_game(new_world_seed, new_fires):  # Only the client sends this once.
+	fires = new_fires
 	world_seed = new_world_seed
 	seed(world_seed)
-	var player_data = SaverAndLoader.custom_data
-	var new_player_info = {"Name" : player_data.player_name, "Position" :  Vector2(player_data.position_x, player_data.position_y), "Level" : player_data.player_level}
+	var player_data = SaverAndLoader.custom_data_player
+	var new_player_info = {"Name" : player_data.player_name, "Position" :  player_data.player_position, "Level" : player_data.player_level}
 	# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://World/World.tscn")
 	rpc("register_new_player", get_tree().get_network_unique_id(), new_player_info)
@@ -162,16 +161,16 @@ remote func unregister_player(player_id):
 
 func quit_game():
 	var player_info = players[get_tree().get_network_unique_id()]
-	var custom_data = {
+	var custom_data_player = {
 		player_name = player_info["Name"],
-		position_x = player_info["Position"].x,
-		position_y = player_info["Position"].y,
+		player_position = player_info["Position"],
 	}
 	Globals.quit_game()
-	for key in custom_data.keys():
-		SaverAndLoader.custom_data[key] = custom_data[key]
-	SaverAndLoader.save_game()
+	for key in custom_data_player.keys():
+		SaverAndLoader.custom_data_player[key] = custom_data_player[key]
+	SaverAndLoader.save_player()
 	if(get_tree().is_network_server()):
+		# save_world?
 		for node in get_children():
 			node.queue_free()
 	get_tree().set_network_peer(null)
@@ -195,9 +194,6 @@ func NPCKilled(enemy_id):
 
 remote func ReceiveWorldState(world_state):
 	get_node("../World").UpdateWorldState(world_state)
-
-remote func Getfires(all_fires):
-	fires = all_fires
 
 
 # Client Side Latency

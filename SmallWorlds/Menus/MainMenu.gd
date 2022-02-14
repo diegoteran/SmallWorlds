@@ -9,7 +9,8 @@ onready var startButton = $VBoxContainer/StartButton
 
 func _ready():
 	startButton.grab_focus()
-	SaverAndLoader.load_game()
+	SaverAndLoader.load_player()
+	SaverAndLoader.load_world()
 
 func enable_keyboard():
 	startButton.grab_focus()

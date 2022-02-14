@@ -16,6 +16,7 @@ _global_script_class_icons={
 
 config/name="Small Worlds"
 run/main_scene="res://Menus/TitleScreen.tscn"
+config/use_custom_user_dir=true
 config/icon="res://PixelArt/SmallPlayer/Side Portrait Large.png"
 
 [autoload]

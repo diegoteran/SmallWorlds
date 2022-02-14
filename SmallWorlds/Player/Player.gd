@@ -65,7 +65,7 @@ puppet var puppet_velocity = Vector2(0,0)
 signal healed
 
 func _ready():
-	SaverAndLoader.load_game()
+	SaverAndLoader.load_player()
 	PlayerStats.update()
 	
 	animationTree.active = true
@@ -99,8 +99,8 @@ func _ready():
 
 func _on_no_health():
 	var new_spawn = Vector2(173, -71)
-	if SaverAndLoader.custom_data.spawn_enabled:
-		new_spawn = Vector2(SaverAndLoader.custom_data.spawn_x, SaverAndLoader.custom_data.spawn_y)
+	if SaverAndLoader.custom_data_player.spawn_enabled:
+		new_spawn = SaverAndLoader.custom_data_player.spawn
 	rpc("player_died", new_spawn)
 	stats.soul = 0
 	for i in range(2):
@@ -248,9 +248,9 @@ func spawning_fire():
 
 remotesync func spawn_fire(new_position):
 	Network.fires.append(new_position)
-	SaverAndLoader.custom_data.fires_x.append(new_position.x)
-	SaverAndLoader.custom_data.fires_y.append(new_position.y)
-	SaverAndLoader.save_game()
+	if get_tree().is_network_server():
+		SaverAndLoader.custom_data_world.world_fires.append(new_position)
+		SaverAndLoader.save_world()
 	var bg = get_node("/root/World/Background")
 	bg.spawn_fire(new_position)
 

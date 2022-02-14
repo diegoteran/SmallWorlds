@@ -36,7 +36,7 @@ func set_soul(value):
 	var prev_soul = soul
 	soul = min(value, max_soul)
 	emit_signal("soul_changed", soul)
-	SaverAndLoader.custom_data.soul = soul
+	SaverAndLoader.custom_data_player.player_soul = soul
 	if soul ==  max_soul and soul != prev_soul:
 		emit_signal("soul_charged")
 
@@ -48,19 +48,19 @@ func set_max_soul(value):
 func set_rock(value, type):
 	rocks[type] = min(value, max_rock)
 	emit_signal("rock_changed", rocks[type], type)
-	SaverAndLoader.custom_data.rocks[type] = rocks[type]
+	SaverAndLoader.custom_data_player.player_research[type] = rocks[type]
 	if rocks[type] ==  max_rock:
 		if level < type + 1:
 			emit_signal("research_completed", type)
 			level = type + 1
-			SaverAndLoader.custom_data.player_level = level
-			SaverAndLoader.save_game()
+			SaverAndLoader.custom_data_player.player_level = level
+			SaverAndLoader.save_player()
 
 func update():
 	for i in range(2):
-		set_rock(SaverAndLoader.custom_data.rocks[i], i)
-	set_soul(SaverAndLoader.custom_data.soul)
-	level = SaverAndLoader.custom_data.player_level
+		set_rock(SaverAndLoader.custom_data_player.player_research[i], i)
+	set_soul(SaverAndLoader.custom_data_player.player_soul)
+	level = SaverAndLoader.custom_data_player.player_level
 	emit_signal("research_completed", level - 1)
 
 func _ready():
