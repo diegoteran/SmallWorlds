@@ -10,7 +10,6 @@ onready var startButton = $VBoxContainer/StartButton
 func _ready():
 	startButton.grab_focus()
 	SaverAndLoader.load_player()
-	SaverAndLoader.load_world()
 
 func enable_keyboard():
 	startButton.grab_focus()
@@ -18,8 +17,8 @@ func enable_keyboard():
 func _on_StartButton_pressed():
 	emit_signal("start_pressed")
 	play_menu_select()
-	Network.call_deferred("create_server", false)
-	queue_free()
+#	Network.call_deferred("create_server", false)
+#	queue_free()
 
 
 func _on_MultiplayerButton_pressed():

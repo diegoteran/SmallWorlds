@@ -7,11 +7,10 @@ onready var playerName = $MultiplayerConfigure/CenterContainer/VBoxContainer/VBo
 onready var createServer = $MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/CreateServerButton
 
 signal return_pressed
-
+signal create_server_pressed
 
 func _ready():
 	address.text = Network.ip_address
-	SaverAndLoader.load_world()
 	SaverAndLoader.load_player()
 	PlayerStats.update()
 	
@@ -27,15 +26,13 @@ func _ready():
 	get_tree().connect("connection_failed", self, "_connection_failed")
 
 func _on_CreateServerButton_pressed():
-	SoundFx.play_menu("Menu Select", rand_range(0.8, 1.2), -30)
+	play_menu_select()
 	to_join_world()
-	Network.call_deferred("create_server", true)
-	Music.stop_menu()
-	queue_free()
+	emit_signal("create_server_pressed")
 
 
 func _on_JoinServerButton_pressed():
-	SoundFx.play_menu("Menu Select", rand_range(0.8, 1.2), -30)
+	play_menu_select()
 	to_join_world()
 	
 	if serverAddress.text != "":

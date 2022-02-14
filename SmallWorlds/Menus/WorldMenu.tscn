@@ -1,0 +1,74 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Menus/WhiteRabbit.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Menus/WorldMenu.gd" type="Script" id=2]
+
+[node name="WorldMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ReturnButton" type="Button" parent="VBoxContainer"]
+margin_right = 480.0
+margin_bottom = 19.0
+custom_fonts/font = ExtResource( 1 )
+text = " Return"
+flat = true
+align = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_top = 23.0
+margin_right = 480.0
+margin_bottom = 243.0
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+margin_bottom = 220.0
+grow_horizontal = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 247.0
+margin_right = 480.0
+margin_bottom = 270.0
+
+[node name="WorldName" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+margin_right = 118.0
+margin_bottom = 23.0
+custom_fonts/font = ExtResource( 1 )
+align = 1
+placeholder_text = "World Name"
+
+[node name="Seed" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+margin_left = 122.0
+margin_right = 240.0
+margin_bottom = 23.0
+custom_fonts/font = ExtResource( 1 )
+align = 1
+placeholder_text = "Seed"
+
+[node name="CreateButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 244.0
+margin_right = 310.0
+margin_bottom = 23.0
+custom_fonts/font = ExtResource( 1 )
+text = "Create"
+flat = true
+align = 0
+
+[connection signal="focus_entered" from="VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_focus_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/HBoxContainer/CreateButton" to="." method="_on_CreateButton_focus_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/HBoxContainer/CreateButton" to="." method="_on_CreateButton_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]

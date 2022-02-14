@@ -61,9 +61,10 @@ func _server_disconnected():
 func create_server(mp) -> void:
 	server = NetworkedMultiplayerENet.new()
 	var port = DEFAULT_PORT
-	if mp == false:
-		port += 1203
-	var err = server.create_server(port, MAX_CLIENTS)
+	var num_clients = MAX_CLIENTS
+	if mp == false: 
+		num_clients = 1
+	var err = server.create_server(port, num_clients)
 	
 	if (err != OK):
 		# warning-ignore:standalone_expression
@@ -81,12 +82,13 @@ func create_server(mp) -> void:
 	# Fire logic
 	fires =  SaverAndLoader.custom_data_world.world_fires
 	
-	# warning-ignore:return_value_discarded
-	get_tree().change_scene("res://World/World.tscn")
-	
 	# Set world seed
+	world_seed = SaverAndLoader.custom_data_world.world_seed
 	print(world_seed)
 	seed(world_seed)
+	
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://World/World.tscn")
 	call_deferred("spawn_player")
 	# Add Enemy spawns created by background - not implemented
 	# Globals.add_all_spawns()
@@ -170,7 +172,7 @@ func quit_game():
 		SaverAndLoader.custom_data_player[key] = custom_data_player[key]
 	SaverAndLoader.save_player()
 	if(get_tree().is_network_server()):
-		# save_world?
+		SaverAndLoader.save_world()
 		for node in get_children():
 			node.queue_free()
 	get_tree().set_network_peer(null)

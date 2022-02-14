@@ -4,8 +4,10 @@ const SAVE_DIR = "user://saves/"
 const SAVE_PATH = SAVE_DIR + "save.dat"
 const WORLD_DIR = SAVE_DIR + "worlds/"
 const PLAYER_DIR = SAVE_DIR + "players/"
+const ENCRYPTION = "ThisIsBecauseOfRaul"
 
 var is_loading = false
+var current_world = ""
 var custom_data = {
 }
 var custom_data_player = {
@@ -31,7 +33,7 @@ func save_game():
 		dir.make_dir_recursive(SAVE_DIR)
 	
 	var save_game = File.new()
-	var error = save_game.open(SAVE_PATH, File.WRITE)
+	var error = save_game.open_encrypted_with_pass(SAVE_PATH, File.WRITE, ENCRYPTION)
 	if error != OK:
 		print("Error saving")
 		return
@@ -51,7 +53,7 @@ func save_player():
 		dir.make_dir_recursive(PLAYER_DIR)
 	
 	var save_player = File.new()
-	var error = save_player.open(PLAYER_DIR + "onlyplayer", File.WRITE)
+	var error = save_player.open_encrypted_with_pass(PLAYER_DIR + "onlyplayer.dat", File.WRITE, ENCRYPTION)
 	if error != OK:
 		print("Error saving player")
 		return
@@ -66,7 +68,7 @@ func save_world():
 		dir.make_dir_recursive(WORLD_DIR)
 	
 	var save_world = File.new()
-	var error = save_world.open(WORLD_DIR + "onlyworld", File.WRITE)
+	var error = save_world.open_encrypted_with_pass(WORLD_DIR + custom_data_world.world_name + "_" + str(custom_data_world.world_seed), File.WRITE, ENCRYPTION)
 	if error != OK:
 		print("Error saving world")
 		return
@@ -84,7 +86,7 @@ func load_game():
 #	for node in persistingNodes:
 #		node.queue_free()
 	
-	var error = save_game.open(SAVE_PATH, File.READ)
+	var error = save_game.open_encrypted_with_pass(SAVE_PATH, File.READ, ENCRYPTION)
 	if error != OK:
 		print("Error loading")
 		return
@@ -110,11 +112,11 @@ func load_game():
 
 func load_player():
 	var save_player = File.new()
-	var PLAYER_PATH = PLAYER_DIR + "onlyplayer"
+	var PLAYER_PATH = PLAYER_DIR + "onlyplayer.dat"
 	if not save_player.file_exists(PLAYER_PATH):
 		return
 	
-	var error = save_player.open(PLAYER_PATH, File.READ)
+	var error = save_player.open_encrypted_with_pass(PLAYER_PATH, File.READ, ENCRYPTION)
 	if error != OK:
 		print("Error loading player")
 		return
@@ -128,11 +130,11 @@ func load_player():
 
 func load_world():
 	var save_world = File.new()
-	var WORLD_PATH = WORLD_DIR + "onlyworld"
+	var WORLD_PATH = WORLD_DIR + current_world
 	if not save_world.file_exists(WORLD_PATH):
 		return
 	
-	var error = save_world.open(WORLD_PATH, File.READ)
+	var error = save_world.open_encrypted_with_pass(WORLD_PATH, File.READ, ENCRYPTION)
 	if error != OK:
 		print("Error loading world")
 		return
