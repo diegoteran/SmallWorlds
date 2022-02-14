@@ -27,7 +27,6 @@ void fragment() {
 	COLOR.rgb = smoke_color.rgb;
 	COLOR.a = clamp(new_alpha * 2.0, 0.0, 1.0);
 }"
-custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )

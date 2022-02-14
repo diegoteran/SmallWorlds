@@ -178,10 +178,8 @@ func _on_death():
 		server.NPCKilled(int(name))
 	
 	play_hurt()
-	delete_reflection()
 	attack_finished()
 	state = DEAD
-	shadowSprite.queue_free()
 	hitBox.set_deferred("monitorable", false)
 	animationPlayer.play("Death")
 
@@ -190,9 +188,10 @@ func delete_reflection():
 
 func dead():
 	for node in get_children():
-		if !(node is Sprite or node is Timer):
+		if !(node is Sprite or node is Timer or node is RemoteTransform2D):
 			node.queue_free()
 	timer.start(20)
 
 func _on_Timer_timeout():
+	delete_reflection()
 	queue_free()
