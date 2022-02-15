@@ -6,6 +6,7 @@ onready var tween = $Tween
 onready var light1 = $light1
 onready var light2 = $light2
 onready var sprite = $Sprite
+onready var audio = $AudioStreamPlayer2D
 
 export var mouse_in_fire = false
 
@@ -47,3 +48,7 @@ func _on_Fire_mouse_entered():
 func _on_Fire_mouse_exited():
 	sprite.material.set_shader_param('color', Color.transparent)
 	mouse_in_fire = false
+
+
+func _on_AudioStreamPlayer2D_finished():
+	audio.play()

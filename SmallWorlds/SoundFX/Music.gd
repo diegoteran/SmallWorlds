@@ -27,7 +27,6 @@ func fade_out(stream_player, duration):
 	tween.start()
 
 func list_play():
-	musicPlayer.volume_db = -15 +  linear2db(Globals.get_music_volume())
 	assert(music_list.size() > 0)
 	musicPlayer.stream = music_list[music_list_index]
 	musicPlayer.play()
@@ -39,15 +38,16 @@ func list_stop():
 	musicPlayer.stop()
 
 func play_menu():
-	musicMenu.volume_db = -15 +  linear2db(Globals.get_music_volume())
 	musicMenu.stream = menu_music
+	if musicMenu.playing:
+		musicMenu.volume_db = 0
+		musicMenu.stop()
 	musicMenu.play()
 
 func stop_menu():
 	fade_out(musicMenu, 3)
 
 func play_boss():
-	musicBoss.volume_db = -15 +  linear2db(Globals.get_music_volume())
 	boss_stopped = false
 	musicBoss.stream = boss_music
 	musicBoss.play()
@@ -58,7 +58,6 @@ func end_boss():
 	
 
 func play_ambiance():
-	musicAmbiance.volume_db = -15 +  linear2db(Globals.get_music_volume())
 	ambiance_stopped = false
 	musicAmbiance.stream = day_music
 	musicAmbiance.play()
@@ -68,7 +67,6 @@ func stop_ambiance():
 	fade_out(musicAmbiance, 5)
 
 func play_ambiance_2():
-	musicAmbiance2.volume_db = -20 +  linear2db(Globals.get_music_volume())
 	ambiance_2_stopped = false
 	musicAmbiance2.stream = night_music
 	musicAmbiance2.play()
@@ -82,10 +80,10 @@ func _on_AudioStreamPlayer_finished():
 	list_play()
 
 func set_music_volume():
-	musicPlayer.volume_db = -15 +  linear2db(Globals.get_music_volume())
-	musicBoss.volume_db = -15 +  linear2db(Globals.get_music_volume())
-	musicAmbiance.volume_db = -15 +  linear2db(Globals.get_music_volume())
-	musicMenu.volume_db = -15 +  linear2db(Globals.get_music_volume())
+	musicPlayer.volume_db = 0
+	musicBoss.volume_db = 0
+	musicAmbiance.volume_db = 0
+	musicMenu.volume_db = 0
 
 
 func _on_AudioStreamPlayerBoss_finished():
@@ -104,7 +102,7 @@ func _on_AudioStreamPlayerMenu_finished():
 
 func _on_Tween_tween_completed(object, _key):
 	object.stop()
-	object.volume_db = -15 +  linear2db(Globals.get_music_volume())
+	object.volume_db = 0
 
 
 func _on_AudioStreamPlayerAmbiance2_finished():

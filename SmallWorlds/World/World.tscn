@@ -772,6 +772,7 @@ texture = ExtResource( 13 )
 centered = false
 
 [node name="Pixelate" type="Sprite" parent="Background"]
+visible = false
 material = SubResource( 9 )
 scale = Vector2( 50, 50 )
 texture = ExtResource( 13 )

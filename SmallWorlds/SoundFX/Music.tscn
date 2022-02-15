@@ -15,14 +15,19 @@ night_music = ExtResource( 4 )
 menu_music = ExtResource( 2 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = "Music"
 
 [node name="AudioStreamPlayerBoss" type="AudioStreamPlayer" parent="."]
+bus = "Music"
 
 [node name="AudioStreamPlayerAmbiance" type="AudioStreamPlayer" parent="."]
+bus = "Music"
 
 [node name="AudioStreamPlayerAmbiance2" type="AudioStreamPlayer" parent="."]
+bus = "Music"
 
 [node name="AudioStreamPlayerMenu" type="AudioStreamPlayer" parent="."]
+bus = "Music"
 
 [node name="Tween" type="Tween" parent="."]
 

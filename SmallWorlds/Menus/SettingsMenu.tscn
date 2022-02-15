@@ -92,8 +92,10 @@ margin_bottom = 16.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 3
 theme = SubResource( 1 )
-max_value = 1.0
-step = 0.1
+min_value = -50.0
+max_value = -10.0
+step = 4.0
+value = -10.0
 
 [node name="Sfx" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 margin_top = 89.0
@@ -120,8 +122,9 @@ margin_bottom = 16.0
 grow_horizontal = 0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 3
-max_value = 1.0
-step = 0.1
+min_value = -30.0
+max_value = 10.0
+step = 4.0
 
 [connection signal="focus_entered" from="ScrollContainer/VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_focus_entered"]
 [connection signal="mouse_entered" from="ScrollContainer/VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_mouse_entered"]

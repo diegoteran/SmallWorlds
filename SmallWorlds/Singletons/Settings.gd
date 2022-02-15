@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_PATH = "res://config.cfg"
+const SAVE_PATH = "user://config.cfg"
 
 var _config_file = ConfigFile.new()
 var _settings = {
@@ -38,3 +38,6 @@ func load_settings():
 	for section in _settings.keys():
 		for key in _settings[section]:
 			_settings[section][key] = _config_file.get_value(section, key, _default[section][key])
+			
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), _settings["audio"]["music"])
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), _settings["audio"]["sfx"])

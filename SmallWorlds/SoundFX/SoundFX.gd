@@ -10,6 +10,7 @@ var sounds = {
 	"Click" : load(sounds_path + "Click.wav"),
 	"EnemyDie" : load(sounds_path + "EnemyDie.wav"),
 	"Evade" : load(sounds_path + "Evade.wav"),
+	"Fire" : load(sounds_path + "Fire.wav"),
 	"FlyAttack" : load(sounds_path + "FlyAttack.wav"),
 	"FlyFlap" : load(sounds_path + "FlyFlap.wav"),
 	"FlyHurt" : load(sounds_path + "FlyHurt.wav"),
@@ -39,7 +40,7 @@ func play(sound_string, from_location, pitch_scale = 1, volume_db = 0):
 		if not soundPlayer.playing:
 			soundPlayer.attenuation = 10
 			soundPlayer.pitch_scale = pitch_scale
-			soundPlayer.volume_db = volume_db + linear2db(Globals.get_sfx_volume())
+			soundPlayer.volume_db = volume_db
 			soundPlayer.stream = sounds[sound_string]
 			soundPlayer.global_position = from_location
 			soundPlayer.play()
@@ -59,7 +60,7 @@ func play_menu(sound_string, pitch_scale = 1, volume_db = 0):
 	for soundPlayer in sound_players_menu:
 		if not soundPlayer.playing:
 			soundPlayer.pitch_scale = pitch_scale
-			soundPlayer.volume_db = volume_db + linear2db(Globals.get_sfx_volume())
+			soundPlayer.volume_db = volume_db
 			soundPlayer.stream = sounds[sound_string]
 			soundPlayer.play()
 			return

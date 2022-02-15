@@ -1,7 +1,7 @@
 extends Node
 
-var music = 1
-var sfx = 1
+var music = -10
+var sfx = -10
 var player : Object = null
 var dead = true
 var world : Object = null

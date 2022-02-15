@@ -25,12 +25,13 @@ func _on_ReturnButton_pressed():
 
 func _on_Music_value_changed(value):
 	Settings._settings["audio"]["music"] = value
-	Music.set_music_volume()
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), value)
 	save_settings()
 	play_menu_select()
 
 func _on_Sfx_value_changed(value):
 	Settings._settings["audio"]["sfx"] = value
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), value)
 	save_settings()
 	play_menu_select()
 

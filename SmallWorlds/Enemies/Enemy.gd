@@ -155,7 +155,7 @@ remotesync func hurt_effect(direction: Vector2, shown_damage: float):
 	
 
 func aggroed(by_player):
-	if state != DEAD:
+	if state != DEAD and state != CHASE:
 		aggroed_player = by_player
 		if state != AGGRO:
 			rpc("aggro_effects")

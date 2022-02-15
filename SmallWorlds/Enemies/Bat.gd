@@ -74,7 +74,7 @@ func seek_player():
 		state = CHASE
 
 func play_flap():
-	SoundFx.play("BatFlap", global_position, rand_range(1.5, 2), -35)
+	SoundFx.play("BatFlap", global_position, rand_range(1.5, 2), -40)
 
 func play_hurt():
 	var num = (randi() % 2) + 1
