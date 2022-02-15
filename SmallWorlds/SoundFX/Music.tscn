@@ -8,13 +8,13 @@
 
 [node name="Music" type="Node"]
 script = ExtResource( 1 )
-music_list = [ ExtResource( 2 ) ]
 boss_music = ExtResource( 3 )
 day_music = ExtResource( 5 )
 night_music = ExtResource( 4 )
 menu_music = ExtResource( 2 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -20.0
 bus = "Music"
 
 [node name="AudioStreamPlayerBoss" type="AudioStreamPlayer" parent="."]

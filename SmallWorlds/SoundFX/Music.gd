@@ -15,6 +15,7 @@ onready var musicAmbiance2 = $AudioStreamPlayerAmbiance2
 onready var musicMenu = $AudioStreamPlayerMenu
 onready var tween = $Tween
 
+var music_stopped = true
 var boss_stopped = true
 var ambiance_stopped = true
 var ambiance_2_stopped = true
@@ -35,6 +36,7 @@ func list_play():
 		music_list_index = 0
 	
 func list_stop():
+	music_stopped = true
 	musicPlayer.stop()
 
 func play_menu():
@@ -80,7 +82,7 @@ func _on_AudioStreamPlayer_finished():
 	list_play()
 
 func set_music_volume():
-	musicPlayer.volume_db = 0
+	musicPlayer.volume_db = -30
 	musicBoss.volume_db = 0
 	musicAmbiance.volume_db = 0
 	musicMenu.volume_db = 0

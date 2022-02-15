@@ -11,6 +11,7 @@ onready var audio = $AudioStreamPlayer2D
 export var mouse_in_fire = false
 
 func _ready():
+	Globals.create_reflection_static(sprite, "fire" + name, global_position)
 	# Light Handler
 	var cycle = get_node("/root/World/DayNightCycle")
 	cycle.connect("light_changed", self, "set_lights")
@@ -19,6 +20,7 @@ func _ready():
 
 func _input(_event):
 	if Input.is_action_just_pressed("ranged") and mouse_in_fire:
+		print("clicked fire")
 		SoundFx.play_menu("Menu Move", rand_range(0.8, 1.2), - 20)
 		Shake.shake(1, 0.5, 0)
 		SaverAndLoader.custom_data_player.spawn_enabled = true
@@ -52,3 +54,6 @@ func _on_Fire_mouse_exited():
 
 func _on_AudioStreamPlayer2D_finished():
 	audio.play()
+
+func queue_free():
+	Globals.delete_reflection("fire" + name)

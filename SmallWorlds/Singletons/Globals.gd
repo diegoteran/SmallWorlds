@@ -75,6 +75,12 @@ func create_reflection(current_sprite: Sprite, new_name: String) -> RemoteTransf
 	remote_transform.call_deferred("set_remote_node", "/root/World/Background/WaterTileMap/" + new_name)
 	return remote_transform
 
+func create_reflection_static(current_sprite: Sprite, new_name: String, position: Vector2) -> void:
+	var water_tilemap = get_node("/root/World/Background/WaterTileMap")
+	var reflection = instance_scene_on_node_with_name(Reflection, water_tilemap, Vector2.ZERO, new_name)
+	reflection.copy_sprite = current_sprite
+	reflection.global_position = position
+
 func delete_reflection(new_name: String) -> void:
 	var tilemap = get_node("/root/World/Background/WaterTileMap")
 	if tilemap.has_node(new_name):
