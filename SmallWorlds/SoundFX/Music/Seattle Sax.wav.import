@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Seattle Sax.wav-73eedd21e9557201556fbe7b2c81a923.sample"
+
+[deps]
+
+source_file="res://SoundFX/Music/Seattle Sax.wav"
+dest_files=[ "res://.import/Seattle Sax.wav-73eedd21e9557201556fbe7b2c81a923.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

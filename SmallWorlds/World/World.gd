@@ -20,12 +20,12 @@ func _ready():
 	Globals.world = world
 	set_network_master(1)
 	Music.play_ambiance()
-#	Music.list_play()
+	Music.list_play()
 
 func queue_free():
 	Music.stop_ambiance()
 	Music.stop_ambiance_2()
-#	Music.list_stop()
+	Music.list_stop()
 
 func _process(_delta):
 	if get_tree().is_network_server():

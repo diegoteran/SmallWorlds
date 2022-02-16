@@ -28,6 +28,7 @@ func fade_out(stream_player, duration):
 	tween.start()
 
 func list_play():
+	music_stopped = false
 	assert(music_list.size() > 0)
 	musicPlayer.stream = music_list[music_list_index]
 	musicPlayer.play()
@@ -78,11 +79,12 @@ func stop_ambiance_2():
 	fade_out(musicAmbiance2, 5)
 
 func _on_AudioStreamPlayer_finished():
-	music_list.shuffle()
-	list_play()
+	if !music_stopped:
+#	music_list.shuffle()
+		list_play()
 
 func set_music_volume():
-	musicPlayer.volume_db = -30
+	musicPlayer.volume_db = 0
 	musicBoss.volume_db = 0
 	musicAmbiance.volume_db = 0
 	musicMenu.volume_db = 0
