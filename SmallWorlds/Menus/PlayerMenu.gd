@@ -3,6 +3,7 @@ extends Control
 onready var hueSlider = $VBoxContainer/HBoxContainer/HueSlider
 onready var playerLabel = $VBoxContainer/HBoxContainer/PlayerName
 onready var playerList = $VBoxContainer/ScrollContainer/VBoxContainer
+onready var sprite = $VBoxContainer/HBoxContainer/CenterContainer/Sprite
 
 signal return_pressed
 signal game_started(mp, client)
@@ -70,7 +71,7 @@ func _on_CreateButton_pressed():
 		return
 	
 #	var world_seed = hash(seedText)
-#	SaverAndLoader.custom_data_world.world_seed = world_seed
+	SaverAndLoader.custom_data_player.player_shader = hueSlider.value
 	SaverAndLoader.custom_data_player.player_name = playerName
 	SaverAndLoader.custom_data_player.player_id = next_id
 	SaverAndLoader.save_player()
@@ -99,3 +100,7 @@ func play_menu_move():
 
 func play_menu_select():
 	SoundFx.play_menu("Menu Select", rand_range(0.8, 1.2), -30)
+
+
+func _on_HueSlider_value_changed(value):
+	sprite.material.set_shader_param("Shift_Hue", value)

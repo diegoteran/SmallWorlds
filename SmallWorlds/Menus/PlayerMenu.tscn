@@ -1,7 +1,54 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Menus/WhiteRabbit.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Menus/PlayerMenu.gd" type="Script" id=2]
+[ext_resource path="res://PixelArt/SmallPlayer/Idle.png" type="Texture" id=3]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+//render_mode unshaded;
+
+uniform float Shift_Hue = 0.0; //0.35, 0.8
+
+void fragment() {
+// Input:3
+	vec3 input_color;
+	vec4 texture_color = texture(TEXTURE, UV);
+	input_color = texture_color.rgb;
+
+// VectorFunc:2
+	vec3 color_hsv;
+	{
+		vec3 c = input_color;
+		vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+		vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+		vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+		float d = q.x - min(q.w, q.y);
+		float e = 1.0e-10;
+		color_hsv=vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+	}
+
+	color_hsv.x = mod((color_hsv.x + Shift_Hue), 1.0f);
+
+// VectorFunc:5
+	vec3 color_rgb;
+	{
+		vec3 c = color_hsv;
+		vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+		vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+		color_rgb=c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+	}
+
+// Output:0
+	texture_color = vec4(color_rgb.rgb,texture_color.a);
+	COLOR.rgba = texture_color;
+
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/Shift_Hue = 0.0
 
 [node name="PlayerMenu" type="Control"]
 anchor_right = 1.0
@@ -51,21 +98,36 @@ placeholder_text = "Player Name"
 
 [node name="HueSlider" type="HSlider" parent="VBoxContainer/HBoxContainer"]
 margin_left = 122.0
-margin_right = 138.0
+margin_right = 222.0
 margin_bottom = 16.0
+rect_min_size = Vector2( 100, 0 )
+max_value = 1.0
+step = 0.01
 
 [node name="CreateButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 142.0
-margin_right = 208.0
+margin_left = 226.0
+margin_right = 292.0
 margin_bottom = 23.0
 custom_fonts/font = ExtResource( 1 )
 text = "Create"
 flat = true
 align = 0
 
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 296.0
+margin_right = 296.0
+margin_bottom = 23.0
+
+[node name="Sprite" type="Sprite" parent="VBoxContainer/HBoxContainer/CenterContainer"]
+material = SubResource( 2 )
+texture = ExtResource( 3 )
+hframes = 15
+frame = 12
+
 [connection signal="focus_entered" from="VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_focus_entered"]
 [connection signal="mouse_entered" from="VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_pressed"]
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/HueSlider" to="." method="_on_HueSlider_value_changed"]
 [connection signal="focus_entered" from="VBoxContainer/HBoxContainer/CreateButton" to="." method="_on_CreateButton_focus_entered"]
 [connection signal="mouse_entered" from="VBoxContainer/HBoxContainer/CreateButton" to="." method="_on_CreateButton_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]

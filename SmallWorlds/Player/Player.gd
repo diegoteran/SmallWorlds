@@ -70,6 +70,7 @@ func _ready():
 	
 	animationTree.active = true
 	label.text = server.players[int(name)]["Name"]
+	sprite.material.set_shader_param("Shift_Hue", server.players[int(name)]["Shader"])
 	if is_network_master():
 		Globals.player = self
 		stats._ready()

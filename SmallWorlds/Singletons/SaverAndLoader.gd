@@ -14,6 +14,7 @@ var custom_data = {
 var custom_data_player = {
 	player_name = "",
 	player_id = 0,
+	player_shader = 0,
 	player_position = Vector2(176, -40),
 	player_level = 0,
 	player_max_health = 4,
