@@ -26,14 +26,21 @@ text = " Return"
 flat = true
 align = 0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer"]
 margin_top = 23.0
+margin_right = 480.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "Select or Create a World"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_top = 40.0
 margin_right = 480.0
 margin_bottom = 243.0
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
-margin_bottom = 220.0
+margin_bottom = 203.0
 grow_horizontal = 2
 size_flags_vertical = 3
 

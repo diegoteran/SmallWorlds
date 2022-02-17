@@ -7,6 +7,8 @@ onready var worldList = $VBoxContainer/ScrollContainer/VBoxContainer
 signal return_pressed
 signal game_started(mp)
 
+var font_data = preload("res://Menus/white-rabbit.regular.ttf")
+
 var mp = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,6 +25,10 @@ func generate_button(world_path):
 	var button = Button.new()
 	button.name = world_path
 	button.text = name_seed[0]
+	
+	var font = DynamicFont.new()
+	font.font_data = font_data
+	button.set("custom_fonts/font", font)
 	worldList.add_child(button)
 #	button.set_size(Vector2(80,20))
 	button.show()
@@ -62,7 +68,7 @@ func _on_CreateButton_pressed():
 	play_menu_select()
 	var seedText = seedLabel.text
 	var worldText = worldLabel.text
-	if seedText == "" or "_" in seedText or worldText == "" or "_" in worldText:
+	if seedText == "" or "_" in seedText or worldText == "" or "_" in worldText or len(worldText) > 16:
 		return
 	
 	var world_seed = hash(seedText)

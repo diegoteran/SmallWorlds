@@ -8,6 +8,8 @@ onready var sprite = $VBoxContainer/HBoxContainer/CenterContainer/Sprite
 signal return_pressed
 signal game_started(mp, client)
 
+var font_data = preload("res://Menus/white-rabbit.regular.ttf")
+
 var mp = false
 var ip = ""
 var client = false
@@ -28,6 +30,10 @@ func generate_button(player_path):
 	button.name = player_path
 	button.text = name_id[0]
 	next_id = max(next_id, int(name_id[1])) + 1
+	
+	var font = DynamicFont.new()
+	font.font_data = font_data
+	button.set("custom_fonts/font", font)
 	playerList.add_child(button)
 #	button.set_size(Vector2(80,20))
 	button.show()
@@ -67,7 +73,7 @@ func _on_CreateButton_pressed():
 	play_menu_select()
 #	var seedText = seedLabel.text
 	var playerName = playerLabel.text
-	if playerName == "" or "_" in playerName:
+	if playerName == "" or "_" in playerName or len(playerName) > 16:
 		return
 	
 #	var world_seed = hash(seedText)
