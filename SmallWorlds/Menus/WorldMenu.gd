@@ -5,7 +5,7 @@ onready var worldLabel = $VBoxContainer/HBoxContainer/WorldName
 onready var worldList = $VBoxContainer/ScrollContainer/VBoxContainer
 
 signal return_pressed
-signal game_started
+signal game_started(mp)
 
 var mp = false
 # Called when the node enters the scene tree for the first time.
@@ -31,8 +31,7 @@ func generate_button(world_path):
 func _pressed(world_path):
 	SaverAndLoader.current_world = world_path
 	SaverAndLoader.load_world()
-	Network.call_deferred("create_server", mp)
-	emit_signal("game_started")
+	emit_signal("game_started", mp)
 
 func list_files_in_directory(path):
 	var files = []

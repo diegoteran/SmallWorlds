@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://SoundFX/Music.gd" type="Script" id=1]
-[ext_resource path="res://SoundFX/Music/Menu.wav" type="AudioStream" id=2]
 [ext_resource path="res://SoundFX/Music/Boss.wav" type="AudioStream" id=3]
 [ext_resource path="res://SoundFX/Music/Night.wav" type="AudioStream" id=4]
 [ext_resource path="res://SoundFX/Music/Day.wav" type="AudioStream" id=5]
@@ -13,7 +12,7 @@ music_list = [ ExtResource( 6 ) ]
 boss_music = ExtResource( 3 )
 day_music = ExtResource( 5 )
 night_music = ExtResource( 4 )
-menu_music = ExtResource( 2 )
+menu_music = ExtResource( 6 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 bus = "Music"

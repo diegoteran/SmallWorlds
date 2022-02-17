@@ -8,10 +8,12 @@ const ENCRYPTION = "ThisIsBecauseOfRaul"
 
 var is_loading = false
 var current_world = ""
+var current_player = ""
 var custom_data = {
 }
 var custom_data_player = {
 	player_name = "",
+	player_id = 0,
 	player_position = Vector2(176, -40),
 	player_level = 0,
 	player_max_health = 4,
@@ -53,7 +55,7 @@ func save_player():
 		dir.make_dir_recursive(PLAYER_DIR)
 	
 	var save_player = File.new()
-	var error = save_player.open_encrypted_with_pass(PLAYER_DIR + "onlyplayer.dat", File.WRITE, ENCRYPTION)
+	var error = save_player.open_encrypted_with_pass(PLAYER_DIR + custom_data_player.player_name + "_" + str(custom_data_player.player_id), File.WRITE, ENCRYPTION)
 	if error != OK:
 		print("Error saving player")
 		return
@@ -112,7 +114,7 @@ func load_game():
 
 func load_player():
 	var save_player = File.new()
-	var PLAYER_PATH = PLAYER_DIR + "onlyplayer.dat"
+	var PLAYER_PATH = PLAYER_DIR + current_player
 	if not save_player.file_exists(PLAYER_PATH):
 		return
 	

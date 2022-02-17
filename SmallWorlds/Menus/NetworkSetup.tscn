@@ -24,9 +24,9 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MultiplayerConfigure/CenterContainer"]
 margin_left = 175.0
-margin_top = 67.0
+margin_top = 80.0
 margin_right = 304.0
-margin_bottom = 203.0
+margin_bottom = 189.0
 
 [node name="ReturnButton" type="Button" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
 margin_right = 129.0
@@ -39,25 +39,17 @@ align = 0
 [node name="VBoxContainer" type="VBoxContainer" parent="MultiplayerConfigure/CenterContainer/VBoxContainer"]
 margin_top = 23.0
 margin_right = 129.0
-margin_bottom = 136.0
+margin_bottom = 109.0
 
 [node name="Address" type="Label" parent="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer"]
 margin_right = 129.0
 margin_bottom = 13.0
 custom_fonts/font = ExtResource( 2 )
 
-[node name="PlayerName" type="LineEdit" parent="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer"]
+[node name="CreateServerButton" type="Button" parent="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer"]
 margin_top = 17.0
 margin_right = 129.0
-margin_bottom = 40.0
-custom_fonts/font = ExtResource( 2 )
-align = 1
-placeholder_text = "Name"
-
-[node name="CreateServerButton" type="Button" parent="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer"]
-margin_top = 44.0
-margin_right = 129.0
-margin_bottom = 63.0
+margin_bottom = 36.0
 custom_fonts/font = ExtResource( 2 )
 text = "Create Server"
 __meta__ = {
@@ -65,16 +57,16 @@ __meta__ = {
 }
 
 [node name="JoinServerButton" type="Button" parent="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer"]
-margin_top = 67.0
+margin_top = 40.0
 margin_right = 129.0
-margin_bottom = 86.0
+margin_bottom = 59.0
 custom_fonts/font = ExtResource( 2 )
 text = "Join Server"
 
 [node name="ServerAddress" type="LineEdit" parent="MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer"]
-margin_top = 90.0
+margin_top = 63.0
 margin_right = 129.0
-margin_bottom = 113.0
+margin_bottom = 86.0
 custom_fonts/font = ExtResource( 2 )
 align = 1
 placeholder_text = "IP"

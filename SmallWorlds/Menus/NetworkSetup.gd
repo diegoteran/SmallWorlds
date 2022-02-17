@@ -3,20 +3,16 @@ extends Control
 onready var multiplayerConfigure = $MultiplayerConfigure
 onready var serverAddress = $MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/ServerAddress
 onready var address = $MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/Address
-onready var playerName = $MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/PlayerName
 onready var createServer = $MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/CreateServerButton
 
 signal return_pressed
 signal create_server_pressed
+signal join_server_pressed(ip)
 
 func _ready():
 	address.text = Network.ip_address
 	SaverAndLoader.load_player()
 	PlayerStats.update()
-	
-	var savedPlayerName = SaverAndLoader.custom_data_player.player_name
-	if savedPlayerName != "":
-		playerName.text = savedPlayerName
 	
 	createServer.grab_focus()
 	
@@ -27,30 +23,20 @@ func _ready():
 
 func _on_CreateServerButton_pressed():
 	play_menu_select()
-	to_join_world()
 	emit_signal("create_server_pressed")
 
 
 func _on_JoinServerButton_pressed():
 	play_menu_select()
-	to_join_world()
 	
 	if serverAddress.text != "":
-		Network.ip_address = "73.97.136.126" #serverAddress.text
-		Network.call_deferred("join_server")
+		emit_signal("join_server_pressed", "73.97.136.126")
 
 func _connected_ok():
 	Music.stop_menu()
 
-
-func to_join_world():
-	SaverAndLoader.custom_data_player.player_name = playerName.text
-	SaverAndLoader.save_player()
-
-
 func _on_CreateServerButton_focus_entered():
 	play_menu_move()
-
 
 func _on_JoinServerButton_focus_entered():
 	play_menu_move()

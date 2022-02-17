@@ -1,8 +1,8 @@
 extends CanvasModulate
 
 var time = 0
-var seconds = 60
-var seconds_check = 60
+var seconds = 40
+var seconds_check = 40
 var is_night = false
 
 signal light_changed(value)
@@ -28,7 +28,7 @@ func _physics_process(delta):
 	set_time(seconds)
 
 func set_time(set_seconds):
-	var currentFrame = range_lerp(set_seconds, 0, 240, 0, 24)
+	var currentFrame = range_lerp(set_seconds, 0, 120, 0, 24)
 	$AnimationPlayer.play("Cycle")
 	$AnimationPlayer.seek(currentFrame)
 

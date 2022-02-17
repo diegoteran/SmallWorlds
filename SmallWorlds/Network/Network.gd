@@ -23,6 +23,8 @@ var delta_latency = 0
 var world
 var player_state_collection = {}
 
+signal connection_error
+
 func _ready() -> void:
 	if OS.get_name() == "Windows":
 		ip_address = IP.get_local_addresses()[1]
@@ -97,12 +99,16 @@ func spawn_player():
 	get_node("../World").SpawnNewPlayer(get_tree().get_network_unique_id(), players[1]["Position"])
 
 func join_server() -> void:
+	print("Trying to joing server")
 	client = NetworkedMultiplayerENet.new()
 	var err = client.create_client(ip_address, DEFAULT_PORT)
 	if (err != OK):
+		print("error: " + str(err))
+		emit_signal("connection_error")
 		return
 	
 	get_tree().set_network_peer(client)
+	print(get_tree().network_peer.get_connection_status())
 
 func _player_connected(player_id) -> void:
 	print("Player " + str(player_id) + " has connected")
@@ -112,6 +118,7 @@ func _player_disconnected(player_id) -> void:
 	print("Player " + str(player_id) + " has disconnected")
 
 func _connection_failed():
+	emit_signal("connection_error")
 	print("Failed to connect")
 
 func _connected_ok():
