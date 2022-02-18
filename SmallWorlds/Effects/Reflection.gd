@@ -5,6 +5,11 @@ onready var sprite = $Sprite
 var copy_sprite : Sprite = null
 var ignore_pos = false
 
+func _ready():
+	if copy_sprite.material != null:
+		sprite.material = copy_sprite.material
+		sprite.material.set_shader_param("Shift_Hue", copy_sprite.material.get_shader_param("Shift_Hue"))
+
 func _process(_delta):
 	if copy_sprite == null:
 		return
