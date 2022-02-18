@@ -1,5 +1,7 @@
 extends Control
 
+export var PlayerButton : PackedScene
+
 onready var hueSlider = $VBoxContainer/HBoxContainer/HueSlider
 onready var playerLabel = $VBoxContainer/HBoxContainer/PlayerName
 onready var playerList = $VBoxContainer/ScrollContainer/VBoxContainer
@@ -25,24 +27,40 @@ func _ready():
 
 
 func generate_button(player_path):
-	var name_id = player_path.split("_")
-	var button = Button.new()
-	button.name = player_path
-	button.text = name_id[0]
-	next_id = max(next_id, int(name_id[1])) + 1
+	var player_data = SaverAndLoader.open_player_file(player_path)
 	
-	var font = DynamicFont.new()
-	font.font_data = font_data
-	button.set("custom_fonts/font", font)
+	var name_id = player_path.split("_")
+	var button = PlayerButton.instance()
+	button.player_name = name_id[0]
+	button.name = player_path
+	button.shader = player_data.player_shader
+	next_id = max(next_id, int(name_id[1])) + 1
 	playerList.add_child(button)
 #	button.set_size(Vector2(80,20))
 	button.show()
-	button.connect("pressed", self, "_pressed", [button.name])
+	button.connect("player_selected", self, "_pressed", [button.name])
+	button.connect("player_deleted", self, "_deleted", [button.name])
 
 func _pressed(player_path):
 	SaverAndLoader.current_player = player_path
 	SaverAndLoader.load_player()
 	emit_signal("game_started", mp, ip)
+
+func _deleted(player_path):
+	var dialog = ConfirmationDialog.new()
+	dialog.dialog_text = "Are you sure you want to delete this character?"
+	dialog.window_title = player_path
+	dialog.connect("confirmed", self, "_delete_player", [player_path])
+	dialog.connect("custom_action", dialog, "queue_free")
+	add_child(dialog)
+	dialog.popup_centered()
+
+func _delete_player(player_path):
+	var success = SaverAndLoader.delete_player_file(player_path)
+	
+	if success:
+		var deleted_button = playerList.get_node(player_path)
+		deleted_button.queue_free()
 
 func list_files_in_directory(path):
 	var files = []

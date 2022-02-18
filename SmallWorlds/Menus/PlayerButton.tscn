@@ -1,0 +1,193 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Menus/WhiteRabbit.tres" type="DynamicFont" id=1]
+[ext_resource path="res://PixelArt/SmallPlayer/Idle.png" type="Texture" id=2]
+[ext_resource path="res://Menus/PlayerButton.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.360784, 0.321569, 0.321569, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+//render_mode unshaded;
+
+uniform float Shift_Hue = 0.0; //0.35, 0.8
+
+void fragment() {
+// Input:3
+	vec3 input_color;
+	vec4 texture_color = texture(TEXTURE, UV);
+	input_color = texture_color.rgb;
+
+// VectorFunc:2
+	vec3 color_hsv;
+	{
+		vec3 c = input_color;
+		vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+		vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+		vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+		float d = q.x - min(q.w, q.y);
+		float e = 1.0e-10;
+		color_hsv=vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+	}
+
+	color_hsv.x = mod((color_hsv.x + Shift_Hue), 1.0f);
+
+// VectorFunc:5
+	vec3 color_rgb;
+	{
+		vec3 c = color_hsv;
+		vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+		vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+		color_rgb=c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+	}
+
+// Output:0
+	texture_color = vec4(color_rgb.rgb,texture_color.a);
+	COLOR.rgba = texture_color;
+
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = SubResource( 2 )
+shader_param/Shift_Hue = 0.0
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 14, 24 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 14, 0, 14, 24 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 28, 0, 14, 24 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 42, 0, 14, 24 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 56, 0, 14, 24 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+} ]
+
+[node name="PlayerButton" type="Control"]
+margin_right = 135.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 135, 60 )
+size_flags_horizontal = 3
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_right = 130.0
+margin_bottom = 27.0
+custom_constants/separation = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_right = 99.0
+margin_bottom = 27.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 99.0
+margin_bottom = 13.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerName" type="Label" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer"]
+margin_right = 99.0
+margin_bottom = 13.0
+custom_fonts/font = ExtResource( 1 )
+text = "Player name"
+
+[node name="Control" type="Control" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 17.0
+margin_right = 99.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 0, 10 )
+
+[node name="Control" type="Control" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_left = 99.0
+margin_right = 110.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_left = 110.0
+margin_right = 130.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 20, 20 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/CenterContainer"]
+margin_left = 10.0
+margin_top = 13.0
+margin_right = 10.0
+margin_bottom = 13.0
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Panel/VBoxContainer/HBoxContainer/CenterContainer/MarginContainer"]
+material = SubResource( 3 )
+position = Vector2( -10, -14 )
+frames = SubResource( 9 )
+animation = "Idle"
+centered = false
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 31.0
+margin_right = 130.0
+margin_bottom = 50.0
+
+[node name="SelectButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer2"]
+margin_right = 66.0
+margin_bottom = 19.0
+custom_fonts/font = ExtResource( 1 )
+text = "Select"
+
+[node name="DeleteButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer2"]
+margin_left = 70.0
+margin_right = 127.0
+margin_bottom = 19.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.611765, 0.105882, 0.105882, 1 )
+text = "Erase"
+
+[connection signal="mouse_entered" from="Panel/VBoxContainer/HBoxContainer2/SelectButton" to="." method="_on_SelectButton_mouse_entered"]
+[connection signal="mouse_exited" from="Panel/VBoxContainer/HBoxContainer2/SelectButton" to="." method="_on_SelectButton_mouse_exited"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer2/SelectButton" to="." method="_on_SelectButton_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer2/DeleteButton" to="." method="_on_DeleteButton_pressed"]

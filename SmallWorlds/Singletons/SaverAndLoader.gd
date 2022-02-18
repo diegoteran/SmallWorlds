@@ -28,6 +28,10 @@ var custom_data_world = {
 	world_name = "",
 	world_fires = []
 }
+var empty_player
+
+func _ready():
+	empty_player = custom_data_player
 
 func save_game():
 	# Check for directories
@@ -131,6 +135,26 @@ func load_player():
 	save_player.close()
 	print("Loaded player: ", custom_data_player)
 
+func open_player_file(player_path):
+	var save_player = File.new()
+	var PLAYER_PATH = PLAYER_DIR + player_path
+	
+	if not save_player.file_exists(PLAYER_PATH):
+		return
+	
+	var error = save_player.open_encrypted_with_pass(PLAYER_PATH, File.READ, ENCRYPTION)
+	if error != OK:
+		print("Error loading player")
+		return {}
+	
+	var player_data = save_player.get_var()
+	save_player.close()
+	
+	for key in empty_player.keys():
+		if not player_data.has(key):
+			player_data[key] = empty_player[key]
+	return player_data
+
 func load_world():
 	var save_world = File.new()
 	var WORLD_PATH = WORLD_DIR + current_world
@@ -148,3 +172,11 @@ func load_world():
 	
 	save_world.close()
 	print("Loaded world: ", custom_data_world)
+
+func delete_player_file(player_path) -> bool:
+	var dir = Directory.new()
+	var complete_path = PLAYER_DIR + player_path
+	if dir.file_exists(complete_path):
+		dir.remove(complete_path)
+		return true
+	return false
