@@ -412,10 +412,10 @@ func run_step():
 	# Dust Particle
 	
 	var effect = StepDustEffect.instance()  #Globals.instance_scene_on_node(StepDustEffect, get_parent(), global_position - velocity.normalized())
-	effect.modulate = Color("ffe486")
+	effect.color = Color("ffe486")
 	if grass_id == TileMap.INVALID_CELL:
 		if water_id == TileMap.INVALID_CELL:
-			effect.modulate = Color("919191")
+			effect.color = Color("919191")
 		else:
 			Globals.instance_scene_on_node(ShockWaveEffect, water_tilemap, global_position)
 #			effect.modulate = Color.aqua

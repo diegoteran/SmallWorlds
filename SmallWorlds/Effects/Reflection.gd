@@ -6,6 +6,9 @@ var copy_sprite : Sprite = null
 var ignore_pos = false
 
 func _ready():
+	
+	sprite.self_modulate = copy_sprite.self_modulate
+	
 	if copy_sprite.material != null:
 		sprite.material = copy_sprite.material
 #		sprite.material.set_shader_param("Shift_Hue", copy_sprite.material.get_shader_param("Shift_Hue"))

@@ -220,7 +220,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="CircleShape2D" id=4]
-radius = 7.5
+radius = 3.37252
 
 [sub_resource type="CircleShape2D" id=5]
 
@@ -233,13 +233,13 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id=8]
 
 [node name="StingFlyBoss" instance=ExtResource( 1 )]
-modulate = Color( 0.447059, 0.980392, 0.529412, 1 )
 scale = Vector2( 2.5, 2.5 )
 script = ExtResource( 6 )
 hp = 50
-ATTACK_RANGE = 50
+ATTACK_RANGE = 60
 
 [node name="Sprite" parent="." index="0"]
+self_modulate = Color( 0.196078, 0.729412, 0.176471, 1 )
 position = Vector2( 0, -16 )
 texture = ExtResource( 5 )
 flip_h = true

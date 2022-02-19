@@ -6,9 +6,13 @@ export var max_hp = 10
 var type = GREEN
 export var days_to_recover = 2
 var empty_sprite_green = preload("res://PixelArt/Mining/rock 2 broken.png")
+var empty_sprite_green_n = preload("res://PixelArt/Mining/rock 2 broken_n.png")
 var full_sprite_green = preload("res://PixelArt/Mining/rock 2.png")
+var full_sprite_green_n = preload("res://PixelArt/Mining/rock 2_n.png")
 var empty_sprite_red = preload("res://PixelArt/Mining/rock 3 broken.png")
+var empty_sprite_red_n = preload("res://PixelArt/Mining/rock 3 broken_n.png")
 var full_sprite_red = preload("res://PixelArt/Mining/rock 3.png")
+var full_sprite_red_n = preload("res://PixelArt/Mining/rock 3_n.png")
 
 var state = WITH
 var days_timer = 0
@@ -43,8 +47,10 @@ func _ready():
 	match type:
 		GREEN:
 			sprite.texture = full_sprite_green
+			sprite.normal_map = full_sprite_green_n
 		RED:
 			sprite.texture = full_sprite_red
+			sprite.normal_map = full_sprite_red_n
 	
 	# Light Handler
 	if is_network_master():
@@ -75,8 +81,10 @@ remotesync func sync_types(new_type):
 	match type:
 		GREEN:
 			sprite.texture = full_sprite_green
+			sprite.normal_map = full_sprite_green_n
 		RED:
 			sprite.texture = full_sprite_red
+			sprite.normal_map = full_sprite_red_n
 
 remotesync func one_day():
 	sprite.frame = 0
@@ -86,8 +94,10 @@ remotesync func replenish():
 		match type:
 			GREEN:
 				sprite.texture = full_sprite_green
+				sprite.normal_map = full_sprite_green_n
 			RED:
 				sprite.texture = full_sprite_red
+				sprite.normal_map = full_sprite_red_n
 		sprite.hframes = 4
 		sprite.frame = 3
 		state = WITH
@@ -137,8 +147,10 @@ func _on_empty():
 		match type:
 			GREEN:
 				sprite.texture = empty_sprite_green
+				sprite.normal_map = empty_sprite_green_n
 			RED:
 				sprite.texture = empty_sprite_red
+				sprite.normal_map = empty_sprite_red_n
 		sprite.hframes = 2
 		sprite.frame = 1
 		if is_network_master():
