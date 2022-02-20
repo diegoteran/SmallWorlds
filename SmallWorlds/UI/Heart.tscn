@@ -42,9 +42,11 @@ script = ExtResource( 2 )
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 centered = false
-vframes = 11
 hframes = 22
+vframes = 11
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RegainHeart = SubResource( 1 )
 anims/RemoveHeart = SubResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]

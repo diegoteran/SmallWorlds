@@ -11,7 +11,7 @@ signal light_changed(value)
 func _ready():
 	seconds_check = seconds
 	if seconds * 4 > DAY_LENGTH * 3:
-		is_night = true 
+		change_light(true)
 #	if !get_tree().is_network_server():
 #		rpc_id(1, "ask_if_night", get_tree().get_network_unique_id())
 #

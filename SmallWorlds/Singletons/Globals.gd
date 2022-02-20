@@ -20,8 +20,8 @@ func get_sfx_volume():
 	return Settings._settings["audio"]["sfx"]
 
 func get_player_by_id(player_id : String):
-	var player = get_node("/root/World/YSort/Players/" + player_id)
-	return player
+	var player_instance = get_node("/root/World/YSort/Players/" + player_id)
+	return player_instance
 
 func instance_scene_on_node(scene, node, position):
 	var instance = scene.instance()

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://UI/SoulUI.gd" type="Script" id=1]
+[ext_resource path="res://UI/Soul.tscn" type="PackedScene" id=2]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.913725, 0.862745, 0.862745, 1 )
@@ -15,8 +16,17 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+Soul = ExtResource( 2 )
+
+[node name="Souls" type="HBoxContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
 margin_right = 64.0
 margin_bottom = 8.0
 rect_min_size = Vector2( 0, 8 )

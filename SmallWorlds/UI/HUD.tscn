@@ -27,11 +27,11 @@ rect_min_size = Vector2( 0, 16 )
 [node name="SoulUI" parent="VBoxContainer" instance=ExtResource( 5 )]
 margin_top = 20.0
 margin_right = 0.0
-margin_bottom = 28.0
-rect_min_size = Vector2( 0, 8 )
+margin_bottom = 36.0
+rect_min_size = Vector2( 0, 16 )
 
 [node name="RockUI" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 32.0
+margin_top = 40.0
 margin_right = 0.0
-margin_bottom = 40.0
+margin_bottom = 48.0
 rect_min_size = Vector2( 0, 8 )
