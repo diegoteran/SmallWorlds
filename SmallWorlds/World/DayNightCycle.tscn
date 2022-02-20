@@ -38,6 +38,7 @@ tracks/1/keys = {
 [node name="DayNightCycle" type="CanvasModulate"]
 color = Color( 0, 0, 0, 1 )
 script = ExtResource( 1 )
+seconds = 100
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Cycle = SubResource( 1 )

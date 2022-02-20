@@ -73,6 +73,7 @@ func _ready():
 	sprite.material.set_shader_param("Shift_Hue", server.players[int(name)]["Shader"])
 	if is_network_master():
 		Globals.player = self
+		label.visible = false
 		stats._ready()
 		stats.connect("no_health", self, "_on_no_health")
 		var remoteTransform = RemoteTransform2D.new()
@@ -94,8 +95,10 @@ func _ready():
 	
 	# Light Handler
 # warning-ignore:return_value_discarded
-	get_node("/root/World/DayNightCycle").connect("light_changed", self, "set_lights")
-	
+	var cycle = get_node("/root/World/DayNightCycle")
+	cycle.connect("light_changed", self, "set_lights")
+	if cycle.is_night:
+		set_lights(true)
 	Globals.dead = false
 
 func _on_no_health():
@@ -136,8 +139,8 @@ func SetDamage(damage):
 func set_lights(value: bool):
 	print("player light")
 	if value:
-		tween.interpolate_property(light1, "energy", light1.energy, 0.6, 5.0)
-		tween.interpolate_property(light2, "energy", light2.energy, 0.6, 5.0)
+		tween.interpolate_property(light1, "energy", light1.energy, 0.9, 5.0)
+		tween.interpolate_property(light2, "energy", light2.energy, 0.9, 5.0)
 	else:
 		tween.interpolate_property(light1, "energy", light1.energy, 0.0, 5.0)
 		tween.interpolate_property(light2, "energy", light2.energy, 0.0, 5.0)
@@ -324,6 +327,7 @@ remotesync func ranged(ranged_vector, level):
 	var arrow = Globals.instance_scene_on_world(Arrow, sword.swordEnd.global_position)
 	arrow.velocity = ranged_vector
 	arrow.level = level
+	arrow.player = name
 	play_ranged_sound()
 	ranged_animation_finished()
 

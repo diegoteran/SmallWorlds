@@ -5,6 +5,7 @@ export var GhostArrow: PackedScene
 
 var velocity = Vector2.ZERO
 var level = 0
+var player = null
 
 onready var timer = $Timer
 onready var sprite = $Sprite

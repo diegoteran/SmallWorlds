@@ -1,13 +1,17 @@
 extends CanvasModulate
 
 var time = 0
-var seconds = 40
+export var seconds = 40
+export var DAY_LENGTH = 120
 var seconds_check = 40
 var is_night = false
 
 signal light_changed(value)
 
-#func _ready():
+func _ready():
+	seconds_check = seconds
+	if seconds * 4 > DAY_LENGTH * 3:
+		is_night = true 
 #	if !get_tree().is_network_server():
 #		rpc_id(1, "ask_if_night", get_tree().get_network_unique_id())
 #
@@ -28,7 +32,7 @@ func _physics_process(delta):
 	set_time(seconds)
 
 func set_time(set_seconds):
-	var currentFrame = range_lerp(set_seconds, 0, 120, 0, 24)
+	var currentFrame = range_lerp(set_seconds, 0, DAY_LENGTH, 0, 24)
 	$AnimationPlayer.play("Cycle")
 	$AnimationPlayer.seek(currentFrame)
 

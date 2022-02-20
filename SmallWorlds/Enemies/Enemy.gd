@@ -133,6 +133,8 @@ func _on_HurtBox_area_entered(area) -> void:
 #	stats.health -= area.damage
 	if area.is_network_master() and state != DEAD:
 		if "Arrow" in area.get_parent().name:
+			if state == IDLE or state == WANDER:
+				aggroed(Globals.get_player_by_id(area.get_parent().player))
 			area.get_parent().delete()
 		else:
 			area.get_parent().get_parent().get_parent().get_parent().add_soul(soul_given)

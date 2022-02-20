@@ -35,7 +35,8 @@ normal_map = ExtResource( 5 )
 offset = Vector2( 0, -50 )
 
 [node name="ShadowSprite" type="Sprite" parent="."]
-modulate = Color( 0, 0, 0, 0.6 )
+modulate = Color( 0.117647, 0.117647, 0.117647, 0.745098 )
+show_behind_parent = true
 position = Vector2( 1.1225, 0 )
 scale = Vector2( 0.469703, 0.182294 )
 texture = ExtResource( 2 )
