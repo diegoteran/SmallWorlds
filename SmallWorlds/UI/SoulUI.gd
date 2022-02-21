@@ -15,6 +15,8 @@ func _ready():
 	
 	for i in max_soul:
 		create_soul_with_id(i)
+	for i in range(soul):
+		soulsUI.get_node(str(i)+"/Soul").gain_soul()
 		
 	# warning-ignore:return_value_discarded
 	PlayerStats.connect("soul_changed", self, "set_soul")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=2]
+[gd_scene load_steps=85 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PixelArt/TileSet/Background.tres" type="TileSet" id=2]
@@ -96,7 +96,81 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
 shader = SubResource( 4 )
-shader_param/bg_color = Color( 0, 0, 0, 0 )
+shader_param/bg_color = Color( 0.145098, 0.239216, 0.247059, 0 )
+
+[sub_resource type="Shader" id=61]
+code = "shader_type canvas_item;
+
+// Gonkee's water shader for Godot 3 - full tutorial https://youtu.be/uhMAHpV_cDg
+// If you use this shader, I would prefer if you gave credit to me and my channel
+
+uniform vec4 blue_tint : hint_color;
+
+uniform vec2 sprite_scale;
+uniform float scale_x = 0.67;
+
+float rand(vec2 coord){
+	return fract(sin(dot(coord, vec2(12.9898, 78.233)))* 43758.5453123);
+}
+
+float noise(vec2 coord){
+	vec2 i = floor(coord);
+	vec2 f = fract(coord);
+
+	// 4 corners of a rectangle surrounding our point
+	float a = rand(i);
+	float b = rand(i + vec2(1.0, 0.0));
+	float c = rand(i + vec2(0.0, 1.0));
+	float d = rand(i + vec2(1.0, 1.0));
+
+	vec2 cubic = f * f * (3.0 - 2.0 * f);
+
+	return mix(a, b, cubic.x) + (c - a) * cubic.y * (1.0 - cubic.x) + (d - b) * cubic.x * cubic.y;
+}
+
+void fragment(){
+	
+	vec2 noisecoord1 = UV * sprite_scale * scale_x;
+	vec2 noisecoord2 = UV * sprite_scale * scale_x + 4.0;
+	
+	vec2 motion1 = vec2(TIME * 0.3, TIME * -0.4);
+	vec2 motion2 = vec2(TIME * 0.1, TIME * 0.5);
+	
+	vec2 distort1 = vec2(noise(noisecoord1 + motion1), noise(noisecoord2 + motion1)) - vec2(0.5);
+	vec2 distort2 = vec2(noise(noisecoord1 + motion2), noise(noisecoord2 + motion2)) - vec2(0.5);
+	
+	vec2 distort_sum = (distort1 + distort2) / 200.0;
+	
+	vec4 color = textureLod(SCREEN_TEXTURE, SCREEN_UV + distort_sum, 0.0);
+	
+//	color = mix(color, blue_tint, 0.3);
+//	color.rgb = mix(vec3(0.5), color.rgb, 1.4);
+	
+//	float near_top = (UV.y + distort_sum.y) / (0.2 / sprite_scale.y);
+//	near_top = clamp(near_top, 0.0, 1.0);
+//	near_top = 1.0 - near_top;
+	
+//	color = mix(color, vec4(1.0), near_top);
+	
+//	float edge_lower = 0.6;
+//	float edge_upper = edge_lower + 0.1;
+	
+//	if(near_top > edge_lower){
+//		color.a = 0.0;
+//
+//		if(near_top < edge_upper){
+//			color.a = (edge_upper - near_top) / (edge_upper - edge_lower);
+//		}
+//	}
+	
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=62]
+shader = SubResource( 61 )
+shader_param/blue_tint = Color( 0, 0, 0, 0 )
+shader_param/sprite_scale = Vector2( 50, 50 )
+shader_param/scale_x = 0.67
 
 [sub_resource type="Shader" id=6]
 code = "shader_type canvas_item;
@@ -756,10 +830,19 @@ format = 1
 tile_data = PoolIntArray( -1507321, 4, 0, -1507320, 4, 1, -1507319, 4, 1, -1507318, 4, 1, -1507317, 4, 1, -1507316, 4, 1, -1507315, 4, 1, -1507314, 4, 2, -1441785, 4, 65536, -1441784, 4, 65537, -1441783, 4, 65537, -1441782, 4, 65537, -1441781, 4, 65537, -1441780, 4, 65537, -1441779, 4, 65537, -1441778, 4, 65538, -1376249, 4, 65536, -1376248, 4, 65537, -1376247, 4, 65537, -1376246, 4, 65537, -1376245, 4, 65537, -1376244, 4, 65537, -1376243, 4, 65537, -1376242, 4, 65538, -1310713, 4, 65536, -1310712, 4, 65537, -1310711, 4, 65537, -1310710, 4, 65537, -1310709, 4, 65537, -1310708, 4, 65537, -1310707, 4, 65537, -1310706, 4, 65538, -1245177, 4, 65536, -1245176, 4, 65537, -1245175, 4, 65537, -1245174, 4, 65537, -1245173, 4, 65537, -1245172, 4, 65537, -1245171, 4, 65537, -1245170, 4, 65538, -1179641, 4, 65536, -1179640, 4, 65537, -1179639, 4, 65537, -1179638, 4, 65537, -1179637, 4, 65537, -1179636, 4, 65537, -1179635, 4, 65537, -1179634, 4, 65538, -1114105, 4, 65536, -1114104, 4, 65537, -1114103, 4, 65537, -1114102, 4, 65537, -1114101, 4, 65537, -1114100, 4, 65537, -1114099, 4, 65537, -1114098, 4, 65538, -1048569, 4, 65536, -1048568, 4, 65537, -1048567, 4, 65537, -1048566, 4, 65537, -1048565, 4, 65537, -1048564, 4, 65537, -1048563, 4, 65537, -1048562, 4, 65538, -983033, 4, 65536, -983032, 4, 65537, -983031, 4, 65537, -983030, 4, 65537, -983029, 4, 65537, -983028, 4, 65537, -983027, 4, 65537, -983026, 4, 65538, -917497, 4, 65536, -917496, 4, 65537, -917495, 4, 65537, -917494, 4, 65537, -917493, 4, 65537, -917492, 4, 65537, -917491, 4, 65537, -917490, 4, 65538, -851961, 4, 65536, -851960, 4, 65537, -851959, 4, 65537, -851958, 4, 65537, -851957, 4, 65537, -851956, 4, 65537, -851955, 4, 65537, -851954, 4, 65538, -786425, 4, 65536, -786424, 4, 65537, -786423, 4, 65537, -786422, 4, 65537, -786421, 4, 65537, -786420, 4, 65537, -786419, 4, 65537, -786418, 4, 65538, -720889, 4, 65536, -720888, 4, 65537, -720887, 4, 65537, -720886, 4, 65537, -720885, 4, 65537, -720884, 4, 65537, -720883, 4, 65537, -720882, 4, 65538, -655353, 4, 65536, -655352, 4, 65537, -655351, 4, 65537, -655350, 4, 65537, -655349, 4, 65537, -655348, 4, 65537, -655347, 4, 65537, -655346, 4, 65538, -589817, 4, 65536, -589816, 4, 65537, -589815, 4, 65537, -589814, 4, 65537, -589813, 4, 65537, -589812, 4, 65537, -589811, 4, 65537, -589810, 4, 65538, -524281, 4, 65536, -524280, 4, 65537, -524279, 4, 65537, -524278, 4, 65537, -524277, 4, 65537, -524276, 4, 65537, -524275, 4, 65537, -524274, 4, 65538, -458745, 4, 65536, -458744, 4, 65537, -458743, 4, 65537, -458742, 4, 65537, -458741, 4, 65537, -458740, 4, 65537, -458739, 4, 65537, -458738, 4, 65538, -393209, 4, 65536, -393208, 4, 65537, -393207, 4, 65537, -393206, 4, 65537, -393205, 4, 65537, -393204, 4, 65537, -393203, 4, 65537, -393202, 4, 65538, -327673, 4, 65536, -327672, 4, 65537, -327671, 4, 65537, -327670, 4, 65537, -327669, 4, 65537, -327668, 4, 65537, -327667, 4, 65537, -327666, 4, 65538, -262137, 4, 65536, -262136, 4, 65537, -262135, 4, 65537, -262134, 4, 65537, -262133, 4, 65537, -262132, 4, 65537, -262131, 4, 65537, -262130, 4, 65538, -196601, 4, 65536, -196600, 4, 65537, -196599, 4, 65537, -196598, 4, 65537, -196597, 4, 65537, -196596, 4, 65537, -196595, 4, 65537, -196594, 4, 65538, -131065, 4, 65536, -131064, 4, 65537, -131063, 4, 65537, -131062, 4, 65537, -131061, 4, 65537, -131060, 4, 65537, -131059, 4, 65537, -131058, 4, 65538, -65529, 4, 65536, -65528, 4, 65537, -65527, 4, 65537, -65526, 4, 65537, -65525, 4, 65537, -65524, 4, 65537, -65523, 4, 65537, -65522, 4, 65538, 7, 4, 131072, 8, 4, 131073, 9, 4, 131073, 10, 4, 131073, 11, 4, 131073, 12, 4, 131073, 13, 4, 131073, 14, 4, 131074 )
 
 [node name="StarSeaReflection" type="Sprite" parent="Background"]
+visible = false
 modulate = Color( 1, 1, 1, 0.266667 )
 material = SubResource( 5 )
 position = Vector2( -3.77551, -381.325 )
 scale = Vector2( 50.059, 55.9582 )
+texture = ExtResource( 13 )
+centered = false
+
+[node name="Water" type="Sprite" parent="Background"]
+visible = false
+material = SubResource( 62 )
+position = Vector2( 2, 1 )
+scale = Vector2( 50, 50 )
 texture = ExtResource( 13 )
 centered = false
 

@@ -42,6 +42,9 @@ func _ready():
 	
 	max_hearts = PlayerStats.max_health
 	hearts = PlayerStats.health
+	for i in range(hearts):
+		heartsUI.get_node(str(i)+"/Heart").regened()
+	
 		
 	# warning-ignore:return_value_discarded
 	PlayerStats.connect("health_changed", self, "set_hearts")

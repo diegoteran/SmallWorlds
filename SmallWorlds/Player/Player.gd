@@ -11,6 +11,7 @@ export var MAX_SPEED = 75
 export var ROLL_SPEED = 130
 export var FRICTION = 1000
 export var ATTACK_SPEED = 15
+export var SOUL_FOR_FIRE = 5
 
 enum {
 	MOVE,
@@ -74,7 +75,6 @@ func _ready():
 	if is_network_master():
 		Globals.player = self
 		label.visible = false
-		stats._ready()
 		stats.connect("no_health", self, "_on_no_health")
 		var remoteTransform = RemoteTransform2D.new()
 		var camera = get_node("../../../Camera2D")
@@ -165,7 +165,7 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("regen"):
 			stats.set_rock(stats.rocks[0] + 10, 0)
 			stats.set_rock(stats.rocks[1] + 9, 1)
-			stats.set_soul(10)
+			stats.set_soul(stats.max_soul)
 			stats.health = stats.max_health
 		
 		
@@ -234,7 +234,7 @@ func move_state(delta):
 	if Input.is_action_pressed("heal") and stats.soul >= 1 and stats.health < stats.max_health:
 		state = HEAL
 	
-	if Input.is_action_just_pressed("fire") and stats.soul == stats.max_soul:
+	if Input.is_action_just_pressed("fire") and stats.soul == SOUL_FOR_FIRE:
 		spawning_fire()
 	
 	if selecting:
@@ -247,7 +247,7 @@ func move_state(delta):
 			state = RANGED
 
 func spawning_fire():
-	stats.soul = 0
+	stats.soul -= SOUL_FOR_FIRE
 	rpc("spawn_fire", global_position)
 
 remotesync func spawn_fire(new_position):
