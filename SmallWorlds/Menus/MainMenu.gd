@@ -6,9 +6,13 @@ signal settings_pressed
 signal exit_pressed
 
 onready var startButton = $VBoxContainer/StartButton
+onready var multiplayerButton = $VBoxContainer/MultiplayerButton
+onready var settingsButton = $VBoxContainer/SettingsButton
+onready var exitButton = $VBoxContainer/ExitButton
 
 func _ready():
 	startButton.grab_focus()
+	pass
 
 func enable_keyboard():
 	startButton.grab_focus()
@@ -36,19 +40,19 @@ func _on_ExitButton_pressed():
 
 
 func _on_StartButton_mouse_entered():
-	play_menu_move()
+	startButton.grab_focus()
 
 
 func _on_MultiplayerButton_mouse_entered():
-	play_menu_move()
+	multiplayerButton.grab_focus()
 
 
 func _on_SettingsButton_mouse_entered():
-	play_menu_move()
+	settingsButton.grab_focus()
 
 
 func _on_ExitButton_mouse_entered():
-	play_menu_move()
+	exitButton.grab_focus()
 
 func play_menu_move():
 	SoundFx.play_menu("Menu Move", rand_range(0.8, 1.2), -30)

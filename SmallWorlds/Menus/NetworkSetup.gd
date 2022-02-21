@@ -1,16 +1,16 @@
 extends Control
 
 onready var multiplayerConfigure = $MultiplayerConfigure
-onready var serverAddress = $MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/ServerAddress
-onready var address = $MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/Address
-onready var createServer = $MultiplayerConfigure/CenterContainer/VBoxContainer/VBoxContainer/CreateServerButton
+onready var serverAddress = $MultiplayerConfigure/VBoxContainer/VBoxContainer/ServerAddress
+onready var address = $MultiplayerConfigure/VBoxContainer/VBoxContainer/Address
+onready var createServer = $MultiplayerConfigure/VBoxContainer/VBoxContainer/CreateServerButton
 
 signal return_pressed
 signal create_server_pressed
 signal join_server_pressed(ip)
 
 func _ready():
-	address.text = Network.ip_address
+	address.text = "Multiplayer"
 	SaverAndLoader.load_player()
 	PlayerStats.update()
 	
