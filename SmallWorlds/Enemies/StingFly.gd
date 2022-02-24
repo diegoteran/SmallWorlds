@@ -177,6 +177,7 @@ func _on_death():
 	if (get_tree().is_network_server()):
 		server.NPCKilled(int(name))
 	
+	._on_death()
 	play_hurt()
 	attack_finished()
 	state = DEAD

@@ -22,6 +22,10 @@ export var ParticleEffect: PackedScene
 export var FloatingText: PackedScene
 export var SoulItem: PackedScene
 
+var drop_p = [0.5]
+export(Array, PackedScene) var drop_type
+var drop_id = [0]
+
 var server = Network
 
 var state = IDLE
@@ -91,11 +95,11 @@ func _physics_process(_delta):
 	elif is_enraged:
 		set_enraged_stats(false)
 
-func drop_soul():
-	var soul_item = SoulItem.instance()
-	soul_item.init(0, name)
-	get_parent().call_deferred("add_child", soul_item)
-	soul_item.position = position
+remotesync func drop_item(item_id):
+	var item = drop_type[item_id].instance()
+	item.init(drop_id[item_id], name)
+	get_parent().call_deferred("add_child", item)
+	item.position = position
 
 func set_hp(new_value):
 	if new_value != hp:
@@ -143,8 +147,8 @@ func _on_HurtBox_area_entered(area) -> void:
 			if state == IDLE or state == WANDER:
 				aggroed(Globals.get_player_by_id(area.get_parent().player))
 			area.get_parent().delete()
-		else:
-			area.get_parent().get_parent().get_parent().get_parent().add_soul(soul_given)
+#		else:
+#			area.get_parent().get_parent().get_parent().get_parent().add_soul(soul_given)
 		var new_knockback = (global_position - area.get_parent().global_position).normalized() * KNOCKBACK_FRICTION
 		var new_hp = hp - area.damage
 		Shake.shake(0.8, 0.3, 2)
@@ -178,7 +182,12 @@ remotesync func aggro_effects():
 	particleEffect.global_position = global_position
 
 func _on_death():
-	drop_soul()
+	if is_network_master():
+		var prob_drop = randf()
+		for i in drop_p.size():
+			if prob_drop < drop_p[i]:
+				rpc("drop_item", drop_id[i])
+				break
 
 func play_hurt():
 	pass

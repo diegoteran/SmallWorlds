@@ -449,6 +449,12 @@ remotesync func hurt(damage_received):
 	text.amount = damage_received
 	
 
+func on_item_collected(item_id):
+	match item_id:
+		0: # SOUL
+			SoundFx.play("Collect", global_position, rand_range(0.8, 1.2), -30)
+			add_soul(1)
+
 func _on_soul_charged():
 	rpc("soul")
 

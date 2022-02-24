@@ -8,6 +8,7 @@ var sounds = {
 	"BatHurt1" : load(sounds_path + "BatHurt1.wav"),
 	"BatHurt2" : load(sounds_path + "BatHurt2.wav"),
 	"Click" : load(sounds_path + "Click.wav"),
+	"Collect" : load(sounds_path + "Collect.wav"),
 	"EnemyDie" : load(sounds_path + "EnemyDie.wav"),
 	"Evade" : load(sounds_path + "Evade.wav"),
 	"Fire" : load(sounds_path + "Fire.wav"),

@@ -29,6 +29,7 @@ script = ExtResource( 7 )
 ParticleEffect = ExtResource( 4 )
 FloatingText = ExtResource( 8 )
 SoulItem = ExtResource( 9 )
+drop_type = [ ExtResource( 9 ) ]
 
 [node name="Sprite" type="Sprite" parent="."]
 
