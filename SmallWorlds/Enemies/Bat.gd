@@ -102,6 +102,7 @@ func _on_Stats_no_health():
 
 func _on_death():
 	state = DEAD
+	._on_death()
 	if (get_tree().is_network_server()):
 		server.NPCKilled(int(name))
 		rpc("despawn")

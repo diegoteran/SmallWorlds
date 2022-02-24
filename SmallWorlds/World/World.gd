@@ -95,7 +95,7 @@ func SpawnEnemies():
 		if server_latest_spawned < enemy and get_tree().has_network_peer() and not get_tree().is_network_server():
 			continue
 		if world_state_buffer[2]["Enemies"][enemy]["EnemyState"] != "Dead" and enemy > max_enemy_spawned:  # Only respawn them if they are not dead
-			print("spawning enemy " + str(enemy))
+#			print("spawning enemy " + str(enemy))
 			if get_tree().is_network_server():
 				rpc_id(0, "sync_latest_in_server", enemy)
 			max_enemy_spawned = enemy

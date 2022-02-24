@@ -20,6 +20,7 @@ enum {
 
 export var ParticleEffect: PackedScene
 export var FloatingText: PackedScene
+export var SoulItem: PackedScene
 
 var server = Network
 
@@ -89,6 +90,12 @@ func _physics_process(_delta):
 			set_enraged_stats(true)
 	elif is_enraged:
 		set_enraged_stats(false)
+
+func drop_soul():
+	var soul_item = SoulItem.instance()
+	soul_item.init(0, name)
+	get_parent().call_deferred("add_child", soul_item)
+	soul_item.position = position
 
 func set_hp(new_value):
 	if new_value != hp:
@@ -171,7 +178,7 @@ remotesync func aggro_effects():
 	particleEffect.global_position = global_position
 
 func _on_death():
-	pass
+	drop_soul()
 
 func play_hurt():
 	pass
@@ -202,7 +209,7 @@ func _on_ProximityTimer_timeout():
 
 remotesync func despawn():
 	delete_reflection()
-	print("despawning enemy " + str(name))
+#	print("despawning enemy " + str(name))
 	queue_free()
 
 func delete_reflection():
