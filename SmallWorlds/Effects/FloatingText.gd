@@ -22,7 +22,7 @@ func _ready():
 	match type:
 		HEAL:
 			label.text = str(amount)
-			label.set("custom_colors/font_color", Color.greenyellow)
+			label.set("custom_colors/font_color", Color.blue)
 		DAMAGE:
 			label.text = str(amount)
 			label.set("custom_colors/font_color", Color.red)

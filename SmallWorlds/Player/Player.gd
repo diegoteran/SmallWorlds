@@ -291,7 +291,7 @@ remotesync func end_heal(success: bool):
 	if success:
 		play_heal_sound()
 		var particleEffect = ParticleEffect.instance()
-		particleEffect.set_particles_color(Color.green)
+		particleEffect.set_particles_color(Color.blue)
 		self.add_child(particleEffect)
 		particleEffect.scale = Vector2(2, 2)
 		particleEffect.global_position = global_position
