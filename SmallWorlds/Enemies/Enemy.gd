@@ -20,7 +20,6 @@ enum {
 
 export var ParticleEffect: PackedScene
 export var FloatingText: PackedScene
-export var SoulItem: PackedScene
 
 var drop_p = [0.5]
 export(Array, PackedScene) var drop_type
@@ -95,11 +94,12 @@ func _physics_process(_delta):
 	elif is_enraged:
 		set_enraged_stats(false)
 
-remotesync func drop_item(item_id):
+remotesync func drop_item(item_id, sync_seed):
 	var item = drop_type[item_id].instance()
 	item.init(drop_id[item_id], name)
 	get_parent().call_deferred("add_child", item)
 	item.position = position
+	item.sync_seed = sync_seed
 
 func set_hp(new_value):
 	if new_value != hp:
@@ -186,7 +186,7 @@ func _on_death():
 		var prob_drop = randf()
 		for i in drop_p.size():
 			if prob_drop < drop_p[i]:
-				rpc("drop_item", drop_id[i])
+				rpc("drop_item", drop_id[i], randi() % 50000)
 				break
 
 func play_hurt():

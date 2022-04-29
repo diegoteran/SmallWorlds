@@ -4,6 +4,7 @@ export var StepDustEffect: PackedScene
 export var ShockWaveEffect: PackedScene
 
 var id = 0
+var sync_seed
 
 enum {
 	SOUL,
@@ -30,6 +31,8 @@ var dirt_tilemap
 var water_tilemap
 
 func _ready():
+	seed(sync_seed)
+	
 	var remote_transform = Globals.create_reflection(sprite, name)
 	add_child(remote_transform)
 	animationPlayer.play("anim")
