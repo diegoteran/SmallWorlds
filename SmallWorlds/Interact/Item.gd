@@ -75,7 +75,6 @@ func init(item_id, unique_name):
 #	self.queue_free()
 
 func _on_Item_body_entered(body):
-	print("touched")
 	if body.is_network_master() and body.has_method("on_item_collected"):
 		body.on_item_collected(id)
 		rpc("delete")

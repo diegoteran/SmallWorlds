@@ -1,0 +1,222 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Enemies/BossEnemy.gd" type="Script" id=3]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 100.0
+height = 200.0
+
+[node name="BossEnemy" instance=ExtResource( 1 )]
+scale = Vector2( 0.2, 0.2 )
+script = ExtResource( 3 )
+
+[node name="Body" type="Node2D" parent="." index="0"]
+modulate = Color( 0.333333, 0.435294, 0.603922, 1 )
+rotation = 0.0128748
+
+[node name="LeftLeg" type="Node2D" parent="Body" index="0"]
+position = Vector2( -105.227, -94.6531 )
+rotation = -0.448491
+__meta__ = {
+"_edit_ik_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/LeftLeg" index="0"]
+polygon = PoolVector2Array( -5.8293, -11.7442, -109.726, -158.419, -389.3, -278.829, -214.688, -77.0606 )
+
+[node name="MiddleSegment" type="Node2D" parent="Body/LeftLeg" index="1"]
+position = Vector2( -387.625, -279.033 )
+rotation = 0.695201
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/LeftLeg/MiddleSegment" index="0"]
+position = Vector2( -1.67538, 0.203156 )
+offset = Vector2( 383.3, 278.907 )
+polygon = PoolVector2Array( -383.274, -276.907, -646.171, -189.515, -960.222, -191.472, -688.047, -334.988 )
+
+[node name="EndSegment" type="Node2D" parent="Body/LeftLeg/MiddleSegment" index="1"]
+position = Vector2( -566.974, 83.3064 )
+rotation = -0.295523
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/LeftLeg/MiddleSegment/EndSegment" index="0"]
+position = Vector2( 6.10352e-05, -0.104202 )
+offset = Vector2( 953.05, 195.523 )
+polygon = PoolVector2Array( -956.274, -195.523, -1132.53, 96.7704, -1020.69, 549.368, -854.42, 103.191 )
+
+[node name="EndPoint" type="Position2D" parent="Body/LeftLeg/MiddleSegment/EndSegment" index="1"]
+position = Vector2( -68.1777, 741.372 )
+rotation = 0.0498517
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Body/LeftLeg/MiddleSegment/EndSegment/EndPoint" index="0"]
+position = Vector2( 0, -200 )
+remote_path = NodePath("../../../../../../HurtBox/CollisionShape2D")
+
+[node name="LeftLeg2" type="Node2D" parent="Body" index="1"]
+position = Vector2( -96.0654, 93.8181 )
+rotation = -0.0145876
+__meta__ = {
+"_edit_ik_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/LeftLeg2" index="0"]
+polygon = PoolVector2Array( -5.8293, -11.7442, -109.726, -158.419, -389.3, -278.829, -214.688, -77.0606 )
+
+[node name="MiddleSegment" type="Node2D" parent="Body/LeftLeg2" index="1"]
+position = Vector2( -387.625, -279.033 )
+rotation = -0.272021
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/LeftLeg2/MiddleSegment" index="0"]
+position = Vector2( -1.67538, 0.203156 )
+offset = Vector2( 383.3, 278.907 )
+polygon = PoolVector2Array( -383.274, -276.907, -646.171, -189.515, -960.222, -191.472, -688.047, -334.988 )
+
+[node name="EndSegment" type="Node2D" parent="Body/LeftLeg2/MiddleSegment" index="1"]
+position = Vector2( -566.974, 83.3064 )
+rotation = 0.214278
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/LeftLeg2/MiddleSegment/EndSegment" index="0"]
+position = Vector2( 6.10352e-05, -0.104202 )
+offset = Vector2( 953.05, 195.523 )
+polygon = PoolVector2Array( -956.274, -195.523, -1132.53, 96.7704, -1020.69, 549.368, -854.42, 103.191 )
+
+[node name="EndPoint" type="Position2D" parent="Body/LeftLeg2/MiddleSegment/EndSegment" index="1"]
+position = Vector2( -68.1777, 741.372 )
+rotation = 0.0751561
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Body/LeftLeg2/MiddleSegment/EndSegment/EndPoint" index="0"]
+position = Vector2( 0, -200 )
+remote_path = NodePath("../../../../../../HurtBox/CollisionShape2D3")
+
+[node name="RightLeg" type="Node2D" parent="Body" index="2"]
+position = Vector2( 99.7757, -102.486 )
+scale = Vector2( -1, 1 )
+__meta__ = {
+"_edit_ik_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/RightLeg" index="0"]
+polygon = PoolVector2Array( -5.8293, -11.7442, -109.726, -158.419, -389.3, -278.829, -214.688, -77.0606 )
+
+[node name="MiddleSegment" type="Node2D" parent="Body/RightLeg" index="1"]
+position = Vector2( -387.625, -279.033 )
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/RightLeg/MiddleSegment" index="0"]
+position = Vector2( -1.67538, 0.203156 )
+offset = Vector2( 383.3, 278.907 )
+polygon = PoolVector2Array( -383.274, -276.907, -646.171, -189.515, -960.222, -191.472, -688.047, -334.988 )
+
+[node name="EndSegment" type="Node2D" parent="Body/RightLeg/MiddleSegment" index="1"]
+position = Vector2( -566.974, 83.3064 )
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/RightLeg/MiddleSegment/EndSegment" index="0"]
+position = Vector2( 6.10352e-05, -0.104202 )
+offset = Vector2( 953.05, 195.523 )
+polygon = PoolVector2Array( -956.274, -195.523, -1132.53, 96.7704, -1020.69, 549.368, -854.42, 103.191 )
+
+[node name="EndPoint" type="Position2D" parent="Body/RightLeg/MiddleSegment/EndSegment" index="1"]
+position = Vector2( -68.1777, 741.372 )
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Body/RightLeg/MiddleSegment/EndSegment/EndPoint" index="0"]
+position = Vector2( 0, -200 )
+remote_path = NodePath("../../../../../../HurtBox/CollisionShape2D2")
+
+[node name="RightLeg2" type="Node2D" parent="Body" index="3"]
+position = Vector2( 103.995, 92.8933 )
+scale = Vector2( -1, 1 )
+__meta__ = {
+"_edit_ik_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/RightLeg2" index="0"]
+polygon = PoolVector2Array( -5.8293, -11.7442, -109.726, -158.419, -389.3, -278.829, -214.688, -77.0606 )
+
+[node name="MiddleSegment" type="Node2D" parent="Body/RightLeg2" index="1"]
+position = Vector2( -387.625, -279.033 )
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/RightLeg2/MiddleSegment" index="0"]
+position = Vector2( -1.67538, 0.203156 )
+offset = Vector2( 383.3, 278.907 )
+polygon = PoolVector2Array( -383.274, -276.907, -646.171, -189.515, -960.222, -191.472, -688.047, -334.988 )
+
+[node name="EndSegment" type="Node2D" parent="Body/RightLeg2/MiddleSegment" index="1"]
+position = Vector2( -566.974, 83.3064 )
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/RightLeg2/MiddleSegment/EndSegment" index="0"]
+position = Vector2( 6.10352e-05, -0.104202 )
+offset = Vector2( 953.05, 195.523 )
+polygon = PoolVector2Array( -956.274, -195.523, -1132.53, 96.7704, -1020.69, 549.368, -854.42, 103.191 )
+
+[node name="EndPoint" type="Position2D" parent="Body/RightLeg2/MiddleSegment/EndSegment" index="1"]
+position = Vector2( -68.1777, 741.372 )
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Body/RightLeg2/MiddleSegment/EndSegment/EndPoint" index="0"]
+position = Vector2( 0, -200 )
+remote_path = NodePath("../../../../../../HurtBox/CollisionShape2D4")
+
+[node name="Sprite" parent="." index="1"]
+scale = Vector2( 6.90221, 5.84426 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2( -1181.24, 292.939 )
+rotation = 0.0139135
+scale = Vector2( 1, 1 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtBox" index="1"]
+position = Vector2( 1119.33, 257.591 )
+rotation = -3.12872
+scale = Vector2( 1, -1 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="HurtBox" index="2"]
+position = Vector2( -1029.58, 591.817 )
+rotation = 0.0157003
+scale = Vector2( 1, 1 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="HurtBox" index="3"]
+position = Vector2( 1121.03, 453.009 )
+rotation = -3.12872
+scale = Vector2( 1, -1 )
+shape = SubResource( 1 )
+
+[editable path="HurtBox"]
+[editable path="PlayerDetectionZone"]

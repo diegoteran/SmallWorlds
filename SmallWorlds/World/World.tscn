@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=2]
+[gd_scene load_steps=86 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PixelArt/TileSet/Background.tres" type="TileSet" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://PixelArt/Structures/Tent.png" type="Texture" id=19]
 [ext_resource path="res://Enemies/BossSpawner.tscn" type="PackedScene" id=20]
 [ext_resource path="res://World/Rock.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Enemies/BossEnemy.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Overlap/SoftCollision.tscn" type="PackedScene" id=23]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -967,6 +968,9 @@ visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 60 )
+
+[node name="BossEnemy" parent="." instance=ExtResource( 22 )]
+position = Vector2( 272, 91 )
 
 [editable path="Background/SoftCollision"]
 [editable path="DayNightCycle"]
