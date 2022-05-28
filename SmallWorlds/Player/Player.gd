@@ -170,7 +170,8 @@ func _physics_process(delta):
 		
 		
 		# Wheel Experiment
-		menu_wheel()
+#		menu_wheel()
+		check_ranged()
 		
 		match(state):
 			MOVE:
@@ -509,6 +510,18 @@ func _on_SelectionWheel_mouse_exited():
 	if selecting:
 		selecting = false
 		print("exit wheel")
+
+func check_ranged() -> void:
+	if Input.is_action_just_pressed("ranged"):
+		wheel_id = 2
+		SoundFx.play_menu("Menu Move", rand_range(0.9, 1.1), -20)
+		sword.select_item(wheel_id)
+	
+	if Input.is_action_just_released("ranged"):
+		wheel_id = 0
+		SoundFx.play_menu("Menu Move", rand_range(0.9, 1.1), -20)
+		sword.select_item(wheel_id)
+	
 
 func queue_free():
 	sword.queue_free()
