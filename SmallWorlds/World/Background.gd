@@ -202,7 +202,7 @@ func make_flower_map(x, y, new_chunk_coords) -> void:
 #					Globals.instance_scene_on_node(TallGrassScene, get_parent().get_node("YSort/TallGrass"), g_position + Vector2(10, 0))
 #				elif chance < 26:
 #					enemy_positions.append(g_position)
-		elif chance < 20.2:
+		elif chance < 20.5:
 			scenes_on_node[new_chunk_coords].append(Globals.instance_scene_on_node_with_name(RockScene, get_parent().get_node("YSort/Rocks"), g_position, "rock" + str(num_rock)))
 			num_rock += 1
 

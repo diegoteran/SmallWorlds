@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://PixelArt/Mining/rock 2.png" type="Texture" id=1]
 [ext_resource path="res://PixelArt/OldShadows/LargeShadow.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://World/Rock.gd" type="Script" id=4]
 [ext_resource path="res://Effects/ParticleEffect.tscn" type="PackedScene" id=5]
 [ext_resource path="res://PixelArt/Mining/rock 2_n.png" type="Texture" id=6]
+[ext_resource path="res://Interact/Item.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -93,6 +94,7 @@ height = 5.64873
 input_pickable = true
 script = ExtResource( 4 )
 ParticleEffect = ExtResource( 5 )
+Item = ExtResource( 7 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 2 )

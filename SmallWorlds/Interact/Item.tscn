@@ -1,23 +1,87 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Interact/Item.gd" type="Script" id=1]
 [ext_resource path="res://Effects/ShockWaveEffect.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Effects/StepDustEffect.tscn" type="PackedScene" id=3]
+[ext_resource path="res://PixelArt/UI/CrystalsNoOutline.png" type="Texture" id=4]
+[ext_resource path="res://PixelArt/Test/LightTest.png" type="Texture" id=5]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+//render_mode unshaded;
+
+uniform float Shift_Hue = 0.0; //0.35, 0.8
+
+void fragment() {
+// Input:3
+	vec3 input_color;
+	vec4 texture_color = texture(TEXTURE, UV);
+	input_color = texture_color.rgb;
+
+// VectorFunc:2
+	vec3 color_hsv;
+	{
+		vec3 c = input_color;
+		vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+		vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+		vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+		float d = q.x - min(q.w, q.y);
+		float e = 1.0e-10;
+		color_hsv=vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+	}
+
+	color_hsv.x = mod((color_hsv.x + Shift_Hue), 1.0f);
+
+// VectorFunc:5
+	vec3 color_rgb;
+	{
+		vec3 c = color_hsv;
+		vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+		vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+		color_rgb=c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+	}
+
+// Output:0
+	texture_color = vec4(color_rgb.rgb,texture_color.a);
+	COLOR.rgba = texture_color;
+
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/Shift_Hue = 0.0
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 5.0
 
 [node name="Item" type="Area2D"]
+collision_mask = 2
 script = ExtResource( 1 )
 StepDustEffect = ExtResource( 3 )
 ShockWaveEffect = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 2 )
+position = Vector2( 0, -6 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 4 )
+hframes = 15
+vframes = 12
+frame = 23
 
 [node name="Sprite2" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0.419608 )
+scale = Vector2( 0.0507813, 0.015625 )
+texture = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="Tween" type="Tween" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -5 )
+shape = SubResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 

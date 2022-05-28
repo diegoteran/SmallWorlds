@@ -14,11 +14,12 @@ script = ExtResource( 3 )
 
 [node name="Body" type="Node2D" parent="." index="0"]
 modulate = Color( 0.333333, 0.435294, 0.603922, 1 )
+position = Vector2( 0, -600 )
 rotation = 0.0128748
 
 [node name="LeftLeg" type="Node2D" parent="Body" index="0"]
 position = Vector2( -105.227, -94.6531 )
-rotation = -0.448491
+rotation = -0.400391
 __meta__ = {
 "_edit_ik_": true
 }
@@ -28,7 +29,7 @@ polygon = PoolVector2Array( -5.8293, -11.7442, -109.726, -158.419, -389.3, -278.
 
 [node name="MiddleSegment" type="Node2D" parent="Body/LeftLeg" index="1"]
 position = Vector2( -387.625, -279.033 )
-rotation = 0.695201
+rotation = 0.579219
 __meta__ = {
 "_edit_bone_": true
 }
@@ -40,7 +41,7 @@ polygon = PoolVector2Array( -383.274, -276.907, -646.171, -189.515, -960.222, -1
 
 [node name="EndSegment" type="Node2D" parent="Body/LeftLeg/MiddleSegment" index="1"]
 position = Vector2( -566.974, 83.3064 )
-rotation = -0.295523
+rotation = -6.47291
 __meta__ = {
 "_edit_bone_": true
 }
@@ -52,7 +53,7 @@ polygon = PoolVector2Array( -956.274, -195.523, -1132.53, 96.7704, -1020.69, 549
 
 [node name="EndPoint" type="Position2D" parent="Body/LeftLeg/MiddleSegment/EndSegment" index="1"]
 position = Vector2( -68.1777, 741.372 )
-rotation = 0.0498517
+rotation = 0.0115171
 __meta__ = {
 "_edit_bone_": true
 }
@@ -191,29 +192,30 @@ position = Vector2( 0, -200 )
 remote_path = NodePath("../../../../../../HurtBox/CollisionShape2D4")
 
 [node name="Sprite" parent="." index="1"]
+position = Vector2( 0, -600 )
 scale = Vector2( 6.90221, 5.84426 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
-position = Vector2( -1181.24, 292.939 )
-rotation = 0.0139135
+position = Vector2( -1207.73, -292.854 )
+rotation = 0.0134939
 scale = Vector2( 1, 1 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtBox" index="1"]
-position = Vector2( 1119.33, 257.591 )
+position = Vector2( 1119.33, -342.408 )
 rotation = -3.12872
 scale = Vector2( 1, -1 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="HurtBox" index="2"]
-position = Vector2( -1029.58, 591.817 )
+position = Vector2( -1029.58, -8.18342 )
 rotation = 0.0157003
 scale = Vector2( 1, 1 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="HurtBox" index="3"]
-position = Vector2( 1121.03, 453.009 )
+position = Vector2( 1121.03, -146.991 )
 rotation = -3.12872
 scale = Vector2( 1, -1 )
 shape = SubResource( 1 )

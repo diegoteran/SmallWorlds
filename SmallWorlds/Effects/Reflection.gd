@@ -16,13 +16,12 @@ func _ready():
 	
 
 func _process(_delta):
-	if copy_sprite == null:
-		return
-	
-	if copy_sprite.texture != sprite.texture:
+	if copy_sprite != null and sprite != null and copy_sprite.texture != sprite.texture:
 		sprite.texture = copy_sprite.texture
 		sprite.vframes = copy_sprite.vframes
 		sprite.hframes = copy_sprite.hframes
+	else:
+		return
 		
 	if ignore_pos:
 		sprite.position.y = copy_sprite.get_rect().size.y / 2

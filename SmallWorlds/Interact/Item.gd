@@ -25,6 +25,8 @@ const MAX_Y =  70.0
 var BOUNCE_TIMES = [0.3, 0.25, 0.2, 0.1, 0.08]
 var BOUNCE_HEIGHTS = [16, 12, 6, 4, 2]
 
+var shader_nums = [0.0, 0.0, 0.3, 0.8]
+
 # Tilemap experiment
 var grass_tilemap
 var dirt_tilemap
@@ -36,6 +38,9 @@ func _ready():
 	var remote_transform = Globals.create_reflection(sprite, name)
 	add_child(remote_transform)
 	animationPlayer.play("anim")
+	
+	# Shader
+	sprite.material.set_shader_param("Shift_Hue", shader_nums[id])
 	
 	# Tilemap Experiment
 	grass_tilemap = get_node("/root/World/Background/GrassTileMap")
@@ -63,13 +68,13 @@ func _ready():
 
 	tween.start()
 	
-	$Timer.wait_time = 5
+	$Timer.wait_time = 25
 	$Timer.start()
 
 ## has to be called before adding the node to the scenetree
 func init(item_id, unique_name):
-	self.id = item_id
-	name = "itemFrom" + unique_name
+	id = item_id
+	name = "itemFrom" + unique_name + str(randi() % 10000000)
 
 #func _process(_delta):
 #	self.queue_free()

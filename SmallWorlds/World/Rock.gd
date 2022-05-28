@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 export var ParticleEffect: PackedScene
+export var Item: PackedScene
 export var hp = 10 setget set_hp
 export var max_hp = 10
 var type = GREEN
@@ -76,6 +77,13 @@ func set_lights(value):
 	if days_timer == 0 and !value:
 		rpc_id(0, "sync_types", type)
 
+remotesync func drop_item(sync_seed):
+	var item = Item.instance()
+	item.init(type + 2, name)
+	get_parent().call_deferred("add_child", item)
+	item.position = position
+	item.sync_seed = sync_seed
+
 remotesync func sync_types(new_type):
 	type = new_type
 	match type:
@@ -112,8 +120,9 @@ func _on_HurtBox_area_entered(area):
 			area.get_parent().delete()
 		else:
 			var player = area.get_parent().get_parent().get_parent().get_parent()
-			if hp > 0 and player.wheel_id == 1 and area.get_parent().get_parent().level >= type:
-				player.add_rock(rand_range(0.8, 1.3), type)
+			if hp > 0  and area.get_parent().get_parent().level >= type:
+#				player.add_rock(rand_range(0.8, 1.3), type)
+				rpc("drop_item", randi() % 50000)
 				new_hp -= 1
 			player_node_path = player.get_path()
 		rpc('hit_effect', new_hp, player_node_path)
