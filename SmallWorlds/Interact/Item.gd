@@ -18,10 +18,11 @@ onready var shadowSprite = $Sprite2
 onready var animationPlayer = $AnimationPlayer
 onready var tween = $Tween
 
-const MIN_X =  50.0
-const MAX_X = 90.0
+const MIN_X =  -70.0
+const MAX_X = 70.0
 const MIN_Y = -70.0
 const MAX_Y =  70.0
+const bounds = 50
 var BOUNCE_TIMES = [0.3, 0.25, 0.2, 0.1, 0.08]
 var BOUNCE_HEIGHTS = [16, 12, 6, 4, 2]
 
@@ -50,9 +51,11 @@ func _ready():
 	
 	# Bouncing
 	var starting_y = sprite.position.y
-	
-	var direction = 1 if randi() % 2 == 0 else -1
-	var goal = global_position + Vector2(rand_range(MIN_X, MAX_X), rand_range(MIN_Y, MAX_Y)) * direction
+	var goal = null
+	while true:
+		goal = global_position + Vector2(rand_range(MIN_X, MAX_X), rand_range(MIN_Y, MAX_Y))
+		if goal.x > bounds and goal.x + bounds < Globals.world_size and goal.y > bounds and goal.y + bounds < Globals.world_size:
+			break
 
 	var sum_time = 0.0
 	for i in BOUNCE_HEIGHTS.size() - (randi() % 3):
@@ -62,7 +65,7 @@ func _ready():
 		sum_time += BOUNCE_TIMES[i]
 		tween.interpolate_property(sprite, "position:y", starting_y - BOUNCE_HEIGHTS[i], starting_y, BOUNCE_TIMES[i], Tween.TRANS_QUAD, Tween.EASE_IN, sum_time)
 		sum_time += BOUNCE_TIMES[i]
-		bounce(sum_time)
+		bounce_pre(sum_time)
 	tween.interpolate_property(self, "global_position:x", null, goal.x, sum_time, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	tween.interpolate_property(self, "global_position:y", null, goal.y, sum_time, Tween.TRANS_LINEAR, Tween.EASE_IN)
 
@@ -87,8 +90,15 @@ func _on_Item_body_entered(body):
 remotesync func delete():
 	queue_free()
 
-func bounce(delay: float):
-	yield(get_tree().create_timer(delay), "timeout")
+func bounce_pre(delay: float):
+	var new_timer = Timer.new()
+	new_timer.one_shot = true
+	add_child(new_timer)
+	new_timer.start(delay)
+	new_timer.connect("timeout", self, "bounce")
+	yield(new_timer, "timeout")
+
+func bounce():
 	# Step sound
 	var grass_cell = grass_tilemap.world_to_map(global_position)
 	var water_cell = water_tilemap.world_to_map(global_position)
