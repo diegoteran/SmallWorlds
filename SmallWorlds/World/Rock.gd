@@ -2,6 +2,7 @@ extends StaticBody2D
 
 export var ParticleEffect: PackedScene
 export var Item: PackedScene
+export var FloatingText : PackedScene
 export var hp = 10 setget set_hp
 export var max_hp = 10
 var type = GREEN
@@ -37,10 +38,10 @@ onready var sprite = $Sprite
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hurtBox.connect("area_entered", self, "_on_HurtBox_area_entered")
-# warning-ignore:return_value_discarded
-	connect("mouse_entered", self, "_on_Rock_mouse_entered")
-# warning-ignore:return_value_discarded
-	connect("mouse_exited", self, "_on_Rock_mouse_exited")
+## warning-ignore:return_value_discarded
+#	connect("mouse_entered", self, "_on_Rock_mouse_entered")
+## warning-ignore:return_value_discarded
+#	connect("mouse_exited", self, "_on_Rock_mouse_exited")
 	
 	var prob = (float(global_position.x) / GRID_SIZE) * (float(global_position.y) / GRID_SIZE)
 	type = RED if prob > randf() else GREEN
@@ -120,10 +121,15 @@ func _on_HurtBox_area_entered(area):
 			area.get_parent().delete()
 		else:
 			var player = area.get_parent().get_parent().get_parent().get_parent()
-			if hp > 0  and area.get_parent().get_parent().level >= type:
-#				player.add_rock(rand_range(0.8, 1.3), type)
-				rpc("drop_item", randi() % 50000)
-				new_hp -= 1
+			if hp > 0:
+				if area.get_parent().get_parent().level >= type:
+	#				player.add_rock(rand_range(0.8, 1.3), type)
+					rpc("drop_item", randi() % 50000)
+					new_hp -= 1
+				else:
+					var text = Globals.instance_scene_on_node(FloatingText, get_parent(), global_position + Vector2(0, -20))
+					text.type = text.INFO
+					text.message = "Upgrade weapon to mine this rock."
 			player_node_path = player.get_path()
 		rpc('hit_effect', new_hp, player_node_path)
 

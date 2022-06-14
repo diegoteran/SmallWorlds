@@ -935,7 +935,7 @@ scale = Vector2( 2.29571, 1.39122 )
 texture = ExtResource( 15 )
 
 [node name="BossSpawner" parent="YSort" instance=ExtResource( 20 )]
-position = Vector2( 1334, 1492 )
+position = Vector2( 2700, 2700 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

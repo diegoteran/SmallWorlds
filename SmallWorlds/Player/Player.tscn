@@ -16,7 +16,7 @@
 [ext_resource path="res://PixelArt/SmallPlayer/Attack.png" type="Texture" id=14]
 [ext_resource path="res://Player/Arrow.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Effects/ParticleEffect.tscn" type="PackedScene" id=16]
-[ext_resource path="res://Menus/WhiteRabbit.tres" type="DynamicFont" id=17]
+[ext_resource path="res://Menus/immortal.tres" type="DynamicFont" id=17]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
