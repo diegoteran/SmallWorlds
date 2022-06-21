@@ -38,26 +38,26 @@ __meta__ = {
 
 [node name="ReturnButton" type="Button" parent="ScrollContainer/VBoxContainer"]
 margin_right = 440.0
-margin_bottom = 19.0
+margin_bottom = 24.0
 custom_fonts/font = ExtResource( 1 )
 text = " Return"
 flat = true
 align = 0
 
 [node name="FullScreen" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 29.0
+margin_top = 34.0
 margin_right = 440.0
-margin_bottom = 53.0
+margin_bottom = 58.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/FullScreen"]
-margin_top = 5.0
-margin_right = 81.0
-margin_bottom = 18.0
+margin_top = 3.0
+margin_right = 57.0
+margin_bottom = 21.0
 custom_fonts/font = ExtResource( 1 )
 text = "Fullsceen"
 
 [node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/FullScreen"]
-margin_left = 85.0
+margin_left = 61.0
 margin_right = 412.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
@@ -68,25 +68,24 @@ margin_right = 440.0
 margin_bottom = 24.0
 
 [node name="Music" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 63.0
+margin_top = 68.0
 margin_right = 440.0
-margin_bottom = 79.0
+margin_bottom = 86.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Music"]
-margin_top = 1.0
-margin_right = 108.0
-margin_bottom = 14.0
+margin_right = 99.0
+margin_bottom = 18.0
 custom_fonts/font = ExtResource( 1 )
 text = "Music Volume"
 
 [node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Music"]
-margin_left = 112.0
-margin_right = 274.0
-margin_bottom = 16.0
+margin_left = 103.0
+margin_right = 269.0
+margin_bottom = 18.0
 size_flags_horizontal = 3
 
 [node name="Music" type="HSlider" parent="ScrollContainer/VBoxContainer/Music"]
-margin_left = 278.0
+margin_left = 273.0
 margin_right = 440.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 150, 0 )
@@ -95,28 +94,27 @@ theme = SubResource( 1 )
 min_value = -50.0
 max_value = -10.0
 step = 4.0
-value = -10.0
+value = -12.0
 
 [node name="Sfx" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 89.0
+margin_top = 96.0
 margin_right = 440.0
-margin_bottom = 105.0
+margin_bottom = 114.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Sfx"]
-margin_top = 1.0
-margin_right = 117.0
-margin_bottom = 14.0
+margin_right = 92.0
+margin_bottom = 18.0
 custom_fonts/font = ExtResource( 1 )
 text = "Sound Effects"
 
 [node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Sfx"]
-margin_left = 121.0
-margin_right = 278.0
-margin_bottom = 16.0
+margin_left = 96.0
+margin_right = 266.0
+margin_bottom = 18.0
 size_flags_horizontal = 3
 
 [node name="Sfx" type="HSlider" parent="ScrollContainer/VBoxContainer/Sfx"]
-margin_left = 282.0
+margin_left = 270.0
 margin_right = 440.0
 margin_bottom = 16.0
 grow_horizontal = 0

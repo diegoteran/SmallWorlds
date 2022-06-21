@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Menus/PauseMenu.gd" type="Script" id=1]
 [ext_resource path="res://Menus/immortal.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Menus/SettingsMenu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Menus/TitleScreenPanel.tres" type="StyleBox" id=4]
 [ext_resource path="res://Menus/FirstTheme.tres" type="Theme" id=5]
+[ext_resource path="res://Menus/HowMenu.tscn" type="PackedScene" id=6]
 
 [node name="PauseMenu" type="Control"]
 pause_mode = 2
@@ -17,6 +18,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 SettingsMenu = ExtResource( 3 )
+HowMenu = ExtResource( 6 )
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_bottom = 1.0
@@ -54,6 +56,14 @@ custom_fonts/font = ExtResource( 2 )
 text = "Settings"
 flat = true
 
+[node name="HowButton" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_top = 23.0
+margin_right = 209.0
+margin_bottom = 42.0
+custom_fonts/font = ExtResource( 2 )
+text = "How To Play"
+flat = true
+
 [node name="ExitButton" type="Button" parent="PanelContainer/VBoxContainer"]
 margin_top = 46.0
 margin_right = 209.0
@@ -70,6 +80,9 @@ flat = true
 [connection signal="focus_entered" from="PanelContainer/VBoxContainer/SettingsButton" to="." method="_on_SettingsButton_focus_entered"]
 [connection signal="mouse_entered" from="PanelContainer/VBoxContainer/SettingsButton" to="." method="_on_SettingsButton_mouse_entered"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
+[connection signal="focus_entered" from="PanelContainer/VBoxContainer/HowButton" to="." method="_on_HowButton_focus_entered"]
+[connection signal="mouse_entered" from="PanelContainer/VBoxContainer/HowButton" to="." method="_on_HowButton_mouse_entered"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HowButton" to="." method="_on_HowButton_pressed"]
 [connection signal="focus_entered" from="PanelContainer/VBoxContainer/ExitButton" to="." method="_on_ExitButton_focus_entered"]
 [connection signal="mouse_entered" from="PanelContainer/VBoxContainer/ExitButton" to="." method="_on_ExitButton_mouse_entered"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]

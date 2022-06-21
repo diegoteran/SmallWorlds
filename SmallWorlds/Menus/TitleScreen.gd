@@ -5,6 +5,7 @@ export var SettingsMenu: PackedScene #  = preload("res://Menus/SettingsMenu.tscn
 export var MultiplayerMenu: PackedScene #  = preload("res://Menus/NetworkSetup.tscn")
 export var WorldMenu : PackedScene
 export var PlayerMenu : PackedScene
+export var HowMenu : PackedScene
 
 onready var panel = $PanelContainer
 onready var tween = $Tween
@@ -14,9 +15,11 @@ var settings_menu
 var multiplayer_menu
 var world_menu
 var player_menu
+var how_menu
 
 var panel_size = 0
 var panel_size_large = 0
+var panel_size_xlarge = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,11 +29,13 @@ func _ready():
 	main_menu.connect("multiplayer_pressed", self, "_on_multiplayer_pressed")
 	main_menu.connect("settings_pressed", self, "_on_settings_pressed")
 	main_menu.connect("exit_pressed", self, "_on_exit_pressed")
+	main_menu.connect("how_pressed", self, "_on_how_pressed")
 	Music.play_menu()
 	
 	# Weird bugs
 	panel_size = panel.rect_size
 	panel_size_large = panel.rect_size + Vector2(150, 0)
+	panel_size_xlarge = panel.rect_size + Vector2(250, 0)
 	
 	# Network
 # warning-ignore:return_value_discarded
@@ -76,12 +81,27 @@ func _on_settings_pressed():
 	settings_menu.connect("return_pressed", self, "_On_Settings_exited")
 	main_menu.visible = false
 
+func _on_how_pressed():
+	how_menu = HowMenu.instance()
+	panel.call_deferred("add_child", how_menu)
+	tween.interpolate_property(panel, "rect_size", panel.rect_size, panel_size_xlarge, 1, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+	tween.start()
+	how_menu.connect("return_pressed", self, "_On_How_exited")
+	main_menu.visible = false
+
 func _on_exit_pressed():
 	get_tree().quit()
 
 func _On_Settings_exited():
 	settings_menu.save_settings()
 	settings_menu.queue_free()
+	tween.interpolate_property(panel, "rect_size", panel.rect_size, panel_size, 1, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+	tween.start()
+	main_menu.visible = true
+	main_menu.enable_keyboard()
+
+func _On_How_exited():
+	how_menu.queue_free()
 	tween.interpolate_property(panel, "rect_size", panel.rect_size, panel_size, 1, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 	tween.start()
 	main_menu.visible = true

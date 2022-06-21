@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://PixelArt/Menu/placeholder_screen.png" type="Texture" id=1]
 [ext_resource path="res://World/Weather.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Menus/WorldMenu.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Menus/PlayerMenu.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Menus/FirstTheme.tres" type="Theme" id=10]
+[ext_resource path="res://Menus/HowMenu.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Animation" id=1]
 resource_name = "fade_in"
@@ -39,6 +40,7 @@ SettingsMenu = ExtResource( 4 )
 MultiplayerMenu = ExtResource( 6 )
 WorldMenu = ExtResource( 8 )
 PlayerMenu = ExtResource( 9 )
+HowMenu = ExtResource( 11 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0

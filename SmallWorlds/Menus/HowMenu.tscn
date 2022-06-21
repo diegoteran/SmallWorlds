@@ -1,0 +1,279 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Menus/immortal.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Menus/HowMenu.gd" type="Script" id=2]
+[ext_resource path="res://PixelArt/Mining/rock 3.png" type="Texture" id=3]
+[ext_resource path="res://PixelArt/Mining/rock 2.png" type="Texture" id=4]
+[ext_resource path="res://PixelArt/UI/Crystals.png" type="Texture" id=5]
+[ext_resource path="res://PixelArt/Structures/Campfire.png" type="Texture" id=6]
+
+[node name="HowMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 428.0
+margin_bottom = 360.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ReturnButton" type="Button" parent="ScrollContainer/VBoxContainer"]
+margin_right = 428.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 1 )
+text = " Return"
+flat = true
+align = 0
+
+[node name="Movement" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 34.0
+margin_right = 428.0
+margin_bottom = 52.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Movement"]
+margin_right = 172.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 1 )
+text = "1: Move with arrow keys."
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Movement"]
+margin_left = 176.0
+margin_right = 428.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[node name="Attack" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 62.0
+margin_right = 428.0
+margin_bottom = 80.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Attack"]
+margin_right = 409.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 1 )
+text = "2: Attack with left mouse button. Hold left click for ranged."
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Attack"]
+margin_left = 413.0
+margin_right = 428.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[node name="Attack2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 90.0
+margin_right = 428.0
+margin_bottom = 108.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Attack2"]
+margin_right = 389.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 1 )
+text = "2B: Hold right mouse button for ranged. Requires energy."
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Attack2"]
+margin_left = 393.0
+margin_right = 428.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[node name="Dash" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 118.0
+margin_right = 428.0
+margin_bottom = 136.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Dash"]
+margin_right = 157.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 1 )
+text = "3: Dash with Shift key."
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Dash"]
+margin_left = 161.0
+margin_right = 428.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[node name="Energy" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 146.0
+margin_right = 428.0
+margin_bottom = 164.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Energy"]
+margin_right = 169.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 1 )
+text = "4: Enemies drop energy. "
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Energy"]
+margin_left = 173.0
+margin_right = 428.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[node name="Sprite" type="Sprite" parent="ScrollContainer/VBoxContainer/Energy"]
+position = Vector2( 185.5, 7 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 5 )
+hframes = 15
+vframes = 12
+frame = 93
+
+[node name="Night" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 174.0
+margin_right = 428.0
+margin_bottom = 192.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Night"]
+margin_right = 297.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 1 )
+text = "5: Enemies are stronger and faster at night."
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Night"]
+margin_left = 301.0
+margin_right = 428.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[node name="Heal" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 202.0
+margin_right = 428.0
+margin_bottom = 220.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Heal"]
+margin_right = 253.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 1 )
+text = "6: Hold E to heal (requires 1 energy)."
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Heal"]
+margin_left = 257.0
+margin_right = 428.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[node name="Spawn" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 230.0
+margin_right = 428.0
+margin_bottom = 248.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Spawn"]
+margin_right = 319.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 1 )
+text = "7: Press Q to spawn a fire (requires 5 energy)."
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Spawn"]
+margin_left = 323.0
+margin_right = 428.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[node name="Sprite2" type="Sprite" parent="ScrollContainer/VBoxContainer/Spawn"]
+position = Vector2( 340.071, 6.22725 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 6 )
+hframes = 8
+
+[node name="Save" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 258.0
+margin_right = 428.0
+margin_bottom = 276.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Save"]
+margin_right = 328.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 1 )
+text = "8: Right click a fire to update your spawnpoint."
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Save"]
+margin_left = 332.0
+margin_right = 428.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[node name="Mine" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 286.0
+margin_right = 428.0
+margin_bottom = 304.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Mine"]
+margin_right = 273.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 1 )
+text = "9: Mine rocks to upgrade your weapon."
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Mine"]
+margin_left = 277.0
+margin_right = 428.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[node name="Sprite2" type="Sprite" parent="ScrollContainer/VBoxContainer/Mine"]
+position = Vector2( 300, 7 )
+texture = ExtResource( 4 )
+hframes = 4
+
+[node name="Sprite3" type="Sprite" parent="ScrollContainer/VBoxContainer/Mine"]
+position = Vector2( 333.409, 7 )
+scale = Vector2( 0.9, 0.9 )
+texture = ExtResource( 3 )
+hframes = 4
+
+[node name="Boss" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 314.0
+margin_right = 428.0
+margin_bottom = 332.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Boss"]
+margin_right = 338.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 1 )
+text = "10: Heal near the monolith after upgrading twice."
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Boss"]
+margin_left = 342.0
+margin_right = 428.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[node name="Goal" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 342.0
+margin_right = 428.0
+margin_bottom = 360.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Goal"]
+margin_right = 151.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 1 )
+text = "Goal: Defeat the boss."
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Goal"]
+margin_left = 155.0
+margin_right = 428.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[connection signal="focus_entered" from="ScrollContainer/VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_focus_entered"]
+[connection signal="mouse_entered" from="ScrollContainer/VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_mouse_entered"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_pressed"]
