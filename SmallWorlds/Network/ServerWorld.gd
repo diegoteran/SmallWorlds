@@ -1,8 +1,8 @@
 extends Node
 
 var enemy_id_counter = 1
-var enemy_maximum = 25
-var enemy_types = ["Bat", "Bat", "Bat", "StingFly"]
+var enemy_maximum = 12
+var enemy_types = ["Bat", "Bat", "Bat", "Bat", "Bat", "Bat", "Bat", "StingFly"]
 var enemy_spawn_points = []
 var open_locations = []
 var occupied_locations = {}

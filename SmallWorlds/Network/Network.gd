@@ -1,7 +1,7 @@
 extends Node
 
 const DEFAULT_PORT = 28960
-const MAX_CLIENTS = 6
+const MAX_CLIENTS = 20
 
 var server = null
 var client = null
@@ -99,7 +99,7 @@ func spawn_player():
 	get_node("../World").SpawnNewPlayer(get_tree().get_network_unique_id(), players[1]["Position"])
 
 func join_server() -> void:
-	print("Trying to joing server")
+	print("Trying to join server")
 	client = NetworkedMultiplayerENet.new()
 	var err = client.create_client(ip_address, DEFAULT_PORT)
 	if (err != OK):

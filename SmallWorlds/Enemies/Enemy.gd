@@ -21,7 +21,7 @@ enum {
 export var ParticleEffect: PackedScene
 export var FloatingText: PackedScene
 
-var drop_p = [0.5]
+var drop_p = [1]
 export(Array, PackedScene) var drop_type
 var drop_id = [0]
 

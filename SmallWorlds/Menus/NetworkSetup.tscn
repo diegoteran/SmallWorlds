@@ -38,18 +38,19 @@ align = 0
 [node name="Control" type="Control" parent="MultiplayerConfigure/VBoxContainer"]
 margin_top = 28.0
 margin_right = 160.0
-margin_bottom = 58.0
-rect_min_size = Vector2( 0, 30 )
+margin_bottom = 38.0
+rect_min_size = Vector2( 0, 10 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MultiplayerConfigure/VBoxContainer"]
-margin_top = 62.0
+margin_top = 42.0
 margin_right = 160.0
-margin_bottom = 168.0
+margin_bottom = 216.0
 
-[node name="Address" type="Label" parent="MultiplayerConfigure/VBoxContainer/VBoxContainer"]
+[node name="Host" type="Label" parent="MultiplayerConfigure/VBoxContainer/VBoxContainer"]
 margin_right = 160.0
 margin_bottom = 18.0
 custom_fonts/font = ExtResource( 2 )
+text = "HOST"
 
 [node name="CreateServerButton" type="Button" parent="MultiplayerConfigure/VBoxContainer/VBoxContainer"]
 margin_top = 22.0
@@ -61,20 +62,40 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="JoinServerButton" type="Button" parent="MultiplayerConfigure/VBoxContainer/VBoxContainer"]
+[node name="Port" type="Label" parent="MultiplayerConfigure/VBoxContainer/VBoxContainer"]
 margin_top = 50.0
 margin_right = 160.0
-margin_bottom = 74.0
+margin_bottom = 68.0
 custom_fonts/font = ExtResource( 2 )
-text = "Join Server"
+text = "Port: 28960"
+
+[node name="Control2" type="Control" parent="MultiplayerConfigure/VBoxContainer/VBoxContainer"]
+margin_top = 72.0
+margin_right = 160.0
+margin_bottom = 92.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Join" type="Label" parent="MultiplayerConfigure/VBoxContainer/VBoxContainer"]
+margin_top = 96.0
+margin_right = 160.0
+margin_bottom = 114.0
+custom_fonts/font = ExtResource( 2 )
+text = "JOIN"
 
 [node name="ServerAddress" type="LineEdit" parent="MultiplayerConfigure/VBoxContainer/VBoxContainer"]
-margin_top = 78.0
+margin_top = 118.0
 margin_right = 160.0
-margin_bottom = 106.0
+margin_bottom = 146.0
 custom_fonts/font = ExtResource( 2 )
 align = 1
 placeholder_text = "IP"
+
+[node name="JoinServerButton" type="Button" parent="MultiplayerConfigure/VBoxContainer/VBoxContainer"]
+margin_top = 150.0
+margin_right = 160.0
+margin_bottom = 174.0
+custom_fonts/font = ExtResource( 2 )
+text = "Join Server"
 
 [connection signal="focus_entered" from="MultiplayerConfigure/VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_focus_entered"]
 [connection signal="mouse_entered" from="MultiplayerConfigure/VBoxContainer/ReturnButton" to="." method="_on_ReturnButton_mouse_entered"]

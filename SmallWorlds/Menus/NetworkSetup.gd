@@ -2,7 +2,6 @@ extends Control
 
 onready var multiplayerConfigure = $MultiplayerConfigure
 onready var serverAddress = $MultiplayerConfigure/VBoxContainer/VBoxContainer/ServerAddress
-onready var address = $MultiplayerConfigure/VBoxContainer/VBoxContainer/Address
 onready var createServer = $MultiplayerConfigure/VBoxContainer/VBoxContainer/CreateServerButton
 
 signal return_pressed
@@ -10,11 +9,8 @@ signal create_server_pressed
 signal join_server_pressed(ip)
 
 func _ready():
-	address.text = "Multiplayer"
 	SaverAndLoader.load_player()
 	PlayerStats.update()
-	
-	createServer.grab_focus()
 	
 	# warning-ignore:return_value_discarded
 	get_tree().connect("connected_to_server", self, "_connected_ok")
@@ -30,7 +26,7 @@ func _on_JoinServerButton_pressed():
 	play_menu_select()
 	
 	if serverAddress.text != "":
-		emit_signal("join_server_pressed", "73.97.136.126")
+		emit_signal("join_server_pressed", serverAddress.text)
 
 func _connected_ok():
 	Music.stop_menu()
