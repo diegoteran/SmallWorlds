@@ -11,6 +11,7 @@ onready var multiplayerButton = $VBoxContainer/MultiplayerButton
 onready var settingsButton = $VBoxContainer/SettingsButton
 onready var exitButton = $VBoxContainer/ExitButton
 onready var howButton = $VBoxContainer/HowButton
+onready var twitterButton = $VBoxContainer/Twitter
 
 func _ready():
 	startButton.grab_focus()
@@ -84,3 +85,16 @@ func _on_HowButton_focus_entered():
 func _on_HowButton_pressed():
 	emit_signal("how_pressed")
 	play_menu_select()
+
+
+func _on_Twitter_pressed():
+# warning-ignore:return_value_discarded
+	OS.shell_open("https://twitter.com/diegoterandev")
+
+
+func _on_Twitter_focus_entered():
+	play_menu_move()
+
+
+func _on_Twitter_mouse_entered():
+	twitterButton.grab_focus()

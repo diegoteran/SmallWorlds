@@ -75,22 +75,31 @@ align = 0
 [node name="VSplitContainer" type="VSplitContainer" parent="VBoxContainer"]
 margin_top = 170.0
 margin_right = 400.0
-margin_bottom = 179.0
+margin_bottom = 170.0
 size_flags_vertical = 3
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-margin_top = 183.0
+margin_top = 174.0
 margin_right = 400.0
-margin_bottom = 187.0
+margin_bottom = 178.0
 
 [node name="VersionLabel" type="Label" parent="VBoxContainer"]
-margin_top = 191.0
+margin_top = 182.0
 margin_right = 400.0
-margin_bottom = 230.0
+margin_bottom = 200.0
 size_flags_vertical = 5
 custom_fonts/font = ExtResource( 1 )
-text = "Version 0.1
-Clerium"
+text = "Version 0.1"
+
+[node name="Twitter" type="Button" parent="VBoxContainer"]
+margin_top = 204.0
+margin_right = 400.0
+margin_bottom = 234.0
+rect_min_size = Vector2( 120, 30 )
+custom_fonts/font = ExtResource( 1 )
+text = "@Diego Te"
+flat = true
+align = 0
 
 [connection signal="focus_entered" from="VBoxContainer/StartButton" to="." method="_on_StartButton_focus_entered"]
 [connection signal="mouse_entered" from="VBoxContainer/StartButton" to="." method="_on_StartButton_mouse_entered"]
@@ -107,3 +116,6 @@ Clerium"
 [connection signal="focus_entered" from="VBoxContainer/ExitButton" to="." method="_on_ExitButton_focus_entered"]
 [connection signal="mouse_entered" from="VBoxContainer/ExitButton" to="." method="_on_ExitButton_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/Twitter" to="." method="_on_Twitter_focus_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/Twitter" to="." method="_on_Twitter_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/Twitter" to="." method="_on_Twitter_pressed"]
