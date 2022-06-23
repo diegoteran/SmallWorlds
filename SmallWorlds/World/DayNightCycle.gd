@@ -1,9 +1,9 @@
 extends CanvasModulate
 
 var time = 0
-export var seconds = 40
+export var seconds = 30
 export var DAY_LENGTH = 120
-var seconds_check = 40
+var seconds_check = 30
 var is_night = false
 
 signal light_changed(value)

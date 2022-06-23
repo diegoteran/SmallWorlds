@@ -85,7 +85,8 @@ func init(item_id, unique_name):
 func _on_Item_body_entered(body):
 	if body.is_network_master() and body.has_method("on_item_collected"):
 		body.on_item_collected(id)
-		rpc("delete")
+		queue_free()
+#		rpc("delete")
 
 remotesync func delete():
 	queue_free()

@@ -29,7 +29,7 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 margin_right = 428.0
-margin_bottom = 360.0
+margin_bottom = 388.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 10
@@ -51,13 +51,13 @@ margin_right = 428.0
 margin_bottom = 52.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Movement"]
-margin_right = 172.0
+margin_right = 247.0
 margin_bottom = 18.0
 custom_fonts/font = ExtResource( 1 )
-text = "1: Move with arrow keys."
+text = "1: Move with arrow or WASD keys."
 
 [node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Movement"]
-margin_left = 176.0
+margin_left = 251.0
 margin_right = 428.0
 margin_bottom = 18.0
 size_flags_horizontal = 3
@@ -68,13 +68,13 @@ margin_right = 428.0
 margin_bottom = 80.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Attack"]
-margin_right = 409.0
+margin_right = 222.0
 margin_bottom = 18.0
 custom_fonts/font = ExtResource( 1 )
-text = "2: Attack with left mouse button. Hold left click for ranged."
+text = "2: Attack with left mouse button."
 
 [node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Attack"]
-margin_left = 413.0
+margin_left = 226.0
 margin_right = 428.0
 margin_bottom = 18.0
 size_flags_horizontal = 3
@@ -195,10 +195,28 @@ scale = Vector2( 1.2, 1.2 )
 texture = ExtResource( 6 )
 hframes = 8
 
-[node name="Save" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="Spawn2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 margin_top = 258.0
 margin_right = 428.0
 margin_bottom = 276.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Spawn2"]
+margin_left = 20.0
+margin_right = 303.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 1 )
+text = "Fire will also make enemies weaker at night."
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Spawn2"]
+margin_left = 307.0
+margin_right = 428.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[node name="Save" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 286.0
+margin_right = 428.0
+margin_bottom = 304.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Save"]
 margin_right = 328.0
@@ -213,9 +231,9 @@ margin_bottom = 18.0
 size_flags_horizontal = 3
 
 [node name="Mine" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 286.0
+margin_top = 314.0
 margin_right = 428.0
-margin_bottom = 304.0
+margin_bottom = 332.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Mine"]
 margin_right = 273.0
@@ -241,9 +259,9 @@ texture = ExtResource( 3 )
 hframes = 4
 
 [node name="Boss" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 314.0
+margin_top = 342.0
 margin_right = 428.0
-margin_bottom = 332.0
+margin_bottom = 360.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Boss"]
 margin_right = 338.0
@@ -258,9 +276,9 @@ margin_bottom = 18.0
 size_flags_horizontal = 3
 
 [node name="Goal" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 342.0
+margin_top = 370.0
 margin_right = 428.0
-margin_bottom = 360.0
+margin_bottom = 388.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Goal"]
 margin_right = 151.0

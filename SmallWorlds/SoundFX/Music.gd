@@ -86,7 +86,7 @@ func _on_AudioStreamPlayer_finished():
 func set_music_volume():
 	musicPlayer.volume_db = 0
 	musicBoss.volume_db = 0
-	musicAmbiance.volume_db = 0
+	musicAmbiance.volume_db = -20
 	musicMenu.volume_db = 0
 
 
