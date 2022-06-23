@@ -34,13 +34,13 @@ func _set_zoom_level(value: float) -> void:
 # warning-ignore:return_value_discarded
 	tween.start()
 
-func _unhandled_input(event):
-	if event is InputEventMouseButton and get_tree().is_network_server():
-		if event.is_pressed():
-			# zoom in
-			if event.button_index == BUTTON_WHEEL_UP:
-		# Inside a given class, we need to either write `self._zoom_level = ...` or explicitly
-		# call the setter function to use it.
-				_set_zoom_level(_zoom_level - zoom_factor)
-			if event.button_index == BUTTON_WHEEL_DOWN:
-				_set_zoom_level(_zoom_level + zoom_factor)
+#func _unhandled_input(event):
+#	if event is InputEventMouseButton and get_tree().is_network_server():
+#		if event.is_pressed():
+#			# zoom in
+#			if event.button_index == BUTTON_WHEEL_UP:
+#		# Inside a given class, we need to either write `self._zoom_level = ...` or explicitly
+#		# call the setter function to use it.
+#				_set_zoom_level(_zoom_level - zoom_factor)
+#			if event.button_index == BUTTON_WHEEL_DOWN:
+#				_set_zoom_level(_zoom_level + zoom_factor)
