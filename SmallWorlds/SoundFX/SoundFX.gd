@@ -21,6 +21,8 @@ var sounds = {
 	"Jump" : load(sounds_path + "Jump.wav"),
 	"Menu Move" : load(sounds_path + "Menu Move.wav"),
 	"Menu Select" : load(sounds_path + "Menu Select.wav"),
+	"Monolith" : load(sounds_path + "Monolith.wav"),
+	"MonolithActivation" : load(sounds_path + "MonolithActivation.wav"),
 	"Pause" : load(sounds_path + "Pause.wav"),
 	"RockBreak" : load(sounds_path + "RockBreak.wav"),
 	"RockHit" : load(sounds_path + "RockHit.wav"),
