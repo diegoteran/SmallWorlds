@@ -20,9 +20,8 @@ height = 6.0
 [sub_resource type="OccluderPolygon2D" id=3]
 polygon = PoolVector2Array( 0.29628, -4.372, -4.54251, -3.78801, -5.79393, -1.70232, -6.79506, 0.216511, -5.7105, 3.30333, -0.204285, 4.1376, 3.38309, 3.63704, 5.13507, 2.71934, 6.63676, 0.299938, 6.21963, -1.36861, 5.2185, -3.03716, 3.13281, -4.03829, 1.04713, -4.03829 )
 
-[sub_resource type="CapsuleShape2D" id=4]
-radius = 6.89685
-height = 88.2346
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 50.3902, 65.7409 )
 
 [node name="Tree" type="StaticBody2D"]
 collision_mask = 0
@@ -55,7 +54,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VisibilityArea"]
-position = Vector2( -0.396851, -51.5905 )
+position = Vector2( -1.30347, -55.9749 )
 shape = SubResource( 4 )
 
 [node name="Tween" type="Tween" parent="."]

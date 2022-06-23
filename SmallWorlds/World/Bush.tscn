@@ -18,7 +18,7 @@ radius = 7.00002
 height = 12.0
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 4.39343, 40.3286 )
+extents = Vector2( 44, 48 )
 
 [node name="Bush" type="StaticBody2D"]
 script = ExtResource( 3 )
@@ -48,7 +48,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VisibilityArea"]
-position = Vector2( -0.210205, -37.8403 )
+position = Vector2( -4, -40 )
 shape = SubResource( 3 )
 
 [node name="Tween" type="Tween" parent="."]

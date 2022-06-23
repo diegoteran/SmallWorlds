@@ -95,6 +95,7 @@ func _on_CreateButton_pressed():
 		return
 	
 #	var world_seed = hash(seedText)
+	SaverAndLoader.custom_data_player = SaverAndLoader.empty_player
 	SaverAndLoader.custom_data_player.player_shader = hueSlider.value
 	SaverAndLoader.custom_data_player.player_name = playerName
 	SaverAndLoader.custom_data_player.player_id = next_id
